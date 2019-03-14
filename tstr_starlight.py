@@ -12,6 +12,9 @@ from sklearn.metrics import roc_auc_score, accuracy_score
 
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+date = '1403'
+folder = 'starlight_amp_noisy_irregular_all_1.00'
+dataset_real = 'starlight_noisy_irregular_all_1.00'#'starlight_noisy_irregular_all_classes'
 
 def read_data(file):
 
@@ -192,10 +195,6 @@ def check_dir(directory):
 		os.makedirs(directory)
 
 
-
-date = '1403'
-folder = 'starlight_amp_noisy_irregular_all'
-
 check_dir('TSTR_'+ date)
 check_dir('TSTR_'+ date +'/train/')
 check_dir('TSTR_'+ date +'/train/')
@@ -238,7 +237,7 @@ if os.path.isfile('TSTR_'+ date +'/train/'+ folder +'/trainonsynthetic_model.h5'
 else:
 
 	irr = True
-	dataset_syn = 'starlight_amp_noisy_irregular_all_generated'
+	dataset_syn = folder+'_generated'
 	one_d = False
 
 ## Train on synthetic
@@ -347,7 +346,6 @@ else:
 	print('\nTest metrics:')
 
 	# Load dataset
-	dataset_real = 'starlight_noisy_irregular_all_classes'
 	if irr == True:
 		X_train, y_train, X_val, y_val, X_test, y_test  = read_data_original_irr('TSTR_data/datasets_original/REAL/'+ dataset_real +'.pkl')
 	else:
