@@ -264,7 +264,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0):
         print('')
 
         batch_size = 512
-        epochs = 2
+        epochs = 200
 
         num_classes = 3
 
