@@ -12,11 +12,12 @@ from sklearn.metrics import roc_auc_score, accuracy_score
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 date = '1403'
+versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v10']
 
 
-def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0):
-    folder = 'starlight_amp_noisy_irregular_all_v6%.2f' % PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE
-    dataset_real = 'starlight_noisy_irregular_all_v6%.2f' % PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE
+def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v=''):
+    folder = 'starlight_noisy_irregular_all_same_set_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    dataset_real = 'starlight_noisy_irregular_all_same_set_%.2f' % PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE
 
     PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY = str(PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY] = {'training': {}, 'testing': {}}
@@ -394,10 +395,17 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0):
 
 
 if __name__ == '__main__':
-    dict_1 = {}
-    MIN_LIM = 20
-    MAX_LIM = 100
-    keep_samples_list = np.round(np.logspace(np.log10(MIN_LIM), np.log10(MAX_LIM), num=6)) / 100
-    for keep_sample in keep_samples_list:
-        main(dict_1, keep_sample)
-    print(dict_1)
+    #build dict of dicts:
+    dict_of_dicts = {}
+    for v in versions:
+        dict_of_dicts[v] = {}
+    for v in dict_of_dicts.keys():
+        dict_1 = dict_of_dicts[v]
+        MIN_LIM = 20
+        MAX_LIM = 100
+        keep_samples_list = np.round(np.logspace(np.log10(MIN_LIM), np.log10(MAX_LIM), num=6)) / 100
+        for keep_sample in keep_samples_list:
+            main(dict_1, keep_sample, v)
+        print(dict_1)
+    print(dict_of_dicts)
+    pickle.dump(dict_of_dicts, open('_'.join(versions), "wb"))
