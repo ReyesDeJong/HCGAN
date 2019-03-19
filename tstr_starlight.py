@@ -12,7 +12,7 @@ from sklearn.metrics import roc_auc_score, accuracy_score
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 date = '1403'
-versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v10']
+versions = ['v7', 'v9']
 
 
 def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v=''):
@@ -408,4 +408,4 @@ if __name__ == '__main__':
             main(dict_1, keep_sample, v)
         print(dict_1)
     print(dict_of_dicts)
-    pickle.dump(dict_of_dicts, open('_'.join(versions), "wb"))
+    pickle.dump(dict_of_dicts, open('_'.join(versions)+'.pkl', "wb"))
