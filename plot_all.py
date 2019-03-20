@@ -50,7 +50,7 @@ result_dict_v10 = {'0.2': {'training': {'IS Mean': 2.988765242434473, 'IS Std': 
 
 results_tstr = [result_dict_v1, result_dict_v2, result_dict_v3, result_dict_v4, result_dict_v5, result_dict_v6, result_dict_v7, result_dict_v9, result_dict_v10]
 
-dicts_trtr = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'random', 'trts_v2_v3_v4_v5_v6_v7_v9_v10.pkl'))
+dicts_trtr = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'random', 'trts_v2_v3_v4_v5_v6_v7_v8_v9_v10.pkl'))
 results_trtr = [dicts_trtr[dict_key] for dict_key in dicts_trtr.keys()]
 
 set_to_plot = 'testing'
