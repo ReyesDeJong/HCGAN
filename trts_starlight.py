@@ -13,7 +13,7 @@ from sklearn.metrics import roc_auc_score, accuracy_score
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 date = '1403'
-project_name = 'trts'#_same_all'
+project_name = 'trts_same_all'
 versions = ['', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10']
 
 
@@ -387,15 +387,15 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
         print('\nTest on synthetic:')
 
         sc, me, st = evaluation(X_test2, y_test2, num_classes)
-        np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_is.npy', sc)
-        np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_is_mean.npy', me)
-        np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_is_std.npy', st)
+        #np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_is.npy', sc)
+        #np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_is_mean.npy', me)
+        #np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_is_std.npy', st)
 
         score = model.evaluate(X_test2, y_test2, verbose=1)
         print('Test loss:', score[0])
         print('Test accuracy:', score[1])
 
-        np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_score.npy', score)
+        #np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_score.npy', score)
 
         y_pred = model.predict(X_test2)
         roc = roc_auc_score(y_test2, y_pred)
@@ -411,7 +411,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
         result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['test loss on syn'] = score[0]
         result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['Test accuracy on syn'] = score[1]
         result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['auc roc on syn'] = roc
-    np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_rocauc.npy', roc)
+    #np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_rocauc.npy', roc)
 
 
 if __name__ == '__main__':
@@ -428,4 +428,4 @@ if __name__ == '__main__':
             main(dict_1, keep_sample, v)
         print(dict_1)
     print(dict_of_dicts)
-    pickle.dump(dict_of_dicts, open(project_name + '_'.join(versions) + '.pkl', "wb"))
+    pickle.dump(dict_of_dicts, open('results/'+project_name + '_'.join(versions) + '.pkl', "wb"))

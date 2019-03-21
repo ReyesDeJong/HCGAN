@@ -12,7 +12,8 @@ from sklearn.metrics import roc_auc_score, accuracy_score
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 date = '1403'
-versions = ['v7', 'v9']
+project_name = 'tstr_same_all'
+versions = ['', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10']
 
 
 def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v=''):
@@ -301,28 +302,28 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
         # Create dictionary, then save into two different documments.
         ## Loss
         history_dictionary_loss = history.loss
-        np.save('TSTR_' + date + '/train/' + folder + '/trainonsynthetic_history_loss.npy', history_dictionary_loss)
+        ##np.save('TSTR_' + date + '/train/' + folder + '/trainonsynthetic_history_loss.npy', history_dictionary_loss)
         ## Val Loss
         history_dictionary_val_loss = history.val_loss
-        np.save('TSTR_' + date + '/train/' + folder + '/trainonsynthetic_history_val_loss.npy',
-                history_dictionary_val_loss)
+        #np.save('TSTR_' + date + '/train/' + folder + '/trainonsynthetic_history_val_loss.npy',
+        #        history_dictionary_val_loss)
         ## Acc
         history_dictionary_acc = history.acc
-        np.save('TSTR_' + date + '/train/' + folder + '/trainonsynthetic_history_acc.npy', history_dictionary_acc)
+        #np.save('TSTR_' + date + '/train/' + folder + '/trainonsynthetic_history_acc.npy', history_dictionary_acc)
         ## Val Acc
         history_dictionary_val_acc = history.val_acc
-        np.save('TSTR_' + date + '/train/' + folder + '/trainonsynthetic_history_val_acc.npy',
-                history_dictionary_val_acc)
+        #np.save('TSTR_' + date + '/train/' + folder + '/trainonsynthetic_history_val_acc.npy',
+        #        history_dictionary_val_acc)
         ## AUC ROC
         roc_auc_dictionary = rocauc.roc_auc
-        np.save('TSTR_' + date + '/train/' + folder + '/trainonsynthetic_rocauc_dict.npy', roc_auc_dictionary)
+        #np.save('TSTR_' + date + '/train/' + folder + '/trainonsynthetic_rocauc_dict.npy', roc_auc_dictionary)
         ## IS
         scores_dict = inception.score
-        np.save('TSTR_' + date + '/train/' + folder + '/trainonsynthetic_is.npy', scores_dict)
+        #np.save('TSTR_' + date + '/train/' + folder + '/trainonsynthetic_is.npy', scores_dict)
         mean_scores_dict = inception.mean
-        np.save('TSTR_' + date + '/train/' + folder + '/trainonsynthetic_is_mean.npy', mean_scores_dict)
+        #np.save('TSTR_' + date + '/train/' + folder + '/trainonsynthetic_is_mean.npy', mean_scores_dict)
         std_scores_dict = inception.std
-        np.save('TSTR_' + date + '/train/' + folder + '/trainonsynthetic_is_std.npy', std_scores_dict)
+        #np.save('TSTR_' + date + '/train/' + folder + '/trainonsynthetic_is_std.npy', std_scores_dict)
 
         ### plot loss and validation_loss v/s epochs
         plt.figure(1)
@@ -367,20 +368,20 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
                 'TSTR_data/datasets_original/REAL/' + dataset_real + '.pkl')
 
         sc, me, st = evaluation(X_test, y_test, num_classes)
-        np.save('TSTR_' + date + '/test/' + folder + '/testonreal_is.npy', sc)
-        np.save('TSTR_' + date + '/test/' + folder + '/testonreal_is_mean.npy', me)
-        np.save('TSTR_' + date + '/test/' + folder + '/testonreal_is_std.npy', st)
+        #np.save('TSTR_' + date + '/test/' + folder + '/testonreal_is.npy', sc)
+        #np.save('TSTR_' + date + '/test/' + folder + '/testonreal_is_mean.npy', me)
+        #np.save('TSTR_' + date + '/test/' + folder + '/testonreal_is_std.npy', st)
 
         score = model.evaluate(X_test, y_test, verbose=1)
         print('Test loss:', score[0])
         print('Test accuracy:', score[1])
 
-        np.save('TSTR_' + date + '/test/' + folder + '/testonreal_score.npy', score)
+        #np.save('TSTR_' + date + '/test/' + folder + '/testonreal_score.npy', score)
 
         y_pred = model.predict(X_test)
         roc = roc_auc_score(y_test, y_pred)
         print('auc roc', roc)
-        np.save('TSTR_' + date + '/test/' + folder + '/testonreal_rocauc.npy', roc)
+        #np.save('TSTR_' + date + '/test/' + folder + '/testonreal_rocauc.npy', roc)
 
         result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['training'] = {
             'IS Mean': mean_scores_dict[-1],
@@ -408,4 +409,4 @@ if __name__ == '__main__':
             main(dict_1, keep_sample, v)
         print(dict_1)
     print(dict_of_dicts)
-    pickle.dump(dict_of_dicts, open('_'.join(versions)+'.pkl', "wb"))
+    pickle.dump(dict_of_dicts, open('results/'+project_name +'_'.join(versions)+'.pkl', "wb"))
