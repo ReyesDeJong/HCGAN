@@ -18,7 +18,7 @@ with open(trts_path, "rb") as f:
 with open(trts_augmented_path, "rb") as f:
     trts_augmented_dict = pickle.load(f)
 
-n_classes = tstr_dict.keys()
+n_classes = np.sort(list(tstr_dict.keys()))
 tstr_array = []
 trts_array = []
 trts_augmented_array = []

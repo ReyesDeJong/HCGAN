@@ -13,16 +13,19 @@ from sklearn.metrics import roc_auc_score, accuracy_score
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 date = '1403'
-project_name = 'trts_same_all'
+project_name = 'trts_augmented'
+in_TSTR_FOLDER = 'augmented/'#'datasets_original/REAL/'#
 versions = ['', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10']
 
 
 def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v=''):
-    folder = 'starlight_amp_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    dataset_real = 'starlight_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    #folder = 'starlight_amp_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    #dataset_real = 'starlight_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     #same_set
-    #folder = 'starlight_noisy_irregular_all_same_set_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    folder = 'starlight_noisy_irregular_all_same_set_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     #dataset_real = 'starlight_noisy_irregular_all_same_set_%.2f' % PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE
+    #for augmented
+    dataset_real = 'starlight_random_sample_augmented_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
 
     PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY = str(PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY] = {'training': {}, 'testing': {}}
@@ -253,10 +256,10 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
         # dataset_real = 'catalina_random_full_north_9classes'
         if irr == True:
             X_train, y_train, X_val, y_val, X_test, y_test = read_data_original_irr(
-                'TSTR_data/datasets_original/REAL/' + dataset_real + '.pkl')
+                'TSTR_data/' + in_TSTR_FOLDER + dataset_real + '.pkl')#datasets_original/REAL/' + dataset_real + '.pkl')
         else:
             X_train, y_train, X_val, y_val, X_test, y_test = read_data(
-                'TSTR_data/datasets_original/REAL/' + dataset_real + '.pkl')
+                'TSTR_data/' + in_TSTR_FOLDER + dataset_real + '.pkl')
 
         print('')
         print('Training new model')
