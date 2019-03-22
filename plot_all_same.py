@@ -61,7 +61,7 @@ dicts_trtr = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'trts_
 results_trtr = [dicts_trtr[dict_key] for dict_key in dicts_trtr.keys()]
 
 dicts_trtr_aug = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'trts_augmented_v2_v3_v4_v5_v6_v7_v8_v9_v10.pkl'))
-results_trtr_aug = [dicts_trtr[dict_key] for dict_key in dicts_trtr.keys()]
+results_trtr_aug = [dicts_trtr_aug[dict_key] for dict_key in dicts_trtr_aug.keys()]
 
 set_to_plot = 'testing'
 metric_to_plot_tstr = 'Test accuracy'
@@ -70,3 +70,6 @@ metric_to_plot_trtr = 'Test accuracy on real'#'Test accuracy'
 
 plot_metric([results_tstr, results_trtr, results_trtr_aug], set_to_plot, [metric_to_plot_tstr, metric_to_plot_trtr, metric_to_plot_trtr],
             '% of least populated classes kept', 'Accuracy', plot_label=['TSTR', 'TRTR', 'Augmented'])
+
+plot_metric([results_tstr, results_trtr], set_to_plot, [metric_to_plot_tstr, metric_to_plot_trtr],
+            '% of least populated classes kept', 'Accuracy', plot_label=['TSTR', 'TRTR'])

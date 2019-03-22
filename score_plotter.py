@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 tstr_path = os.path.join(os.getcwd(), 'tstr.pkl')
 trts_path = os.path.join(os.getcwd(), 'trts.pkl')
-trts_augmented_path = os.path.join(os.getcwd(), 'trts_augmented_90k.pkl')
+trts_augmented_path = os.path.join(os.getcwd(), 'trts_augmented.pkl')
 
 with open(tstr_path, "rb") as f:
     tstr_dict = pickle.load(f)
@@ -34,7 +34,7 @@ for n_class in n_classes:
 plt.figure()
 plt.plot(n_class_array, tstr_array, 'bo', label='TSTR accuracy')
 plt.plot(n_class_array, trts_array, 'ro', label ='TRTR Accuracy')
-plt.plot(n_class_array, trts_augmented_array, 'go', label='Augmented')
+#plt.plot(n_class_array, trts_augmented_array, 'go', label='Augmented')
 plt.xlabel('Number of classes')
 plt.ylabel('Accuracy')
 plt.legend()
