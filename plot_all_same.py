@@ -71,5 +71,5 @@ metric_to_plot_trtr = 'Test accuracy on real'#'Test accuracy'
 plot_metric([results_tstr, results_trtr, results_trtr_aug], set_to_plot, [metric_to_plot_tstr, metric_to_plot_trtr, metric_to_plot_trtr],
             '% of least populated classes kept', 'Accuracy', plot_label=['TSTR', 'TRTR', 'Augmented'])
 
-plot_metric([results_tstr, results_trtr], set_to_plot, [metric_to_plot_tstr, metric_to_plot_trtr],
-            '% of least populated classes kept', 'Accuracy', plot_label=['TSTR', 'TRTR'])
+#plot_metric([results_tstr, results_trtr], set_to_plot, [metric_to_plot_tstr, metric_to_plot_trtr],
+#            '% of least populated classes kept', 'Accuracy', plot_label=['TSTR', 'TRTR'])

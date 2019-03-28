@@ -10,15 +10,21 @@ from sklearn.utils import shuffle
 from keras.models import Model, load_model
 from sklearn.metrics import roc_auc_score, accuracy_score
 
+
+BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 date = '1403'
 project_name = 'tstr_same_all'
-versions = ['', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10']
+versions = ['', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
+
 
 
 def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v=''):
-    folder = 'starlight_noisy_irregular_all_same_set_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    dataset_real = 'starlight_noisy_irregular_all_same_set_%.2f' % PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE
+    folder = '%s%s%.2f' % (BASE_REAL_NAME, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    dataset_real = '%s%.2f' % (BASE_REAL_NAME, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    #folder = 'starlight_noisy_irregular_all_same_set_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    #dataset_real = 'starlight_noisy_irregular_all_same_set_%.2f' % PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE
+
 
     PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY = str(PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY] = {'training': {}, 'testing': {}}

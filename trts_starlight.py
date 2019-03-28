@@ -10,22 +10,28 @@ from sklearn.utils import shuffle
 from keras.models import Model, load_model
 from sklearn.metrics import roc_auc_score, accuracy_score
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-date = '1403'
-project_name = 'trts_augmented'
+BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced'
+project_name = 'trts_augmented_amp_balanced'
+FOLDER_TO_SAVE_IN = 'same_set'
 in_TSTR_FOLDER = 'augmented/'#'datasets_original/REAL/'#
-versions = ['', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10']
+AUGMENTED_OR_NOT_EXTRA_STR = '_augmented'
+versions = ['', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+date = '2803'
 
 
 def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v=''):
+    folder = '%s%s%.2f' % (BASE_REAL_NAME, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    dataset_real = '%s%s%s%.2f' % (BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     #folder = 'starlight_amp_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     #dataset_real = 'starlight_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     #same_set
-    folder = 'starlight_noisy_irregular_all_same_set_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    #folder = 'starlight_noisy_irregular_all_same_set_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     #dataset_real = 'starlight_noisy_irregular_all_same_set_%.2f' % PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE
     #for augmented
-    dataset_real = 'starlight_random_sample_augmented_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    #dataset_real = 'starlight_random_sample_augmented_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
 
     PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY = str(PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY] = {'training': {}, 'testing': {}}
@@ -431,4 +437,4 @@ if __name__ == '__main__':
             main(dict_1, keep_sample, v)
         print(dict_1)
     print(dict_of_dicts)
-    pickle.dump(dict_of_dicts, open('results/'+project_name + '_'.join(versions) + '.pkl', "wb"))
+    pickle.dump(dict_of_dicts, open(os.path.join('results', FOLDER_TO_SAVE_IN, +project_name + '_'.join(versions) + '.pkl'), "wb"))
