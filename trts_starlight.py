@@ -10,9 +10,9 @@ from sklearn.utils import shuffle
 from keras.models import Model, load_model
 from sklearn.metrics import roc_auc_score, accuracy_score
 
-RESULTS_NAME = 'trts__augmented_amp_balanced_larger_train'
+RESULTS_NAME = 'trts__augmented_amp_balanced_larger_train_50-50'
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
-AUGMENTED_OR_NOT_EXTRA_STR = '_augmented'#''#
+AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'#''#
 versions = ['v2', 'v3', 'v4', 'v5']
 FOLDER_TO_SAVE_IN = 'same_set'
 
@@ -291,8 +291,8 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
         ## callbacks
         history = my_callbacks.Histories()
-        rocauc = my_callbacks.ROC_AUC(X_train, y_train, X_test, y_test)
-        inception = my_callbacks.Inception(X_test, num_classes)
+        #rocauc = my_callbacks.ROC_AUC(X_train, y_train, X_test, y_test)
+        #inception = my_callbacks.Inception(X_test, num_classes)
 
         checkpoint = ModelCheckpoint('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5',
                                      monitor='val_loss', verbose=1, save_best_only=True, mode='min')
@@ -302,9 +302,9 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
         model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, validation_data=(X_val, y_val),
                   callbacks=[history,
                              checkpoint,
-                             earlyStopping,
-                             rocauc,
-                             inception
+                             earlyStopping#,
+                             #rocauc,
+                             #inception
                              ])
 
         model.save('TRTS_' + date + '/train/' + folder + '/train_model.h5')
@@ -323,15 +323,15 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
         history_dictionary_val_acc = history.val_acc
         np.save('TRTS_' + date + '/train/' + folder + '/train_history_val_acc.npy', history_dictionary_val_acc)
         ## AUC ROC
-        roc_auc_dictionary = rocauc.roc_auc
-        np.save('TRTS_' + date + '/train/' + folder + '/train_rocauc_dict.npy', roc_auc_dictionary)
+        #roc_auc_dictionary = rocauc.roc_auc
+        #np.save('TRTS_' + date + '/train/' + folder + '/train_rocauc_dict.npy', roc_auc_dictionary)
         ## IS
-        scores_dict = inception.score
-        np.save('TRTS_' + date + '/train/' + folder + '/train_is.npy', scores_dict)
-        mean_scores_dict = inception.mean
-        np.save('TRTS_' + date + '/train/' + folder + '/train_is_mean.npy', mean_scores_dict)
-        std_scores_dict = inception.std
-        np.save('TRTS_' + date + '/train/' + folder + '/train_is_std.npy', std_scores_dict)
+        #scores_dict = inception.score
+        #np.save('TRTS_' + date + '/train/' + folder + '/train_is.npy', scores_dict)
+        #mean_scores_dict = inception.mean
+        #np.save('TRTS_' + date + '/train/' + folder + '/train_is_mean.npy', mean_scores_dict)
+        #std_scores_dict = inception.std
+        #np.save('TRTS_' + date + '/train/' + folder + '/train_is_std.npy', std_scores_dict)
 
         ### plot loss and validation_loss v/s epochs
         plt.figure(1)
@@ -355,8 +355,8 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
         plt.savefig('TRTS_' + date + '/train/' + folder + '/train_acc.png')
 
         print('Training metrics:')
-        print('Inception Score:\nMean score : ', mean_scores_dict[-1])
-        print('Std : ', std_scores_dict[-1])
+        #print('Inception Score:\nMean score : ', mean_scores_dict[-1])
+        #print('Std : ', std_scores_dict[-1])
 
         print('ACC : ', np.mean(history_dictionary_acc))
         print('VAL_ACC : ', np.mean(history_dictionary_val_acc))
@@ -377,10 +377,10 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
             X_train2, y_train2, X_val2, y_val2, X_test2, y_test2 = read_data(
                 'TSTR_data/generated/' + folder + '/' + dataset_syn + '.pkl')
 
-        sc, me, st = evaluation(X_test, y_test, num_classes)
-        np.save('TRTS_' + date + '/test/' + folder + '/test_onreal_is.npy', sc)
-        np.save('TRTS_' + date + '/test/' + folder + '/test_onreal_is_mean.npy', me)
-        np.save('TRTS_' + date + '/test/' + folder + '/test_onreal_is_std.npy', st)
+        #sc, me, st = evaluation(X_test, y_test, num_classes)
+        #np.save('TRTS_' + date + '/test/' + folder + '/test_onreal_is.npy', sc)
+        #np.save('TRTS_' + date + '/test/' + folder + '/test_onreal_is_mean.npy', me)
+        #np.save('TRTS_' + date + '/test/' + folder + '/test_onreal_is_std.npy', st)
 
         score = model.evaluate(X_test, y_test, verbose=1)
         print('Test loss:', score[0])
@@ -388,18 +388,18 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
         np.save('TRTS_' + date + '/test/' + folder + '/test_onreal_score.npy', score)
 
-        y_pred = model.predict(X_test)
-        roc = roc_auc_score(y_test, y_pred)
-        print('auc roc', roc)
-        np.save('TRTS_' + date + '/test/' + folder + '/test_onreal_rocauc.npy', roc)
+        #y_pred = model.predict(X_test)
+        #roc = roc_auc_score(y_test, y_pred)
+        #print('auc roc', roc)
+        #np.save('TRTS_' + date + '/test/' + folder + '/test_onreal_rocauc.npy', roc)
 
-        result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing'] = {
-            'test loss on real': score[0], 'Test accuracy on real': score[1], 'auc roc on real': roc
-        }
+        #result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing'] = {
+        #    'test loss on real': score[0], 'Test accuracy on real': score[1], 'auc roc on real': roc
+        #}
 
         print('\nTest on synthetic:')
 
-        sc, me, st = evaluation(X_test2, y_test2, num_classes)
+        #sc, me, st = evaluation(X_test2, y_test2, num_classes)
         #np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_is.npy', sc)
         #np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_is_mean.npy', me)
         #np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_is_std.npy', st)
@@ -410,20 +410,20 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
         #np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_score.npy', score)
 
-        y_pred = model.predict(X_test2)
-        roc = roc_auc_score(y_test2, y_pred)
-        print('auc roc', roc)
+        #y_pred = model.predict(X_test2)
+        #roc = roc_auc_score(y_test2, y_pred)
+        #print('auc roc', roc)
 
         result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['training'] = {
-            'IS Mean': mean_scores_dict[-1],
-            'IS Std': std_scores_dict[-1], 'ACC': np.mean(history_dictionary_acc),
+         #   'IS Mean': mean_scores_dict[-1],
+         #   'IS Std': std_scores_dict[-1], 'ACC': np.mean(history_dictionary_acc),
             'VAL_ACC': np.mean(history_dictionary_val_acc),
             'LOSS': np.mean(history_dictionary_loss), 'VAL_LOSS': np.mean(history_dictionary_val_loss)
         }
 
         result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['test loss on syn'] = score[0]
         result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['Test accuracy on syn'] = score[1]
-        result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['auc roc on syn'] = roc
+        #result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['auc roc on syn'] = roc
     #np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_rocauc.npy', roc)
 
 
