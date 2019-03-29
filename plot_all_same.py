@@ -54,22 +54,25 @@ result_dict_v10 = some_dicts['v10']
 results_tstr = [result_dict_v1, result_dict_v2, result_dict_v3, result_dict_v4, result_dict_v5, result_dict_v6, result_dict_v7, result_dict_v9, result_dict_v10]
 
 """
-dicts_tstr = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'tstr_same_all_v2_v3_v4_v5_v6_v7_v8_v9_v10.pkl'))
-results_tstr = [dicts_tstr[dict_key] for dict_key in dicts_tstr.keys()]
+#dicts_tstr = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'tstr_same_all_v2_v3_v4_v5_v6_v7_v8_v9_v10.pkl'))
+#results_tstr = [dicts_tstr[dict_key] for dict_key in dicts_tstr.keys()]
 
-dicts_trtr = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'trts_same_all_v2_v3_v4_v5_v6_v7_v8_v9_v10.pkl'))
+dicts_trtr = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'trts_amp_balanced_v2_v3_v4_v5_v6_v7_v8_v9.pkl'))
 results_trtr = [dicts_trtr[dict_key] for dict_key in dicts_trtr.keys()]
 
-dicts_trtr_aug = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'trts_augmented_v2_v3_v4_v5_v6_v7_v8_v9_v10.pkl'))
+dicts_trtr_aug = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'trts_augmented_amp_balanced_v2_v3_v4_v5_v6_v7_v8_v9.pkl'))
 results_trtr_aug = [dicts_trtr_aug[dict_key] for dict_key in dicts_trtr_aug.keys()]
 
 set_to_plot = 'testing'
 metric_to_plot_tstr = 'Test accuracy'
 metric_to_plot_trtr = 'Test accuracy on real'#'Test accuracy'
 
+plot_metric([results_trtr, results_trtr_aug], set_to_plot, [metric_to_plot_trtr, metric_to_plot_trtr],
+            '% of least populated classes kept', 'Accuracy', plot_label=['TRTR', 'Augmented'])
 
-plot_metric([results_tstr, results_trtr, results_trtr_aug], set_to_plot, [metric_to_plot_tstr, metric_to_plot_trtr, metric_to_plot_trtr],
-            '% of least populated classes kept', 'Accuracy', plot_label=['TSTR', 'TRTR', 'Augmented'])
+
+#plot_metric([results_tstr, results_trtr, results_trtr_aug], set_to_plot, [metric_to_plot_tstr, metric_to_plot_trtr, metric_to_plot_trtr],
+#            '% of least populated classes kept', 'Accuracy', plot_label=['TSTR', 'TRTR', 'Augmented'])
 
 #plot_metric([results_tstr, results_trtr], set_to_plot, [metric_to_plot_tstr, metric_to_plot_trtr],
 #            '% of least populated classes kept', 'Accuracy', plot_label=['TSTR', 'TRTR'])

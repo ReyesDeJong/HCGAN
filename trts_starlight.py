@@ -10,12 +10,11 @@ from sklearn.utils import shuffle
 from keras.models import Model, load_model
 from sklearn.metrics import roc_auc_score, accuracy_score
 
-BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced'
-project_name = 'trts_augmented_amp_balanced'
+RESULTS_NAME = 'trts__augmented_amp_balanced_larger_train'
+BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
+AUGMENTED_OR_NOT_EXTRA_STR = '_augmented'#''#
+versions = ['v2', 'v3', 'v4', 'v5']
 FOLDER_TO_SAVE_IN = 'same_set'
-in_TSTR_FOLDER = 'augmented/'#'datasets_original/REAL/'#
-AUGMENTED_OR_NOT_EXTRA_STR = '_augmented'
-versions = ['', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -24,7 +23,12 @@ date = '2803'
 
 def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v=''):
     folder = '%s%s%.2f' % (BASE_REAL_NAME, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    dataset_real = '%s%s%s%.2f' % (BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    if AUGMENTED_OR_NOT_EXTRA_STR == '':
+        in_TSTR_FOLDER = 'datasets_original/REAL/'
+        dataset_real = '%s%s%s%.2f' % (BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, '', PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    else:
+        in_TSTR_FOLDER = 'augmented/'
+        dataset_real = '%s%s%s%.2f' % (BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     #folder = 'starlight_amp_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     #dataset_real = 'starlight_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     #same_set
@@ -430,11 +434,11 @@ if __name__ == '__main__':
         dict_of_dicts[v] = {}
     for v in dict_of_dicts.keys():
         dict_1 = dict_of_dicts[v]
-        MIN_LIM = 20
+        MIN_LIM = 10
         MAX_LIM = 100
         keep_samples_list = np.round(np.logspace(np.log10(MIN_LIM), np.log10(MAX_LIM), num=6)) / 100
         for keep_sample in keep_samples_list:
             main(dict_1, keep_sample, v)
         print(dict_1)
     print(dict_of_dicts)
-    pickle.dump(dict_of_dicts, open(os.path.join('results', FOLDER_TO_SAVE_IN, +project_name + '_'.join(versions) + '.pkl'), "wb"))
+    pickle.dump(dict_of_dicts, open(os.path.join('results', FOLDER_TO_SAVE_IN, RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
