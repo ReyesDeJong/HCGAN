@@ -33,7 +33,7 @@ def plot_metric(results_list, set_to_plot, metric_to_plot, x_axis_name, y_axis_n
     plt.title('Starlight Accuracy as a function of unbalance (Same set, with through away)')# % set_to_plot)
     plt.xlabel(x_axis_name)
     plt.ylabel(y_axis_name)
-    plt.ylim(0.5,1)
+    #plt.ylim(0.5,1)
     plt.legend()
     plt.show()
 
@@ -63,7 +63,7 @@ results_trtr = [dicts_trtr[dict_key] for dict_key in dicts_trtr.keys()]
 dicts_trtr_aug = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'trts__augmented_amp_balanced_larger_trainv2_v3_v4_v5.pkl'))
 results_trtr_aug = [dicts_trtr_aug[dict_key] for dict_key in dicts_trtr_aug.keys()]
 
-dicts_trtr_aug_50_50 = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'trts__augmented_amp_balanced_larger_train_50_50v2_v3_v4_v5.pkl'))
+dicts_trtr_aug_50_50 = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'trts__augmented_amp_balanced_larger_train_50-50v2v2_v3_v4_v5.pkl'))
 results_trtr_aug_50_50 = [dicts_trtr_aug_50_50[dict_key] for dict_key in dicts_trtr_aug_50_50.keys()]
 
 set_to_plot = 'testing'

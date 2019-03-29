@@ -10,7 +10,7 @@ from sklearn.utils import shuffle
 from keras.models import Model, load_model
 from sklearn.metrics import roc_auc_score, accuracy_score
 
-RESULTS_NAME = 'trts__augmented_amp_balanced_larger_train_50-50'
+RESULTS_NAME = 'trts__augmented_amp_balanced_larger_train_50-50v2'
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
 AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'#''#
 versions = ['v2', 'v3', 'v4', 'v5']
@@ -393,9 +393,9 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
         #print('auc roc', roc)
         #np.save('TRTS_' + date + '/test/' + folder + '/test_onreal_rocauc.npy', roc)
 
-        #result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing'] = {
-        #    'test loss on real': score[0], 'Test accuracy on real': score[1], 'auc roc on real': roc
-        #}
+        result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing'] = {
+            'test loss on real': score[0], 'Test accuracy on real': score[1]#, 'auc roc on real': roc
+        }
 
         print('\nTest on synthetic:')
 
