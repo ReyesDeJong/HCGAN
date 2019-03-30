@@ -269,20 +269,19 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     # rocauc = my_callbacks.ROC_AUC(X_train, y_train, X_test, y_test)
     # inception = my_callbacks.Inception(X_test, num_classes)
 
-    checkpoint = ModelCheckpoint('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5',
-                                 monitor='val_acc', verbose=1, save_best_only=True, mode='min')
-    earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=10, verbose=1, mode='min')
+    checkpoint = ModelCheckpoint('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5', monitor='val_acc',
+                                 verbose=1, save_best_only=True, mode='max')
+    earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=10, verbose=1, mode='max')
 
     model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, validation_data=(X_val, y_val),
               callbacks=[history,
                          checkpoint,
-                         earlyStopping,
-                         inception
+                         earlyStopping  # ,
+                         # rocauc,
+                         # inception
                          ])
 
-    model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
-
-    # model.save('TRTS_' + date + '/train/' + folder + '/train_model.h5')
+    model.load('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5', monitor='val_acc')
 
     # Create dictionary, then save into two different documments.
     ## Loss
