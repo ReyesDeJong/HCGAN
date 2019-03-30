@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e579d4b7-5a0a-4dbd-9630-c1d5e19cf80a" name="Default Changelist" comment="" />
+    <list default="true" id="e579d4b7-5a0a-4dbd-9630-c1d5e19cf80a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/model_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_keras.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plot_all_same.py" beforeDir="false" afterPath="$PROJECT_DIR$/plot_all_same.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trts_starlight.py" beforeDir="false" afterPath="$PROJECT_DIR$/trts_starlight.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,19 +37,31 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/plot_all_same.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="52" column="35" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="35" />
+            <state relative-caret-position="649">
+              <caret line="77" column="98" selection-start-line="77" selection-start-column="98" selection-end-line="77" selection-end-column="98" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/trts_starlight.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4110">
+              <caret line="274" column="92" selection-start-line="274" selection-start-column="92" selection-end-line="274" selection-end-column="92" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/trts_starlight.py">
+        <entry file="file://$PROJECT_DIR$/model_keras.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-393">
-              <caret line="283" column="87" selection-start-line="283" selection-start-column="87" selection-end-line="283" selection-end-column="87" />
+            <state relative-caret-position="930">
+              <caret line="62" column="40" selection-start-line="62" selection-start-column="40" selection-end-line="62" selection-end-column="40" />
               <folding>
-                <element signature="e#0#25#0" expanded="true" />
+                <element signature="e#0#77#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -60,10 +76,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/trts_starlight_from_best_gan.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1800">
+            <state relative-caret-position="323">
               <caret line="428" column="4" selection-start-line="428" selection-start-column="4" selection-end-line="428" selection-end-column="4" />
             </state>
           </provider>
@@ -104,6 +120,8 @@
       <find>check</find>
       <find>Test accuracy on real</find>
       <find>results_dict</find>
+      <find>drop</find>
+      <find>0</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -124,15 +142,16 @@
         <option value="$PROJECT_DIR$/plot_all.py" />
         <option value="$PROJECT_DIR$/score_plotter.py" />
         <option value="$PROJECT_DIR$/trts_starlight_multi_run.py" />
-        <option value="$PROJECT_DIR$/plot_all_same.py" />
         <option value="$PROJECT_DIR$/tstr_starlight.py" />
         <option value="$PROJECT_DIR$/tstr_catalina.py" />
         <option value="$PROJECT_DIR$/tstr.py" />
         <option value="$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py" />
         <option value="$PROJECT_DIR$/trts_catalina_german.py" />
         <option value="$PROJECT_DIR$/trts_catalina.py" />
-        <option value="$PROJECT_DIR$/trts_starlight.py" />
         <option value="$PROJECT_DIR$/trts_starlight_from_best_gan.py" />
+        <option value="$PROJECT_DIR$/plot_all_same.py" />
+        <option value="$PROJECT_DIR$/model_keras.py" />
+        <option value="$PROJECT_DIR$/trts_starlight.py" />
       </list>
     </option>
   </component>
@@ -201,7 +220,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.trts_starlight">
+  <component name="RunManager" selected="Python.plot_all_same">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="HCGAN" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -334,9 +353,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.plot_all_same" />
         <item itemvalue="Python.trts_starlight" />
         <item itemvalue="Python.trts_starlight_multi_run_to_choose_best_gan" />
-        <item itemvalue="Python.plot_all_same" />
         <item itemvalue="Python.score_plotter" />
         <item itemvalue="Python.trts_catalina_german" />
       </list>
@@ -370,12 +389,12 @@
       <workItem from="1553781317758" duration="7274000" />
       <workItem from="1553810984618" duration="609000" />
       <workItem from="1553887773689" duration="4299000" />
-      <workItem from="1553966466519" duration="12534000" />
+      <workItem from="1553966466519" duration="13681000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="90730000" />
+    <option name="totallyTimeSpent" value="91877000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -405,7 +424,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="11" />
-      <window_info anchor="bottom" id="Python Console" order="12" visible="true" weight="0.41792658" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.41792658" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -527,13 +546,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/plot_all_same.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="52" column="35" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tstr_starlight.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -584,16 +596,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trts_starlight.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-393">
-          <caret line="283" column="87" selection-start-line="283" selection-start-column="87" selection-end-line="283" selection-end-column="87" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-8">
@@ -603,8 +605,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/trts_starlight_from_best_gan.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1800">
+        <state relative-caret-position="323">
           <caret line="428" column="4" selection-start-line="428" selection-start-column="4" selection-end-line="428" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model_keras.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="930">
+          <caret line="62" column="40" selection-start-line="62" selection-start-column="40" selection-end-line="62" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#77#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plot_all_same.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="649">
+          <caret line="77" column="98" selection-start-line="77" selection-start-column="98" selection-end-line="77" selection-end-column="98" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trts_starlight.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4110">
+          <caret line="274" column="92" selection-start-line="274" selection-start-column="92" selection-end-line="274" selection-end-column="92" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

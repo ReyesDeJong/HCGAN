@@ -11,11 +11,12 @@ import shutil
 from keras.models import Model, load_model
 from sklearn.metrics import roc_auc_score, accuracy_score
 
-
+DROP_OUT_RATE = 0.5
+PATIENCE = 20
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
 AUGMENTED_OR_NOT_EXTRA_STR = ''#'_augmented_50-50'##
 versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
-RESULTS_NAME = 'trts%s_%s' % (AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
+RESULTS_NAME = 'trts_dp_%.1f_pt_%i_%s_%s' % (DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
 FOLDER_TO_SAVE_IN = 'same_set'
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -255,7 +256,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
     num_classes = 3
 
-    m = Model_(batch_size, 100, num_classes)
+    m = Model_(batch_size, 100, num_classes, drop_rate=DROP_OUT_RATE)
 
     if one_d == True:
         model = m.cnn()
@@ -271,7 +272,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
     checkpoint = ModelCheckpoint('TRTS_' + date + '/train/weights.best.train.hdf5', monitor='val_acc',
                                  verbose=1, save_best_only=True, mode='max')
-    earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=10, verbose=1, mode='max')
+    earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=PATIENCE, verbose=1, mode='max')
 
     model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, validation_data=(X_val, y_val),
               callbacks=[history,

@@ -4,7 +4,8 @@ from keras.models import Sequential
 
 class Model_():
 
-	def __init__(self, batch_size, length, num_classes):
+	def __init__(self, batch_size, length, num_classes, drop_rate = 0.8):
+		self.drop_rate = drop_rate
 		self.batch_size=batch_size
 		self.length = length
 		self.num_classes = num_classes
@@ -31,7 +32,7 @@ class Model_():
 		model.add(Flatten())
 
 		model.add(Dense(100, activation='relu'))  #1024
-		model.add(Dropout(0.8))
+		model.add(Dropout(self.drop_rate))
 		model.add(Dense(output_dim=self.num_classes, activation='softmax'))
 
 		print(model.summary())
@@ -59,7 +60,7 @@ class Model_():
 		model.add(Flatten())
 
 		model.add(Dense(100, activation='relu'))  #1024
-		model.add(Dropout(0.8))
+		model.add(Dropout(self.drop_rate))
 		model.add(Dense(output_dim=self.num_classes, activation='softmax'))
 
 		print(model.summary())
