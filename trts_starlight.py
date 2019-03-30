@@ -281,7 +281,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
                          # inception
                          ])
 
-    model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5', monitor='val_acc')
+    model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
 
     # Create dictionary, then save into two different documments.
     ## Loss
