@@ -283,7 +283,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
                          #inception
                          ])
 
-    model.load('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
+    model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
 
     # Create dictionary, then save into two different documments.
     ## Loss
@@ -334,7 +334,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     #print('Inception Score:\nMean score : ', mean_scores_dict[-1])
     #print('Std : ', std_scores_dict[-1])
 
-    model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
+    #model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
 
     score_train = model.evaluate(X_train, y_train, verbose=1)
     score_val = model.evaluate(X_val, y_val, verbose=1)
@@ -472,7 +472,7 @@ if __name__ == '__main__':
         print(result_dict_for_different_versions)
         multi_runs_dict['run%i' % run_i] = result_dict_for_different_versions
 
-    best_gan_dict, mean_metric_dict = get_best_gans(multi_runs_dict, BEST_METRIC_KEY)
+    best_gan_dict, mean_metric_dict = get_best_gans(multi_runs_dict, SET_KEY_FOR_BEST_METRIC, BEST_METRIC_KEY)
 
     check_dir(os.path.join('results', FOLDER_TO_SAVE_IN))
     pickle.dump(multi_runs_dict, open(os.path.join('results', FOLDER_TO_SAVE_IN, RUNS + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))

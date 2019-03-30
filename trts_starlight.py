@@ -13,7 +13,7 @@ from sklearn.metrics import roc_auc_score, accuracy_score
 
 
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
-AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'#''##
+AUGMENTED_OR_NOT_EXTRA_STR = ''#'_augmented_50-50'##
 versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
 RESULTS_NAME = 'trts%s_%s' % (AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
 FOLDER_TO_SAVE_IN = 'same_set'
@@ -281,7 +281,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
                          # inception
                          ])
 
-    model.load('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5', monitor='val_acc')
+    model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5', monitor='val_acc')
 
     # Create dictionary, then save into two different documments.
     ## Loss

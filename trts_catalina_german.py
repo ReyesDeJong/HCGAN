@@ -284,7 +284,7 @@ def main(result_dict={}, N_CLASSES=2):
                         inception
                         ])
 
-        model.load('TRTS_'+ date +'/train/'+ folder +'/weights.best.train.hdf5')
+        model = load_model('TRTS_'+ date +'/train/'+ folder +'/weights.best.train.hdf5')
 
         #Create dictionary, then save into two different documments.
     ## Loss

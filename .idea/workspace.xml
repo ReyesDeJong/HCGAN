@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e579d4b7-5a0a-4dbd-9630-c1d5e19cf80a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/trts_catalina.py" beforeDir="false" afterPath="$PROJECT_DIR$/trts_catalina.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trts_catalina_german.py" beforeDir="false" afterPath="$PROJECT_DIR$/trts_catalina_german.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/trts_starlight.py" beforeDir="false" afterPath="$PROJECT_DIR$/trts_starlight.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py" beforeDir="false" afterPath="$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tstr.py" beforeDir="false" afterPath="$PROJECT_DIR$/tstr.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tstr_catalina.py" beforeDir="false" afterPath="$PROJECT_DIR$/tstr_catalina.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tstr_starlight.py" beforeDir="false" afterPath="$PROJECT_DIR$/tstr_starlight.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,8 +36,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/plot_all_same.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-13">
+            <state relative-caret-position="19">
               <caret line="52" column="35" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="368">
+              <caret line="466" column="19" lean-forward="true" selection-start-line="466" selection-start-column="19" selection-end-line="466" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -50,90 +54,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/trts_starlight.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="283" column="98" selection-start-line="283" selection-start-column="98" selection-end-line="283" selection-end-column="98" />
+            <state relative-caret-position="225">
+              <caret line="15" column="32" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/trts_catalina_german.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="286" column="79" selection-start-line="286" selection-start-column="79" selection-end-line="286" selection-end-column="79" />
-              <folding>
-                <element signature="e#0#25#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/trts_catalina.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="279" column="50" selection-start-line="279" selection-start-column="50" selection-end-line="279" selection-end-column="50" />
-              <folding>
-                <element signature="e#0#25#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="285" column="79" selection-start-line="285" selection-start-column="79" selection-end-line="285" selection-end-column="79" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tstr.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="265" column="158" lean-forward="true" selection-start-line="265" selection-start-column="158" selection-end-line="265" selection-end-column="158" />
-              <folding>
-                <element signature="e#0#25#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tstr_catalina.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="278" column="166" selection-start-line="278" selection-start-column="166" selection-end-line="278" selection-end-column="166" />
-              <folding>
-                <element signature="e#0#25#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tstr_starlight.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="293" column="97" selection-start-line="293" selection-start-column="97" selection-end-line="293" selection-end-column="97" />
-              <folding>
-                <element signature="e#0#25#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/my_callbacks.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-180">
-              <folding>
-                <element signature="e#0#12#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -172,8 +96,8 @@
       <find>model.save</find>
       <find>val_loss</find>
       <find>check</find>
-      <find>results_dict</find>
       <find>Test accuracy on real</find>
+      <find>results_dict</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -195,13 +119,13 @@
         <option value="$PROJECT_DIR$/score_plotter.py" />
         <option value="$PROJECT_DIR$/trts_starlight_multi_run.py" />
         <option value="$PROJECT_DIR$/plot_all_same.py" />
-        <option value="$PROJECT_DIR$/tstr.py" />
-        <option value="$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py" />
-        <option value="$PROJECT_DIR$/trts_starlight.py" />
-        <option value="$PROJECT_DIR$/trts_catalina_german.py" />
-        <option value="$PROJECT_DIR$/trts_catalina.py" />
         <option value="$PROJECT_DIR$/tstr_starlight.py" />
         <option value="$PROJECT_DIR$/tstr_catalina.py" />
+        <option value="$PROJECT_DIR$/tstr.py" />
+        <option value="$PROJECT_DIR$/trts_catalina_german.py" />
+        <option value="$PROJECT_DIR$/trts_catalina.py" />
+        <option value="$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py" />
+        <option value="$PROJECT_DIR$/trts_starlight.py" />
       </list>
     </option>
   </component>
@@ -270,7 +194,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.trts_starlight_multi_run_to_choose_best_gan">
+  <component name="RunManager" selected="Python.trts_starlight">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="HCGAN" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -403,9 +327,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.trts_starlight" />
         <item itemvalue="Python.trts_starlight_multi_run_to_choose_best_gan" />
         <item itemvalue="Python.plot_all_same" />
-        <item itemvalue="Python.trts_starlight" />
         <item itemvalue="Python.score_plotter" />
         <item itemvalue="Python.trts_catalina_german" />
       </list>
@@ -439,12 +363,12 @@
       <workItem from="1553781317758" duration="7274000" />
       <workItem from="1553810984618" duration="609000" />
       <workItem from="1553887773689" duration="4299000" />
-      <workItem from="1553966466519" duration="9761000" />
+      <workItem from="1553966466519" duration="10029000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="87957000" />
+    <option name="totallyTimeSpent" value="88225000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -580,15 +504,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/my_callbacks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-180">
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/anaconda3/envs/tf/lib/python3.6/site-packages/keras/engine/training.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="127">
@@ -596,34 +511,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/plot_all_same.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-13">
-          <caret line="52" column="35" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="285" column="79" selection-start-line="285" selection-start-column="79" selection-end-line="285" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/trts_starlight.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="283" column="98" selection-start-line="283" selection-start-column="98" selection-end-line="283" selection-end-column="98" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/trts_catalina_german.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="286" column="79" selection-start-line="286" selection-start-column="79" selection-end-line="286" selection-end-column="79" />
+        <state relative-caret-position="240">
+          <caret line="277" column="115" selection-start-line="277" selection-start-column="115" selection-end-line="277" selection-end-column="115" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
@@ -633,27 +524,7 @@
     <entry file="file://$PROJECT_DIR$/trts_catalina.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
-          <caret line="279" column="50" selection-start-line="279" selection-start-column="50" selection-end-line="279" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tstr_starlight.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="293" column="97" selection-start-line="293" selection-start-column="97" selection-end-line="293" selection-end-column="97" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tstr_catalina.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="278" column="166" selection-start-line="278" selection-start-column="166" selection-end-line="278" selection-end-column="166" />
+          <caret line="279" column="111" selection-start-line="279" selection-start-column="111" selection-end-line="279" selection-end-column="111" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
@@ -662,11 +533,64 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tstr.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="265" column="158" lean-forward="true" selection-start-line="265" selection-start-column="158" selection-end-line="265" selection-end-column="158" />
+        <state relative-caret-position="345">
+          <caret line="266" column="111" selection-start-line="266" selection-start-column="111" selection-end-line="266" selection-end-column="111" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tstr_catalina.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="279" column="111" selection-start-line="279" selection-start-column="111" selection-end-line="279" selection-end-column="111" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tstr_starlight.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="295" column="47" selection-start-line="295" selection-start-column="47" selection-end-line="295" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my_callbacks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-180">
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trts_starlight.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="32" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plot_all_same.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="52" column="35" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="466" column="19" lean-forward="true" selection-start-line="466" selection-start-column="19" selection-end-line="466" selection-end-column="19" />
         </state>
       </provider>
     </entry>

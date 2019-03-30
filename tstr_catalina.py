@@ -287,7 +287,7 @@ else:
 					inception
 					])
 
-	model.load('TSTR_'+ date +'/train/'+ folder +'/weights.best.trainonsynthetic.hdf5')
+	model = load_model('TSTR_'+ date +'/train/'+ folder +'/weights.best.trainonsynthetic.hdf5')
 
 	#Create dictionary, then save into two different documments.
 ## Loss
