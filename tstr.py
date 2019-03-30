@@ -263,17 +263,18 @@ else:
 	rocauc = my_callbacks.ROC_AUC(X_train, y_train, X_test, y_test)
 	inception = my_callbacks.Inception(X_test, num_classes)
 
-	checkpoint = ModelCheckpoint('TSTR_'+ date +'/train/'+ folder +'/weights.best.trainonsynthetic.hdf5', monitor='val_loss', verbose=1, save_best_only=True, mode='min')
-	earlyStopping = EarlyStopping(monitor='val_loss',min_delta = 0.00000001  , patience=10, verbose=1, mode='min') #0.00000001   patience 0
+	checkpoint = ModelCheckpoint('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5',
+								 monitor='val_acc', verbose=1, save_best_only=True, mode='min')
+	earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=10, verbose=1, mode='min')
 
-	model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, validation_data = (X_val, y_val),
-		callbacks = [history,
-					checkpoint,
-					earlyStopping,
-					rocauc,
-					inception
-					])
+	model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, validation_data=(X_val, y_val),
+			  callbacks=[history,
+						 checkpoint,
+						 earlyStopping,
+						 inception
+						 ])
 
+	model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
 	model.save('TSTR_'+ date +'/train/'+ folder +'/trainonsynthetic_model.h5')
 
 	#Create dictionary, then save into two different documments.

@@ -274,8 +274,9 @@ def main(result_dict={}, N_CLASSES=2):
         history = my_callbacks.Histories()
         inception = my_callbacks.Inception(X_test, N_CLASSES)
 
-        checkpoint = ModelCheckpoint('TRTS_'+ date +'/train/'+ folder +'/weights.best.train.hdf5', monitor='val_loss', verbose=1, save_best_only=True, mode='min')
-        earlyStopping = EarlyStopping(monitor='val_loss',min_delta = 0.00000001  , patience=10, verbose=1, mode='min') #0.00000001   patience 0
+        checkpoint = ModelCheckpoint('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5',
+                                     monitor='val_acc', verbose=1, save_best_only=True, mode='min')
+        earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=10, verbose=1, mode='min')
 
         model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, validation_data = (X_val, y_val),
             callbacks = [history,
@@ -283,6 +284,8 @@ def main(result_dict={}, N_CLASSES=2):
                         earlyStopping,
                         inception
                         ])
+
+        model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
 
         model.save('TRTS_'+ date +'/train/'+ folder +'/train_model.h5')
 
