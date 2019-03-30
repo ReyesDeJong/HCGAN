@@ -57,13 +57,13 @@ results_tstr = [result_dict_v1, result_dict_v2, result_dict_v3, result_dict_v4, 
 #dicts_tstr = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'tstr_same_all_v2_v3_v4_v5_v6_v7_v8_v9_v10.pkl'))
 #results_tstr = [dicts_tstr[dict_key] for dict_key in dicts_tstr.keys()]
 
-dicts_trtr = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'trts_amp_balanced_larger_trainv2_v3_v4_v5.pkl'))
+dicts_trtr = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'trts_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl'))
 results_trtr = [dicts_trtr[dict_key] for dict_key in dicts_trtr.keys()]
 
 dicts_trtr_aug = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'trts__augmented_amp_balanced_larger_trainv2_v3_v4_v5.pkl'))
 results_trtr_aug = [dicts_trtr_aug[dict_key] for dict_key in dicts_trtr_aug.keys()]
 
-dicts_trtr_aug_50_50 = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'trts__augmented_amp_balanced_larger_train_50-50v2v2_v3_v4_v5.pkl'))
+dicts_trtr_aug_50_50 = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'trts__augmented_amp_balanced_larger_train_50-50v2_v3_v4_v5.pkl'))
 results_trtr_aug_50_50 = [dicts_trtr_aug_50_50[dict_key] for dict_key in dicts_trtr_aug_50_50.keys()]
 
 set_to_plot = 'testing'
