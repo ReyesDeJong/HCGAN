@@ -9,12 +9,13 @@ import matplotlib.pyplot as plt
 from sklearn.utils import shuffle
 import shutil
 from keras.models import Model, load_model
+import keras
 from sklearn.metrics import roc_auc_score, accuracy_score
 
 DROP_OUT_RATE = 0.5
 PATIENCE = 20
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
-AUGMENTED_OR_NOT_EXTRA_STR = ''#'_augmented_50-50'##
+AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'#''##
 versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
 RESULTS_NAME = 'trts_dp_%.1f_pt_%i_%s_%s' % (DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
 FOLDER_TO_SAVE_IN = 'same_set'
@@ -270,7 +271,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     # rocauc = my_callbacks.ROC_AUC(X_train, y_train, X_test, y_test)
     # inception = my_callbacks.Inception(X_test, num_classes)
 
-    checkpoint = ModelCheckpoint('TRTS_' + date + '/train/weights.best.train.hdf5', monitor='val_acc',
+    checkpoint = ModelCheckpoint('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5', monitor='val_acc',
                                  verbose=1, save_best_only=True, mode='max')
     earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=PATIENCE, verbose=1, mode='max')
 
@@ -282,8 +283,8 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
                          # inception
                          ])
 
-    model = load_model('TRTS_' + date + '/train/weights.best.train.hdf5')
-    os.remove('TRTS_' + date + '/train/weights.best.train.hdf5')
+    model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
+    os.remove('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
 
     # Create dictionary, then save into two different documments.
     ## Loss
@@ -405,6 +406,8 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['Test accuracy on syn'] = score[1]
     # result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['auc roc on syn'] = roc
     # np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_rocauc.npy', roc)
+    keras.backend.clear_session()
+    del model
 
 if __name__ == '__main__':
     # build dict of dicts:

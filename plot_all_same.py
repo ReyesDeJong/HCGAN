@@ -57,7 +57,7 @@ results_tstr = [result_dict_v1, result_dict_v2, result_dict_v3, result_dict_v4, 
 #dicts_tstr = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'tstr_same_all_v2_v3_v4_v5_v6_v7_v8_v9_v10.pkl'))
 #results_tstr = [dicts_tstr[dict_key] for dict_key in dicts_tstr.keys()]
 
-dicts_trtr = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'trts_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl'))
+dicts_trtr = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'trts_dp_0.5_pt_20__starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl'))
 results_trtr = [dicts_trtr[dict_key] for dict_key in dicts_trtr.keys()]
 
 #undo this, just to compare old plot befora cota error
