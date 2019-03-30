@@ -15,12 +15,11 @@ import keras
 DROP_OUT_RATE = 0.5
 PATIENCE = 20
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
-AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'#''##
-versions = ['v2', 'v3']#, 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
-RUNS = 2#10
+AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'  # ''##
+versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
+RUNS = 10
 RESULTS_NAME = 'trts_dp_%.1f_pt_%i_%s_%s' % (DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
 FOLDER_TO_SAVE_IN = 'select_best_gan'
-
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -28,21 +27,24 @@ date = '2803'
 SET_KEY_FOR_BEST_METRIC = 'training'
 BEST_METRIC_KEY = 'VAL_ACC'
 
+
 def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v=''):
     folder = '%s%s%.2f' % (BASE_REAL_NAME, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     if AUGMENTED_OR_NOT_EXTRA_STR == '':
         in_TSTR_FOLDER = 'datasets_original/REAL/'
-        dataset_real = '%s%s%s%.2f' % (BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, '', PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+        dataset_real = '%s%s%s%.2f' % (
+        BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, '', PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     else:
         in_TSTR_FOLDER = 'augmented/'
-        dataset_real = '%s%s%s%.2f' % (BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    #folder = 'starlight_amp_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    #dataset_real = 'starlight_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    #same_set
-    #folder = 'starlight_noisy_irregular_all_same_set_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    #dataset_real = 'starlight_noisy_irregular_all_same_set_%.2f' % PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE
-    #for augmented
-    #dataset_real = 'starlight_random_sample_augmented_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+        dataset_real = '%s%s%s%.2f' % (
+        BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    # folder = 'starlight_amp_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    # dataset_real = 'starlight_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    # same_set
+    # folder = 'starlight_noisy_irregular_all_same_set_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    # dataset_real = 'starlight_noisy_irregular_all_same_set_%.2f' % PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE
+    # for augmented
+    # dataset_real = 'starlight_random_sample_augmented_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
 
     PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY = str(PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY] = {'training': {}, 'testing': {}}
@@ -231,12 +233,11 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     check_dir('TRTS_' + date + '/test/')
     check_dir('TRTS_' + date + '/test/' + folder)
 
-    #if os.path.isfile('TRTS_' + date + '/train/' + folder + '/train_model.h5'):
+    # if os.path.isfile('TRTS_' + date + '/train/' + folder + '/train_model.h5'):
     #    os.remove('TRTS_' + date + '/train/' + folder + '/train_model.h5')
     #    shutil.rmtree('TRTS_' + date + '/test/' + folder)
 
-
-    #else:
+    # else:
 
     irr = True
     one_d = False
@@ -338,7 +339,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     # print('Inception Score:\nMean score : ', mean_scores_dict[-1])
     # print('Std : ', std_scores_dict[-1])
 
-    #model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
+    # model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
 
     score_train = model.evaluate(X_train, y_train, verbose=1)
     score_val = model.evaluate(X_val, y_val, verbose=1)
@@ -412,27 +413,34 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     keras.backend.clear_session()
     del model
 
+
 def check_dir(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
+
 if __name__ == '__main__':
-    best_gans_dict = np.load(os.path.join('results', FOLDER_TO_SAVE_IN, 'best_gan_dict_'+RUNS + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'))
+    best_gans_dict = np.load(os.path.join('results', 'select_best_gan',
+                                          'best_gan_dict_' + str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(
+                                              versions) + '.pkl'))
     result_dict_for_different_versions_runs = {}
-    for v in versions:
-        result_dict_for_different_versions_runs[v] = {}
-    for v in result_dict_for_different_versions_runs.keys():
-        dict_single_version = result_dict_for_different_versions_runs[v]
+    for run_idx in range(RUNS):
+        result_dict_for_different_versions_runs['run_%i' % run_idx] = {}
+    for run_idx in result_dict_for_different_versions_runs.keys():
+        dict_single_version = result_dict_for_different_versions_runs[run_idx]
         MIN_LIM = 10
         MAX_LIM = 100
         keep_samples_list = np.round(np.logspace(np.log10(MIN_LIM), np.log10(MAX_LIM), num=6)) / 100
         for keep_sample in keep_samples_list:
-            print('loading best gan %s%s' %(str(keep_sample), str(best_gans_dict[keep_sample]['mean_%s' % BEST_METRIC_KEY])))
-            best_gan_for_percentage = best_gans_dict[keep_sample]['best_version']
+            print('loading best gan for %s keep %s version %s acc %s' % (run_idx,
+            str(keep_sample), best_gans_dict[str(keep_sample)]['best_version'],
+            str(best_gans_dict[str(keep_sample)]['mean_%s' % BEST_METRIC_KEY])))
+            best_gan_for_percentage = best_gans_dict[str(keep_sample)]['best_version']
             main(dict_single_version, keep_sample, best_gan_for_percentage)
         print(dict_single_version)
     print(result_dict_for_different_versions_runs)
 
     check_dir(os.path.join('results', FOLDER_TO_SAVE_IN))
-    pickle.dump(result_dict_for_different_versions_runs, open(os.path.join('results', FOLDER_TO_SAVE_IN, 'best_gan_results' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
-
+    pickle.dump(result_dict_for_different_versions_runs, open(
+        os.path.join('results', FOLDER_TO_SAVE_IN, 'best_gan_results' + RESULTS_NAME + '_'.join(versions) + '.pkl'),
+        "wb"))

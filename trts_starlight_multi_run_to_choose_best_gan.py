@@ -16,8 +16,8 @@ DROP_OUT_RATE = 0.5
 PATIENCE = 20
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
 AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'#''##
-versions = ['v2', 'v3']#, 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
-RUNS = 2#10
+versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
+RUNS = 10
 RESULTS_NAME = 'trts_dp_%.1f_pt_%i_%s_%s' % (DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
 FOLDER_TO_SAVE_IN = 'select_best_gan'
 
@@ -481,11 +481,11 @@ if __name__ == '__main__':
     best_gan_dict, mean_metric_dict = get_best_gans(multi_runs_dict, SET_KEY_FOR_BEST_METRIC, BEST_METRIC_KEY)
 
     check_dir(os.path.join('results', FOLDER_TO_SAVE_IN))
-    pickle.dump(multi_runs_dict, open(os.path.join('results', FOLDER_TO_SAVE_IN, RUNS + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
+    pickle.dump(multi_runs_dict, open(os.path.join('results', FOLDER_TO_SAVE_IN, str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
     pickle.dump(mean_metric_dict, open(
-        os.path.join('results', FOLDER_TO_SAVE_IN, 'mean_metric_dict_'+RUNS + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
+        os.path.join('results', FOLDER_TO_SAVE_IN, 'mean_metric_dict_'+ str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
     pickle.dump(best_gan_dict, open(
-        os.path.join('results', FOLDER_TO_SAVE_IN, 'best_gan_dict_'+RUNS + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
+        os.path.join('results', FOLDER_TO_SAVE_IN, 'best_gan_dict_'+ str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
     print('RESULTS')
     print('multi_runs_dict\n', multi_runs_dict)
     print('mean_metric_dict\n', mean_metric_dict)
