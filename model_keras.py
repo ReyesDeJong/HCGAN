@@ -1,4 +1,4 @@
-from keras.layers import Input, Dense, Conv2D, MaxPooling2D, Dropout, Flatten
+from keras.layers import Input, Dense, Conv2D, MaxPooling2D, Dropout, Flatten, BatchNormalization, Activation
 from keras.models import Model
 from keras.models import Sequential
 
