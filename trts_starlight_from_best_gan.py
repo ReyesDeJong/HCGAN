@@ -14,12 +14,13 @@ import keras
 
 DROP_OUT_RATE = 0.5
 PATIENCE = 20
-BN_COND = 'batch_norm'#''
+BN_CONDITION = 'batch_norm_'  # ''
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
 AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'  # ''##
 versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
 RUNS = 10
-RESULTS_NAME = 'trts_dp_%.1f_pt_%i_%s_%s' % (DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
+RESULTS_NAME = 'trts_%sdp_%.1f_pt_%i_%s_%s' % (
+BN_CONDITION, DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
 FOLDER_TO_SAVE_IN = 'select_best_gan'
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -34,11 +35,11 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     if AUGMENTED_OR_NOT_EXTRA_STR == '':
         in_TSTR_FOLDER = 'datasets_original/REAL/'
         dataset_real = '%s%s%s%.2f' % (
-        BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, '', PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+            BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, '', PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     else:
         in_TSTR_FOLDER = 'augmented/'
         dataset_real = '%s%s%s%.2f' % (
-        BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+            BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     # folder = 'starlight_amp_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     # dataset_real = 'starlight_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     # same_set
@@ -264,11 +265,11 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
     m = Model_(batch_size, 100, num_classes, drop_rate=DROP_OUT_RATE)
 
-    #if one_d == True:
+    # if one_d == True:
     #    model = m.cnn()
-    #else:
+    # else:
     #    model = m.cnn2()
-    if BN_CONDITION=='batch_norm':
+    if BN_CONDITION == 'batch_norm_':
         model = m.cnn2_batch()
     else:
         model = m.cnn2()
@@ -438,8 +439,11 @@ if __name__ == '__main__':
         keep_samples_list = np.round(np.logspace(np.log10(MIN_LIM), np.log10(MAX_LIM), num=6)) / 100
         for keep_sample in keep_samples_list:
             print('loading best gan for %s keep %s version %s acc %s' % (run_idx,
-            str(keep_sample), best_gans_dict[str(keep_sample)]['best_version'],
-            str(best_gans_dict[str(keep_sample)]['mean_%s' % BEST_METRIC_KEY])))
+                                                                         str(keep_sample),
+                                                                         best_gans_dict[str(keep_sample)][
+                                                                             'best_version'],
+                                                                         str(best_gans_dict[str(keep_sample)][
+                                                                                 'mean_%s' % BEST_METRIC_KEY])))
             best_gan_for_percentage = best_gans_dict[str(keep_sample)]['best_version']
             main(dict_single_version, keep_sample, best_gan_for_percentage)
         print(dict_single_version)

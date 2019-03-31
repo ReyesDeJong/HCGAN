@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e579d4b7-5a0a-4dbd-9630-c1d5e19cf80a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_keras.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/trts_starlight_from_best_gan.py" beforeDir="false" afterPath="$PROJECT_DIR$/trts_starlight_from_best_gan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py" beforeDir="false" afterPath="$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -70,8 +69,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="25" selection-start-column="25" selection-end-column="25" />
+            <state relative-caret-position="315">
+              <caret line="22" column="14" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -79,8 +81,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/trts_starlight_from_best_gan.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="271" column="30" selection-start-line="271" selection-start-column="30" selection-end-line="271" selection-end-column="30" />
+            <state relative-caret-position="315">
+              <caret line="22" column="14" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -153,8 +155,8 @@
         <option value="$PROJECT_DIR$/trts_catalina.py" />
         <option value="$PROJECT_DIR$/trts_starlight.py" />
         <option value="$PROJECT_DIR$/plot_all_same.py" />
-        <option value="$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py" />
         <option value="$PROJECT_DIR$/model_keras.py" />
+        <option value="$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py" />
         <option value="$PROJECT_DIR$/trts_starlight_from_best_gan.py" />
       </list>
     </option>
@@ -403,12 +405,12 @@
       <workItem from="1553810984618" duration="609000" />
       <workItem from="1553887773689" duration="4299000" />
       <workItem from="1553966466519" duration="17866000" />
-      <workItem from="1554004352213" duration="299000" />
+      <workItem from="1554004352213" duration="545000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="96361000" />
+    <option name="totallyTimeSpent" value="96607000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -609,13 +611,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="25" selection-start-column="25" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model_keras.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1027">
@@ -626,10 +621,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="22" column="14" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/trts_starlight_from_best_gan.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="271" column="30" selection-start-line="271" selection-start-column="30" selection-end-line="271" selection-end-column="30" />
+        <state relative-caret-position="315">
+          <caret line="22" column="14" selection-start-line="22" selection-start-column="14" selection-end-line="22" selection-end-column="14" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
