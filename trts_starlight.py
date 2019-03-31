@@ -14,10 +14,12 @@ from sklearn.metrics import roc_auc_score, accuracy_score
 
 DROP_OUT_RATE = 0.5
 PATIENCE = 20
+BN_CONDITION = 'batch_norm_'  # ''
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
 AUGMENTED_OR_NOT_EXTRA_STR = ''#'_augmented_50-50'#''##
 versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
-RESULTS_NAME = 'trts_dp_%.1f_pt_%i_%s_%s' % (DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
+RESULTS_NAME = 'trts_%sdp_%.1f_pt_%i_%s_%s' % (
+BN_CONDITION, DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
 FOLDER_TO_SAVE_IN = 'same_set'
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -29,17 +31,19 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     folder = '%s%s%.2f' % (BASE_REAL_NAME, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     if AUGMENTED_OR_NOT_EXTRA_STR == '':
         in_TSTR_FOLDER = 'datasets_original/REAL/'
-        dataset_real = '%s%s%s%.2f' % (BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, '', PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+        dataset_real = '%s%s%s%.2f' % (
+            BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, '', PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     else:
         in_TSTR_FOLDER = 'augmented/'
-        dataset_real = '%s%s%s%.2f' % (BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    #folder = 'starlight_amp_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    #dataset_real = 'starlight_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    #same_set
-    #folder = 'starlight_noisy_irregular_all_same_set_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    #dataset_real = 'starlight_noisy_irregular_all_same_set_%.2f' % PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE
-    #for augmented
-    #dataset_real = 'starlight_random_sample_augmented_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+        dataset_real = '%s%s%s%.2f' % (
+            BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    # folder = 'starlight_amp_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    # dataset_real = 'starlight_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    # same_set
+    # folder = 'starlight_noisy_irregular_all_same_set_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    # dataset_real = 'starlight_noisy_irregular_all_same_set_%.2f' % PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE
+    # for augmented
+    # dataset_real = 'starlight_random_sample_augmented_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
 
     PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY = str(PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY] = {'training': {}, 'testing': {}}
@@ -228,12 +232,11 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     check_dir('TRTS_' + date + '/test/')
     check_dir('TRTS_' + date + '/test/' + folder)
 
-    #if os.path.isfile('TRTS_' + date + '/train/' + folder + '/train_model.h5'):
+    # if os.path.isfile('TRTS_' + date + '/train/' + folder + '/train_model.h5'):
     #    os.remove('TRTS_' + date + '/train/' + folder + '/train_model.h5')
     #    shutil.rmtree('TRTS_' + date + '/test/' + folder)
 
-
-    #else:
+    # else:
 
     irr = True
     one_d = False
@@ -259,8 +262,12 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
     m = Model_(batch_size, 100, num_classes, drop_rate=DROP_OUT_RATE)
 
-    if one_d == True:
-        model = m.cnn()
+    # if one_d == True:
+    #    model = m.cnn()
+    # else:
+    #    model = m.cnn2()
+    if BN_CONDITION == 'batch_norm_':
+        model = m.cnn2_batch()
     else:
         model = m.cnn2()
 
@@ -335,7 +342,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     # print('Inception Score:\nMean score : ', mean_scores_dict[-1])
     # print('Std : ', std_scores_dict[-1])
 
-    #model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
+    # model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
 
     score_train = model.evaluate(X_train, y_train, verbose=1)
     score_val = model.evaluate(X_val, y_val, verbose=1)
@@ -408,6 +415,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     # np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_rocauc.npy', roc)
     keras.backend.clear_session()
     del model
+
 
 if __name__ == '__main__':
     # build dict of dicts:
