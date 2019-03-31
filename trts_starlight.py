@@ -15,7 +15,7 @@ from sklearn.metrics import roc_auc_score, accuracy_score
 DROP_OUT_RATE = 0.5
 PATIENCE = 20
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
-AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'#''##
+AUGMENTED_OR_NOT_EXTRA_STR = ''#'_augmented_50-50'#''##
 versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
 RESULTS_NAME = 'trts_dp_%.1f_pt_%i_%s_%s' % (DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
 FOLDER_TO_SAVE_IN = 'same_set'
