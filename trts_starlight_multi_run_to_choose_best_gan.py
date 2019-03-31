@@ -14,13 +14,14 @@ import keras
 
 DROP_OUT_RATE = 0.5
 PATIENCE = 20
+BN_CONDITION = 'batch_norm_'  # ''
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
-AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'#''##
+AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'  # ''##
 versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
 RUNS = 10
-RESULTS_NAME = 'trts_dp_%.1f_pt_%i_%s_%s' % (DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
+RESULTS_NAME = 'trts_%sdp_%.1f_pt_%i_%s_%s' % (
+BN_CONDITION, DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
 FOLDER_TO_SAVE_IN = 'select_best_gan'
-
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -28,21 +29,24 @@ date = '2803'
 SET_KEY_FOR_BEST_METRIC = 'training'
 BEST_METRIC_KEY = 'VAL_ACC'
 
+
 def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v=''):
     folder = '%s%s%.2f' % (BASE_REAL_NAME, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     if AUGMENTED_OR_NOT_EXTRA_STR == '':
         in_TSTR_FOLDER = 'datasets_original/REAL/'
-        dataset_real = '%s%s%s%.2f' % (BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, '', PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+        dataset_real = '%s%s%s%.2f' % (
+        BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, '', PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     else:
         in_TSTR_FOLDER = 'augmented/'
-        dataset_real = '%s%s%s%.2f' % (BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    #folder = 'starlight_amp_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    #dataset_real = 'starlight_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    #same_set
-    #folder = 'starlight_noisy_irregular_all_same_set_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    #dataset_real = 'starlight_noisy_irregular_all_same_set_%.2f' % PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE
-    #for augmented
-    #dataset_real = 'starlight_random_sample_augmented_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+        dataset_real = '%s%s%s%.2f' % (
+        BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    # folder = 'starlight_amp_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    # dataset_real = 'starlight_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    # same_set
+    # folder = 'starlight_noisy_irregular_all_same_set_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    # dataset_real = 'starlight_noisy_irregular_all_same_set_%.2f' % PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE
+    # for augmented
+    # dataset_real = 'starlight_random_sample_augmented_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
 
     PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY = str(PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY] = {'training': {}, 'testing': {}}
@@ -231,12 +235,11 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     check_dir('TRTS_' + date + '/test/')
     check_dir('TRTS_' + date + '/test/' + folder)
 
-    #if os.path.isfile('TRTS_' + date + '/train/' + folder + '/train_model.h5'):
+    # if os.path.isfile('TRTS_' + date + '/train/' + folder + '/train_model.h5'):
     #    os.remove('TRTS_' + date + '/train/' + folder + '/train_model.h5')
     #    shutil.rmtree('TRTS_' + date + '/test/' + folder)
 
-
-    #else:
+    # else:
 
     irr = True
     one_d = False
@@ -262,8 +265,12 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
     m = Model_(batch_size, 100, num_classes, drop_rate=DROP_OUT_RATE)
 
-    if one_d == True:
-        model = m.cnn()
+    # if one_d == True:
+    #    model = m.cnn()
+    # else:
+    #    model = m.cnn2()
+    if BN_CONDITION == 'batch_norm_':
+        model = m.cnn2_batch()
     else:
         model = m.cnn2()
 
@@ -338,7 +345,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     # print('Inception Score:\nMean score : ', mean_scores_dict[-1])
     # print('Std : ', std_scores_dict[-1])
 
-    #model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
+    # model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
 
     score_train = model.evaluate(X_train, y_train, verbose=1)
     score_val = model.evaluate(X_val, y_val, verbose=1)
@@ -412,25 +419,27 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     keras.backend.clear_session()
     del model
 
+
 def get_percentage_version_mean_metric_dict(results_dict, set_key, metric_key):
     runs_keys = list(results_dict.keys())
     versions_keys = list(results_dict[runs_keys[0]].keys())
     percentage_keys = list(results_dict[runs_keys[0]][versions_keys[0]].keys())
     mean_metrics_dict = {}
-    #create empty dict
+    # create empty dict
     for percentage in percentage_keys:
         mean_metrics_dict[percentage] = {}
         for version in versions_keys:
             mean_metrics_dict[percentage][version] = {}
             for run in runs_keys:
                 mean_metrics_dict[percentage][version][run] = None
-    #fill dict
+    # fill dict
     for run in runs_keys:
         for version in versions_keys:
             for percentage in percentage_keys:
-                mean_metrics_dict[percentage][version][run] = results_dict[run][version][percentage][set_key][metric_key]
+                mean_metrics_dict[percentage][version][run] = results_dict[run][version][percentage][set_key][
+                    metric_key]
 
-    #generate means
+    # generate means
     for percentage in percentage_keys:
         for version in versions_keys:
             metric_list = []
@@ -456,9 +465,11 @@ def get_best_gans(results_dict, set_key, metric_key):
         best_gan_dict[percentage] = {'best_version': best_version, 'mean_%s' % metric_key: best_metric}
     return best_gan_dict, mean_metric_dict
 
+
 def check_dir(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
+
 
 if __name__ == '__main__':
     multi_runs_dict = {}
@@ -481,11 +492,15 @@ if __name__ == '__main__':
     best_gan_dict, mean_metric_dict = get_best_gans(multi_runs_dict, SET_KEY_FOR_BEST_METRIC, BEST_METRIC_KEY)
 
     check_dir(os.path.join('results', FOLDER_TO_SAVE_IN))
-    pickle.dump(multi_runs_dict, open(os.path.join('results', FOLDER_TO_SAVE_IN, str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
+    pickle.dump(multi_runs_dict, open(
+        os.path.join('results', FOLDER_TO_SAVE_IN, str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'),
+        "wb"))
     pickle.dump(mean_metric_dict, open(
-        os.path.join('results', FOLDER_TO_SAVE_IN, 'mean_metric_dict_'+ str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
+        os.path.join('results', FOLDER_TO_SAVE_IN,
+                     'mean_metric_dict_' + str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
     pickle.dump(best_gan_dict, open(
-        os.path.join('results', FOLDER_TO_SAVE_IN, 'best_gan_dict_'+ str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
+        os.path.join('results', FOLDER_TO_SAVE_IN,
+                     'best_gan_dict_' + str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
     print('RESULTS')
     print('multi_runs_dict\n', multi_runs_dict)
     print('mean_metric_dict\n', mean_metric_dict)
