@@ -67,6 +67,45 @@ class Model_():
 
 		return model
 
+	def cnn2_batch(self):
+		model = Sequential()
+
+		model.add(Conv2D(32, kernel_size=(3, 1), padding="same", input_shape=(self.length, 1, 2), use_bias=False))
+		model.add(BatchNormalization())
+		model.add(Activation("relu"))
+		model.add(MaxPooling2D(pool_size=(2, 1)))
+
+		model.add(Conv2D(64, kernel_size=(3, 1), padding="same", use_bias=False))
+		model.add(BatchNormalization())
+		model.add(Activation("relu"))
+		model.add(MaxPooling2D(pool_size=(2, 1)))
+
+		model.add(Conv2D(128, kernel_size=(3, 1), padding="same", use_bias=False))
+		model.add(BatchNormalization())
+		model.add(Activation("relu"))
+		model.add(MaxPooling2D(pool_size=(2, 1)))
+
+		model.add(Conv2D(64, kernel_size=(3, 1), padding="same", use_bias=False))
+		model.add(BatchNormalization())
+		model.add(Activation("relu"))
+		model.add(MaxPooling2D(pool_size=(2, 1)))
+
+		model.add(Conv2D(64, kernel_size=(1, 1), padding="same", use_bias=False))
+		model.add(BatchNormalization())
+		model.add(Activation("relu"))
+		model.add(MaxPooling2D(pool_size=(2, 1)))
+
+		model.add(Flatten())
+
+		model.add(Dense(100, use_bias=False))  # 1024
+		model.add(BatchNormalization())
+		model.add(Activation("relu"))
+		model.add(Dense(output_dim=self.num_classes, activation='softmax'))
+
+		print(model.summary())
+
+		return model
+
 	def fc(self):
 		model = Sequential()
 

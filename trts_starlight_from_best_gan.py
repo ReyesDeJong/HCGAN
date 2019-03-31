@@ -14,6 +14,7 @@ import keras
 
 DROP_OUT_RATE = 0.5
 PATIENCE = 20
+BN_COND = 'batch_norm'#''
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
 AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'  # ''##
 versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
@@ -263,8 +264,12 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
     m = Model_(batch_size, 100, num_classes, drop_rate=DROP_OUT_RATE)
 
-    if one_d == True:
-        model = m.cnn()
+    #if one_d == True:
+    #    model = m.cnn()
+    #else:
+    #    model = m.cnn2()
+    if BN_CONDITION=='batch_norm':
+        model = m.cnn2_batch()
     else:
         model = m.cnn2()
 
