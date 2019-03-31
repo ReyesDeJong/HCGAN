@@ -100,6 +100,7 @@ class Model_():
 		model.add(Dense(100, use_bias=False))  # 1024
 		model.add(BatchNormalization())
 		model.add(Activation("relu"))
+		model.add(Dropout(self.drop_rate))
 		model.add(Dense(output_dim=self.num_classes, activation='softmax'))
 
 		print(model.summary())
