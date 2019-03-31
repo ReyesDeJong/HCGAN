@@ -28,7 +28,7 @@ date = '2803'
 
 
 def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v=''):
-    folder = '%s%s%.2f' % (BASE_REAL_NAME, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    #folder = '%s%s%.2f' % (BASE_REAL_NAME, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     if AUGMENTED_OR_NOT_EXTRA_STR == '':
         in_TSTR_FOLDER = 'datasets_original/REAL/'
         dataset_real = '%s%s%s%.2f' % (
@@ -37,6 +37,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
         in_TSTR_FOLDER = 'augmented/'
         dataset_real = '%s%s%s%.2f' % (
             BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    folder = dataset_real
     # folder = 'starlight_amp_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     # dataset_real = 'starlight_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     # same_set
