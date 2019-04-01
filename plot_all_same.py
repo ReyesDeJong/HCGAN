@@ -51,25 +51,31 @@ def get_results_from_path(path):
 results_trtr = get_results_from_path(
     os.path.join(
         PATH_TO_PROJECT, 'results', 'same_set',
-        'trts_dp_0.5_pt_20__starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
+        'trts_batch_norm_dp_1.0_pt_20__starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
 )
 
-results_trtr_bn = get_results_from_path(
-    os.path.join(
-        PATH_TO_PROJECT, 'results', 'same_set',
-        'trts_batch_norm_dp_0.5_pt_20__starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
-)
+# results_trtr_bn = get_results_from_path(
+#     os.path.join(
+#         PATH_TO_PROJECT, 'results', 'same_set',
+#         'trts_batch_norm_dp_0.5_pt_20__starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
+# )
 
 results_aug = get_results_from_path(
     os.path.join(
-        PATH_TO_PROJECT, 'results', 'select_best_gan',
-        'best_gan_resultstrts_dp_0.5_pt_20__augmented_50-50_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
+        PATH_TO_PROJECT, 'results', 'same_set',
+        'trts_batch_norm_dp_1.0_pt_20__augmented_50-50_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
 )
+#
+# results_aug_bn = get_results_from_path(
+#     os.path.join(
+#         PATH_TO_PROJECT, 'results', 'select_best_gan',
+#         'best_gan_resultstrts_batch_norm_dp_0.5_pt_20__augmented_50-50_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
+# )
 
-results_aug_bn = get_results_from_path(
+results_aug_best = get_results_from_path(
     os.path.join(
         PATH_TO_PROJECT, 'results', 'select_best_gan',
-        'best_gan_resultstrts_batch_norm_dp_0.5_pt_20__augmented_50-50_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
+            'best_gan_resultstrts_batch_norm_dp_1.0_pt_20__augmented_50-50_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
 )
 
 set_to_plot = 'testing'
@@ -77,15 +83,16 @@ metric_to_plot_tstr = 'Test accuracy'
 metric_to_plot_trtr = 'Test accuracy on real'
 # 'Test accuracy'
 
-# plot_metric([results_trtr, results_trtr_aug, results_trtr_aug_50_50], set_to_plot, [metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr],
-#            '% of least populated classes kept', 'Accuracy', plot_label=['TRTR', 'Aug_BEST', 'Aug_BEST_BN'])
+plot_metric([results_trtr, results_aug, results_aug_best], set_to_plot,
+            [metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr],
+            '% of least populated classes kept', 'Accuracy', plot_label=['TRTR', 'Aug', 'Aug_BEST'])
 
 #plot_metric([results_trtr, results_trtr_aug], set_to_plot, [metric_to_plot_trtr, metric_to_plot_trtr],
 #'% of least populated classes kept', 'Accuracy', plot_label = ['TRTR_BN', 'Augmented_BEST_BN'])
 
-plot_metric(
-    [results_trtr, results_trtr_bn, results_aug, results_aug_bn],
-    set_to_plot, [metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr],
-    '% of least populated classes kept', 'Accuracy',
-    plot_label = ['TRTR', 'TRTR_BN', 'Augmented_BEST', 'Augmented_BEST_BN'])
+# plot_metric(
+#     [results_trtr, results_trtr_bn, results_aug, results_aug_bn],
+#     set_to_plot, [metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr],
+#     '% of least populated classes kept', 'Accuracy',
+#     plot_label = ['TRTR', 'TRTR_BN', 'Augmented_BEST', 'Augmented_BEST_BN'])
 

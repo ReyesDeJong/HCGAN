@@ -12,7 +12,7 @@ from keras.models import Model, load_model
 from sklearn.metrics import roc_auc_score, accuracy_score
 import keras
 
-DROP_OUT_RATE = 0.5
+DROP_OUT_RATE = 1.0
 PATIENCE = 20
 BN_CONDITION = 'batch_norm_'  # ''
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
