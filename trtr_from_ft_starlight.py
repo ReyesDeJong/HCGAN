@@ -17,7 +17,7 @@ PATIENCE = 20
 BN_CONDITION = 'batch_norm_'  # ''
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
 versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
-RESULTS_NAME = 'finetune_small_lr_%sdp_%.1f_pt_%i_%s' % (
+RESULTS_NAME = 'trtr_FT_%sdp_%.1f_pt_%i_%s' % (
     BN_CONDITION, DROP_OUT_RATE, PATIENCE, BASE_REAL_NAME)
 FOLDER_TO_SAVE_IN = 'fine_tune'
 RUNS = 10
@@ -227,7 +227,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
                                  monitor='val_acc', verbose=1, save_best_only=True, mode='max')
     earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=PATIENCE, verbose=1, mode='max')
 
-    model.fit(X_train_syn, y_train_syn, epochs=epochs, batch_size=batch_size, validation_data=(X_val_real, y_val_real),
+    model.fit(X_train_real, y_train_real, epochs=epochs, batch_size=batch_size, validation_data=(X_val_real, y_val_real),
               callbacks=[history,
                          checkpoint,
                          earlyStopping  # ,
@@ -250,27 +250,27 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
 
     #fine tunning
-    K.set_value(model.optimizer.lr, 0.00005)
-
-    checkpoint = ModelCheckpoint('TSTR_' + date + '/train/' + syn_data_name + '/weights.best.trainfinetune.hdf5',
-                                 monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=PATIENCE_FINE, verbose=1, mode='max')
-    model.fit(X_train_real, y_train_real, epochs=epochs, batch_size=batch_size, validation_data=(X_val_real, y_val_real),
-              callbacks=[history,
-                         checkpoint,
-                         earlyStopping  # ,
-                         # rocauc,
-                         # inception
-                         ])
-
-    model = load_model('TSTR_' + date + '/train/' + syn_data_name + '/weights.best.trainfinetune.hdf5')
+    # K.set_value(model.optimizer.lr, 0.00005)
+    #
+    # checkpoint = ModelCheckpoint('TSTR_' + date + '/train/' + syn_data_name + '/weights.best.trainfinetune.hdf5',
+    #                              monitor='val_acc', verbose=1, save_best_only=True, mode='max')
+    # earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=PATIENCE_FINE, verbose=1, mode='max')
+    # model.fit(X_train_real, y_train_real, epochs=epochs, batch_size=batch_size, validation_data=(X_val_real, y_val_real),
+    #           callbacks=[history,
+    #                      checkpoint,
+    #                      earlyStopping  # ,
+    #                      # rocauc,
+    #                      # inception
+    #                      ])
+    #
+    # model = load_model('TSTR_' + date + '/train/' + syn_data_name + '/weights.best.trainfinetune.hdf5')
 
     ## Test on real
 
-    score_val = model.evaluate(X_val_real, y_val_real, verbose=1)
-
-    print('fine tune VAL_ACC : ', score_val[1])
-    print('fine tune VAL_LOSS : ', score_val[0])
+    # score_val = model.evaluate(X_val_real, y_val_real, verbose=1)
+    #
+    # print('fine tune VAL_ACC : ', score_val[1])
+    # print('fine tune VAL_LOSS : ', score_val[0])
 
 
     print('\nTest metrics:')
@@ -288,9 +288,9 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
     print('\nTest on synthetic:')
 
-    score = model.evaluate(X_test_syn, y_test_syn, verbose=1)
-    print('Test loss:', score[0])
-    print('Test accuracy:', score[1])
+    # score = model.evaluate(X_test_syn, y_test_syn, verbose=1)
+    # print('Test loss:', score[0])
+    # print('Test accuracy:', score[1])
 
     result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['training'] = {
         'VAL_ACC': score_val[1], 'TRAIN_ACC': score_train[1],
@@ -330,8 +330,7 @@ if __name__ == '__main__':
                                                                              'best_version'],
                                                                          str(best_gans_dict[str(keep_sample)][
                                                                                  'mean_%s' % BEST_METRIC_KEY])))
-            #best_gan_for_percentage = best_gans_dict[str(keep_sample)]['best_version']
-            best_gan_for_percentage = versions[np.random.randint(0, len(versions))]
+            best_gan_for_percentage = versions[np.random.randint(0, len(versions))]#best_gans_dict[str(keep_sample)]['best_version']
             main(dict_single_version, keep_sample, best_gan_for_percentage)
         print(dict_single_version)
     print(result_dict_for_different_versions_runs)

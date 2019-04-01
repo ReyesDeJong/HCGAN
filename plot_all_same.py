@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import sys
+import  matplotlib
+#matplotlib.use('agg')
 
 PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), ''))
@@ -32,6 +34,7 @@ def plot_metric(results_list, set_to_plot, metric_to_plot, x_axis_name, y_axis_n
     for result_idx in range(len(results_list)):
         percentages_float, all_results_metrics_mean, all_results_metrics_low_bound, all_results_metrics_up_bound = get_all_ro_plot(
             results_list[result_idx], metric_to_plot[result_idx])
+        print(all_results_metrics_mean)
         plt.plot(percentages_float, all_results_metrics_mean, 'o-', label=plot_label[result_idx])
         plt.fill_between(percentages_float, all_results_metrics_low_bound, all_results_metrics_up_bound, alpha=.1)
     plt.title('Starlight Accuracy as a function of unbalance (Same set, with through away)')  # % set_to_plot)
@@ -78,6 +81,12 @@ results_fine_tune = get_results_from_path(
         'single_gan_finetune_batch_norm_dp_0.5_pt_20_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
 )
 
+results_fine_tune_single = get_results_from_path(
+    os.path.join(
+        PATH_TO_PROJECT, 'results', 'fine_tune',
+        'single_gan_resultstrtr_FT_batch_norm_dp_0.5_pt_20_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
+)
+
 # results_trtr_bn_no_dp = get_results_from_path(
 #     os.path.join(
 #         PATH_TO_PROJECT, 'results', 'same_set',
@@ -111,8 +120,8 @@ metric_to_plot_trtr = 'Test accuracy on real'
 #             [metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr],
 #             '% of least populated classes kept', 'Accuracy', plot_label=['TRTR', 'Aug', 'Aug_BEST'])
 
-plot_metric([results_trtr_bn_2, results_fine_tune], set_to_plot, [metric_to_plot_trtr, metric_to_plot_trtr],
-'% of least populated classes kept', 'Accuracy', plot_label = ['TRTR_BN', 'Fine_tune'])
+plot_metric([results_trtr_bn_2, results_fine_tune, results_fine_tune_single], set_to_plot, [metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr],
+'% of least populated classes kept', 'Accuracy', plot_label = ['TRTR_BN', 'Fine_tune', 'Fine_tune_single'])
 
 # plot_metric(
 #     [results_trtr, results_trtr_bn, results_aug, results_aug_bn],
