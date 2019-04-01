@@ -35,8 +35,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/plot_all_same.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="85" selection-start-line="85" selection-start-column="2" selection-end-line="89" selection-end-column="78" />
+            <state relative-caret-position="148">
+              <caret line="84" column="92" selection-start-line="84" selection-start-column="92" selection-end-line="84" selection-end-column="92" />
             </state>
           </provider>
         </entry>
@@ -356,12 +356,12 @@
       <workItem from="1554004352213" duration="545000" />
       <workItem from="1554057283482" duration="4667000" />
       <workItem from="1554081008195" duration="75000" />
-      <workItem from="1554087988989" duration="1915000" />
+      <workItem from="1554087988989" duration="2400000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="103847000" />
+    <option name="totallyTimeSpent" value="104332000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -374,6 +374,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1299" height="743" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.33599362" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -583,8 +584,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/plot_all_same.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="85" selection-start-line="85" selection-start-column="2" selection-end-line="89" selection-end-column="78" />
+        <state relative-caret-position="148">
+          <caret line="84" column="92" selection-start-line="84" selection-start-column="92" selection-end-line="84" selection-end-column="92" />
         </state>
       </provider>
     </entry>
