@@ -216,8 +216,6 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
         model = m.cnn2()
 
     model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-    symbolic_weights = getattr(model.optimizer, 'weights')
-    weight_values = K.batch_get_value(symbolic_weights)
 
     ## callbacks
     history = my_callbacks.Histories()
@@ -249,11 +247,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
 
     #fine tunning
-    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-    model.optimizer.set_weights(weight_values)
     K.set_value(model.optimizer.lr, 0.0002)
-
-
 
     checkpoint = ModelCheckpoint('TSTR_' + date + '/train/' + syn_data_name + '/weights.best.trainfinetune.hdf5',
                                  monitor='val_acc', verbose=1, save_best_only=True, mode='max')
