@@ -17,7 +17,7 @@ PATIENCE = 20
 BN_CONDITION = 'batch_norm_'  # ''
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
 versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
-RESULTS_NAME = 'finetune_%sdp_%.1f_pt_%i_%s' % (
+RESULTS_NAME = 'finetune_small_lr_%sdp_%.1f_pt_%i_%s' % (
     BN_CONDITION, DROP_OUT_RATE, PATIENCE, BASE_REAL_NAME)
 FOLDER_TO_SAVE_IN = 'fine_tune'
 RUNS = 10
@@ -30,6 +30,7 @@ SET_KEY_FOR_BEST_METRIC = 'training'
 BEST_METRIC_KEY = 'VAL_ACC'
 
 PATIENCE = 30
+PATIENCE_FINE = 200
 
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -249,11 +250,11 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
 
     #fine tunning
-    K.set_value(model.optimizer.lr, 0.0001)
+    K.set_value(model.optimizer.lr, 0.00001)
 
     checkpoint = ModelCheckpoint('TSTR_' + date + '/train/' + syn_data_name + '/weights.best.trainfinetune.hdf5',
                                  monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=PATIENCE, verbose=1, mode='max')
+    earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=PATIENCE_FINE, verbose=1, mode='max')
     model.fit(X_train_real, y_train_real, epochs=epochs, batch_size=batch_size, validation_data=(X_val_real, y_val_real),
               callbacks=[history,
                          checkpoint,
