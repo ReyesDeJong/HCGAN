@@ -322,6 +322,7 @@ if __name__ == '__main__':
         MIN_LIM = 10
         MAX_LIM = 100
         keep_samples_list = np.round(np.logspace(np.log10(MIN_LIM), np.log10(MAX_LIM), num=6)) / 100
+        keep_samples_list = [keep_samples_list[-1]]
         for keep_sample in keep_samples_list:
             print('loading best gan for %s keep %s version %s acc %s' % (run_idx,
                                                                          str(keep_sample),
