@@ -37,7 +37,7 @@ def plot_metric(results_list, set_to_plot, metric_to_plot, x_axis_name, y_axis_n
     plt.title('Starlight Accuracy as a function of unbalance (Same set, with through away)')  # % set_to_plot)
     plt.xlabel(x_axis_name)
     plt.ylabel(y_axis_name)
-    # plt.ylim(0.85,1)
+    plt.ylim(0.9,1)
     plt.legend()
     plt.show()
 
@@ -48,23 +48,47 @@ def get_results_from_path(path):
     return results
 
 
-results_trtr = get_results_from_path(
-    os.path.join(
-        PATH_TO_PROJECT, 'results', 'same_set',
-        'trts_batch_norm_dp_1.0_pt_20__starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
-)
-
-# results_trtr_bn = get_results_from_path(
+# results_trtr = get_results_from_path(
 #     os.path.join(
 #         PATH_TO_PROJECT, 'results', 'same_set',
-#         'trts_batch_norm_dp_0.5_pt_20__starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
+#         'trts_batch_norm_dp_1.0_pt_20__starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
 # )
 
-results_aug = get_results_from_path(
+results_trtr_bn = get_results_from_path(
     os.path.join(
         PATH_TO_PROJECT, 'results', 'same_set',
-        'trts_batch_norm_dp_1.0_pt_20__augmented_50-50_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
+        'trts_batch_norm_dp_0.5_pt_20__starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
 )
+
+results_trtr_bn_2 = get_results_from_path(
+    os.path.join(
+        PATH_TO_PROJECT, 'results', 'same_set',
+        'trtr_batch_norm_dp_0.5_pt_20__starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv1_v2_v3_v4_v5_v6_v7_v8_v9_v10.pkl')
+)
+
+results_trtr_bn_3 = get_results_from_path(
+    os.path.join(
+        PATH_TO_PROJECT, 'results', 'same_set',
+        'trtr_batch_norm_dp_0.5_pt_20__starlight_noisy_irregular_all_same_set_amp_balanced_larger_train_V2v1_v2_v3_v4_v5_v6_v7_v8_v9_v10.pkl')
+)
+
+results_fine_tune = get_results_from_path(
+    os.path.join(
+        PATH_TO_PROJECT, 'results', 'fine_tune',
+        'best_gan_resultsfinetune_batch_norm_dp_0.5_pt_20_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
+)
+
+# results_trtr_bn_no_dp = get_results_from_path(
+#     os.path.join(
+#         PATH_TO_PROJECT, 'results', 'same_set',
+#         'trtr_batch_norm_dp_0.0_pt_20__starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv1_v2_v3_v4_v5_v6_v7_v8_v9_v10.pkl')
+# )
+
+# results_aug = get_results_from_path(
+#     os.path.join(
+#         PATH_TO_PROJECT, 'results', 'same_set',
+#         'trts_batch_norm_dp_1.0_pt_20__augmented_50-50_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
+# )
 #
 # results_aug_bn = get_results_from_path(
 #     os.path.join(
@@ -72,23 +96,23 @@ results_aug = get_results_from_path(
 #         'best_gan_resultstrts_batch_norm_dp_0.5_pt_20__augmented_50-50_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
 # )
 
-results_aug_best = get_results_from_path(
-    os.path.join(
-        PATH_TO_PROJECT, 'results', 'select_best_gan',
-            'best_gan_resultstrts_batch_norm_dp_1.0_pt_20__augmented_50-50_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
-)
+# results_aug_best = get_results_from_path(
+#     os.path.join(
+#         PATH_TO_PROJECT, 'results', 'select_best_gan',
+#             'best_gan_resultstrts_batch_norm_dp_1.0_pt_20__augmented_50-50_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
+# )
 
 set_to_plot = 'testing'
 metric_to_plot_tstr = 'Test accuracy'
 metric_to_plot_trtr = 'Test accuracy on real'
 # 'Test accuracy'
 
-plot_metric([results_trtr, results_aug, results_aug_best], set_to_plot,
-            [metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr],
-            '% of least populated classes kept', 'Accuracy', plot_label=['TRTR', 'Aug', 'Aug_BEST'])
+# plot_metric([results_trtr, results_aug, results_aug_best], set_to_plot,
+#             [metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr],
+#             '% of least populated classes kept', 'Accuracy', plot_label=['TRTR', 'Aug', 'Aug_BEST'])
 
-#plot_metric([results_trtr, results_trtr_aug], set_to_plot, [metric_to_plot_trtr, metric_to_plot_trtr],
-#'% of least populated classes kept', 'Accuracy', plot_label = ['TRTR_BN', 'Augmented_BEST_BN'])
+plot_metric([results_trtr_bn_2, results_fine_tune], set_to_plot, [metric_to_plot_trtr, metric_to_plot_trtr],
+'% of least populated classes kept', 'Accuracy', plot_label = ['TRTR_BN', 'Fine_tune'])
 
 # plot_metric(
 #     [results_trtr, results_trtr_bn, results_aug, results_aug_bn],

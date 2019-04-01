@@ -9,22 +9,25 @@ import matplotlib.pyplot as plt
 from sklearn.utils import shuffle
 import shutil
 from keras.models import Model, load_model
-import keras
 from sklearn.metrics import roc_auc_score, accuracy_score
+import keras
 
-DROP_OUT_RATE = 0.5
+DROP_OUT_RATE = 1.0
 PATIENCE = 20
 BN_CONDITION = 'batch_norm_'  # ''
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
-AUGMENTED_OR_NOT_EXTRA_STR = ''  # '_augmented_50-50'#''##
-versions = ['v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10']
-RESULTS_NAME = 'trtr_%sdp_%.1f_pt_%i_%s_%s_V2' % (
-    BN_CONDITION, DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
-FOLDER_TO_SAVE_IN = 'same_set'
+AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'  # ''##
+versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
+RUNS = 10
+RESULTS_NAME = 'trts_%sdp_%.1f_pt_%i_%s_%s' % (
+BN_CONDITION, DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
+FOLDER_TO_SAVE_IN = 'select_best_gan'
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 date = '2803'
+SET_KEY_FOR_BEST_METRIC = 'training'
+BEST_METRIC_KEY = 'VAL_ACC'
 
 
 def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v=''):
@@ -37,8 +40,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
         in_TSTR_FOLDER = 'augmented/'
         dataset_real = '%s%s%s%.2f' % (
             BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    print("Training set to load %s" % dataset_real)
-    # folder = dataset_real
+    #folder = dataset_real
     # folder = 'starlight_amp_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     # dataset_real = 'starlight_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     # same_set
@@ -134,9 +136,9 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
         y_train = np.asarray(data[0]['class'])
         # print(np.unique(y_train))
         X_train, y_train = shuffle(X_train, y_train, random_state=42)
-        #  for i in y_train:
-        #     if i != None:
-        #        print(i)
+        #	for i in y_train:
+        #		if i != None:
+        #			print(i)
         y_train = change_classes(y_train)
         y_train = to_categorical(y_train)
 
@@ -359,7 +361,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     print('\nTest metrics:')
     print('\nTest on real:')
 
-    # dataset_syn = folder + '_generated'
+    dataset_syn = folder + '_generated'
 
     # sc, me, st = evaluation(X_test, y_test, num_classes)
     # np.save('TRTS_' + date + '/test/' + folder + '/test_onreal_is.npy', sc)
@@ -381,7 +383,6 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
         'test loss on real': score[0], 'Test accuracy on real': score[1]  # , 'auc roc on real': roc
     }
 
-    """
     print('\nTest on synthetic:')
     if irr == True:
         X_train2, y_train2, X_val2, y_val2, X_test2, y_test2 = read_data_generated_irr(
@@ -416,24 +417,40 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['Test accuracy on syn'] = score[1]
     # result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['auc roc on syn'] = roc
     # np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_rocauc.npy', roc)
-    """
     keras.backend.clear_session()
     del model
 
 
+def check_dir(directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+
 if __name__ == '__main__':
-    # build dict of dicts:
-    dict_of_dicts = {}
-    for v in versions:
-        dict_of_dicts[v] = {}
-    for v in dict_of_dicts.keys():
-        dict_1 = dict_of_dicts[v]
+    best_gans_dict = np.load(os.path.join('results', 'select_best_gan',
+                                          'best_gan_dict_' + str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(
+                                              versions) + '.pkl'))
+    result_dict_for_different_versions_runs = {}
+    for run_idx in range(RUNS):
+        result_dict_for_different_versions_runs['run_%i' % run_idx] = {}
+    for run_idx in result_dict_for_different_versions_runs.keys():
+        dict_single_version = result_dict_for_different_versions_runs[run_idx]
         MIN_LIM = 10
         MAX_LIM = 100
         keep_samples_list = np.round(np.logspace(np.log10(MIN_LIM), np.log10(MAX_LIM), num=6)) / 100
         for keep_sample in keep_samples_list:
-            main(dict_1, keep_sample, v)
-        print(dict_1)
-    print(dict_of_dicts)
-    pickle.dump(dict_of_dicts,
-                open(os.path.join('results', FOLDER_TO_SAVE_IN, RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
+            print('loading best gan for %s keep %s version %s acc %s' % (run_idx,
+                                                                         str(keep_sample),
+                                                                         best_gans_dict[str(keep_sample)][
+                                                                             'best_version'],
+                                                                         str(best_gans_dict[str(keep_sample)][
+                                                                                 'mean_%s' % BEST_METRIC_KEY])))
+            best_gan_for_percentage = best_gans_dict[str(keep_sample)]['best_version']
+            main(dict_single_version, keep_sample, best_gan_for_percentage)
+        print(dict_single_version)
+    print(result_dict_for_different_versions_runs)
+
+    check_dir(os.path.join('results', FOLDER_TO_SAVE_IN))
+    pickle.dump(result_dict_for_different_versions_runs, open(
+        os.path.join('results', FOLDER_TO_SAVE_IN, 'best_gan_results' + RESULTS_NAME + '_'.join(versions) + '.pkl'),
+        "wb"))

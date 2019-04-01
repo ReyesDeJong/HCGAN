@@ -7,6 +7,7 @@ from keras.utils import to_categorical
 import os
 import matplotlib.pyplot as plt
 from sklearn.utils import shuffle
+import shutil
 from keras.models import Model, load_model
 from sklearn.metrics import roc_auc_score, accuracy_score
 import keras
@@ -16,26 +17,18 @@ DROP_OUT_RATE = 0.5
 PATIENCE = 20
 BN_CONDITION = 'batch_norm_'  # ''
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
+AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'  # ''##
 versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
-RESULTS_NAME = 'finetune_%sdp_%.1f_pt_%i_%s' % (
-    BN_CONDITION, DROP_OUT_RATE, PATIENCE, BASE_REAL_NAME)
-FOLDER_TO_SAVE_IN = 'fine_tune'
 RUNS = 10
-
-#from best 50-50 gan
-AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'
-BEST_GAN_NAME = 'trts_%sdp_%.1f_pt_%i_%s_%s' % (
+RESULTS_NAME = 'trts_%sdp_%.1f_pt_%i_%s_%s' % (
 BN_CONDITION, DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
-SET_KEY_FOR_BEST_METRIC = 'training'
-BEST_METRIC_KEY = 'VAL_ACC'
-
-PATIENCE = 30
-
+FOLDER_TO_SAVE_IN = 'fine_tune'
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 date = '2803'
-
+SET_KEY_FOR_BEST_METRIC = 'training'
+BEST_METRIC_KEY = 'VAL_ACC'
 
 def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v=''):
     real_data_folder = os.path.join('datasets_original', 'REAL')
@@ -303,6 +296,51 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     del model
 
 
+def get_percentage_version_mean_metric_dict(results_dict, set_key, metric_key):
+    runs_keys = list(results_dict.keys())
+    versions_keys = list(results_dict[runs_keys[0]].keys())
+    percentage_keys = list(results_dict[runs_keys[0]][versions_keys[0]].keys())
+    mean_metrics_dict = {}
+    # create empty dict
+    for percentage in percentage_keys:
+        mean_metrics_dict[percentage] = {}
+        for version in versions_keys:
+            mean_metrics_dict[percentage][version] = {}
+            for run in runs_keys:
+                mean_metrics_dict[percentage][version][run] = None
+    # fill dict
+    for run in runs_keys:
+        for version in versions_keys:
+            for percentage in percentage_keys:
+                mean_metrics_dict[percentage][version][run] = results_dict[run][version][percentage][set_key][
+                    metric_key]
+
+    # generate means
+    for percentage in percentage_keys:
+        for version in versions_keys:
+            metric_list = []
+            for run in runs_keys:
+                metric_list.append(mean_metrics_dict[percentage][version][run])
+            mean_metrics_dict[percentage][version]['mean_%s' % metric_key] = np.mean(metric_list)
+    return mean_metrics_dict
+
+
+def get_best_gans(results_dict, set_key, metric_key):
+    mean_metric_dict = get_percentage_version_mean_metric_dict(results_dict, set_key, metric_key)
+    percentage_keys = list(mean_metric_dict.keys())
+    versions_keys = list(mean_metric_dict[percentage_keys[0]].keys())
+    best_gan_dict = {}
+    for percentage in percentage_keys:
+        best_version = None
+        best_metric = 0
+        for version in versions_keys:
+            metric_value = mean_metric_dict[percentage][version]['mean_%s' % metric_key]
+            if metric_value > best_metric:
+                best_version = version
+                best_metric = metric_value
+        best_gan_dict[percentage] = {'best_version': best_version, 'mean_%s' % metric_key: best_metric}
+    return best_gan_dict, mean_metric_dict
+
 
 def check_dir(directory):
     if not os.path.exists(directory):
@@ -310,31 +348,36 @@ def check_dir(directory):
 
 
 if __name__ == '__main__':
-    best_gans_dict = np.load(os.path.join('results', 'select_best_gan',
-                                          'best_gan_dict_' + str(RUNS) + '_runs' + BEST_GAN_NAME + '_'.join(
-                                              versions) + '.pkl'))
-    result_dict_for_different_versions_runs = {}
-    for run_idx in range(RUNS):
-        result_dict_for_different_versions_runs['run_%i' % run_idx] = {}
-    for run_idx in result_dict_for_different_versions_runs.keys():
-        dict_single_version = result_dict_for_different_versions_runs[run_idx]
-        MIN_LIM = 10
-        MAX_LIM = 100
-        keep_samples_list = np.round(np.logspace(np.log10(MIN_LIM), np.log10(MAX_LIM), num=6)) / 100
-        for keep_sample in keep_samples_list:
-            print('loading best gan for %s keep %s version %s acc %s' % (run_idx,
-                                                                         str(keep_sample),
-                                                                         best_gans_dict[str(keep_sample)][
-                                                                             'best_version'],
-                                                                         str(best_gans_dict[str(keep_sample)][
-                                                                                 'mean_%s' % BEST_METRIC_KEY])))
-            best_gan_for_percentage = best_gans_dict[str(keep_sample)]['best_version']
-            main(dict_single_version, keep_sample, best_gan_for_percentage)
-        print(dict_single_version)
-    print(result_dict_for_different_versions_runs)
+    multi_runs_dict = {}
+    for run_i in range(RUNS):
+        # build dict of dicts:
+        result_dict_for_different_versions = {}
+        for v in versions:
+            result_dict_for_different_versions[v] = {}
+        for v in result_dict_for_different_versions.keys():
+            dict_single_version = result_dict_for_different_versions[v]
+            MIN_LIM = 10
+            MAX_LIM = 100
+            keep_samples_list = np.round(np.logspace(np.log10(MIN_LIM), np.log10(MAX_LIM), num=6)) / 100
+            for keep_sample in keep_samples_list:
+                main(dict_single_version, keep_sample, v)
+            print(dict_single_version)
+        print(result_dict_for_different_versions)
+        multi_runs_dict['run%i' % run_i] = result_dict_for_different_versions
+
+    best_gan_dict, mean_metric_dict = get_best_gans(multi_runs_dict, SET_KEY_FOR_BEST_METRIC, BEST_METRIC_KEY)
 
     check_dir(os.path.join('results', FOLDER_TO_SAVE_IN))
-    pickle.dump(result_dict_for_different_versions_runs, open(
-        os.path.join('results', FOLDER_TO_SAVE_IN, 'single_gan_results' + RESULTS_NAME + '_'.join(versions) + '.pkl'),
+    pickle.dump(multi_runs_dict, open(
+        os.path.join('results', FOLDER_TO_SAVE_IN, str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'),
         "wb"))
-
+    pickle.dump(mean_metric_dict, open(
+        os.path.join('results', FOLDER_TO_SAVE_IN,
+                     'mean_metric_dict_' + str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
+    pickle.dump(best_gan_dict, open(
+        os.path.join('results', FOLDER_TO_SAVE_IN,
+                     'best_gan_dict_' + str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
+    print('RESULTS')
+    print('multi_runs_dict\n', multi_runs_dict)
+    print('mean_metric_dict\n', mean_metric_dict)
+    print('best_gan_dict\n', best_gan_dict)
