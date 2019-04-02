@@ -344,7 +344,6 @@ if __name__ == '__main__':
         "wb"))
     check_dir(os.path.join('results', FOLDER_TO_SAVE_IN))
     pickle.dump(result_dict_for_different_versions_runs, open(
-        os.path.join('results', FOLDER_TO_SAVE_IN, 'random_gan_results' + RESULTS_NAME + '_'.join(versions) + '.pkl'),
+        os.path.join('results', FOLDER_TO_SAVE_IN, 'single_gan_results' + RESULTS_NAME + '_'.join(versions) + '.pkl'),
         "wb"))
-    print('end')
 
