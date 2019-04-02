@@ -311,6 +311,8 @@ def check_dir(directory):
 
 
 if __name__ == '__main__':
+    np.random.seed(42)
+    versions = versions[np.random.shuffle(np.arange(len(versions)))]
     best_gans_dict = np.load(os.path.join('results', 'select_best_gan',
                                           'best_gan_dict_' + str(RUNS) + '_runs' + BEST_GAN_NAME + '_'.join(
                                               versions) + '.pkl'))
@@ -323,7 +325,7 @@ if __name__ == '__main__':
         MAX_LIM = 100
         keep_samples_list = np.round(np.logspace(np.log10(MIN_LIM), np.log10(MAX_LIM), num=6)) / 100
         #keep_samples_list = [keep_samples_list[-1]]
-        for keep_sample in keep_samples_list:
+        for version_idx, keep_sample in enumerate(keep_samples_list):
             print('loading best gan for %s keep %s version %s acc %s' % (run_idx,
                                                                          str(keep_sample),
                                                                          best_gans_dict[str(keep_sample)][
@@ -331,7 +333,7 @@ if __name__ == '__main__':
                                                                          str(best_gans_dict[str(keep_sample)][
                                                                                  'mean_%s' % BEST_METRIC_KEY])))
             #best_gan_for_percentage = best_gans_dict[str(keep_sample)]['best_version']
-            best_gan_for_percentage = versions[np.random.randint(0, len(versions))]
+            best_gan_for_percentage = versions[version_idx]#np.random.randint(0, len(versions))]
             main(dict_single_version, keep_sample, best_gan_for_percentage)
         print(dict_single_version)
     print(result_dict_for_different_versions_runs)
