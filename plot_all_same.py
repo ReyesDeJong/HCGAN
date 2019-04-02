@@ -59,7 +59,7 @@ def get_results_from_path(path):
 
 results_trtr_bn = get_results_from_path(
     os.path.join(
-        PATH_TO_PROJECT, 'results', 'same_set',
+        PATH_TO_PROJECT, 'results', 'fine_tune',
         'single_gan_resultstrtr_FT_batch_norm_dp_0.5_pt_20_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
 )
 
