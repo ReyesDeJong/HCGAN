@@ -314,7 +314,9 @@ def check_dir(directory):
 
 if __name__ == '__main__':
     np.random.seed(42)
-    versions = versions[np.random.shuffle(np.arange(len(versions)))]
+    version_indexes = np.arange(len(versions))
+    np.random.shuffle(version_indexes)
+    versions = np.array(versions)[version_indexes]
     best_gans_dict = np.load(os.path.join('results', 'select_best_gan',
                                           'best_gan_dict_' + str(RUNS) + '_runs' + BEST_GAN_NAME + '_'.join(
                                               versions) + '.pkl'))
