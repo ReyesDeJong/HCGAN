@@ -20,7 +20,7 @@ BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_tra
 AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'  # ''##
 versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
 RUNS = 10
-RESULTS_NAME = 'trts_%sdp_%.1f_pt_%i_%s_%s' % (
+RESULTS_NAME = 'fine_tune_SAME_lr_%sdp_%.1f_pt_%i_%s_%s' % (
 BN_CONDITION, DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
 FOLDER_TO_SAVE_IN = 'fine_tune'
 
@@ -29,6 +29,15 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 date = '2803'
 SET_KEY_FOR_BEST_METRIC = 'training'
 BEST_METRIC_KEY = 'VAL_ACC'
+
+PATIENCE = 30
+PATIENCE_FINE = 200
+
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+date = '2803'
+
 
 def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v=''):
     real_data_folder = os.path.join('datasets_original', 'REAL')
@@ -199,7 +208,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     print('')
 
     batch_size = 512
-    epochs = 200
+    epochs = 10000
 
     num_classes = 3
 
@@ -242,11 +251,11 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
 
     #fine tunning
-    K.set_value(model.optimizer.lr, 0.0001)
+    #K.set_value(model.optimizer.lr, 0.00005)
 
     checkpoint = ModelCheckpoint('TSTR_' + date + '/train/' + syn_data_name + '/weights.best.trainfinetune.hdf5',
                                  monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=PATIENCE, verbose=1, mode='max')
+    earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=PATIENCE_FINE, verbose=1, mode='max')
     model.fit(X_train_real, y_train_real, epochs=epochs, batch_size=batch_size, validation_data=(X_val_real, y_val_real),
               callbacks=[history,
                          checkpoint,

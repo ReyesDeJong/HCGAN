@@ -19,9 +19,9 @@ BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_tra
 AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'  # ''##
 versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
 RUNS = 10
-RESULTS_NAME = 'trts_%sdp_%.1f_pt_%i_%s_%s' % (
+RESULTS_NAME = 'fine_tune_SAME_lr_%sdp_%.1f_pt_%i_%s_%s' % (
 BN_CONDITION, DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
-FOLDER_TO_SAVE_IN = 'select_best_gan'
+FOLDER_TO_SAVE_IN = 'fine_tune'
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -29,28 +29,24 @@ date = '2803'
 SET_KEY_FOR_BEST_METRIC = 'training'
 BEST_METRIC_KEY = 'VAL_ACC'
 
+PATIENCE = 30
+PATIENCE_FINE = 200
+
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+date = '2803'
+
 
 def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v=''):
-    folder = '%s%s%.2f' % (BASE_REAL_NAME, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    if AUGMENTED_OR_NOT_EXTRA_STR == '':
-        in_TSTR_FOLDER = 'datasets_original/REAL/'
-        dataset_real = '%s%s%s%.2f' % (
-            BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, '', PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    else:
-        in_TSTR_FOLDER = 'augmented/'
-        dataset_real = '%s%s%s%.2f' % (
-            BASE_REAL_NAME, AUGMENTED_OR_NOT_EXTRA_STR, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    #folder = dataset_real
-    # folder = 'starlight_amp_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    # dataset_real = 'starlight_noisy_irregular_all_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    # same_set
-    # folder = 'starlight_noisy_irregular_all_same_set_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    # dataset_real = 'starlight_noisy_irregular_all_same_set_%.2f' % PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE
-    # for augmented
-    # dataset_real = 'starlight_random_sample_augmented_%s%.2f' % (v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    real_data_folder = os.path.join('datasets_original', 'REAL')
+    dataset_real_pkl = '%s%.2f.pkl' % (BASE_REAL_NAME, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
+    syn_data_name = os.path.join('%s%s%.2f' % (BASE_REAL_NAME, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE))
 
     PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY = str(PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
     result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY] = {'training': {}, 'testing': {}}
+    print("REAL Training set to load %s" % dataset_real_pkl)
+    print("SYN Training set to load %s" % syn_data_name)
 
     def read_data(file):
 
@@ -90,12 +86,10 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
         mgt = np.asarray(data[0]['original_magnitude'])
         t = np.asarray(data[0]['time'])
         X_train = np.stack((mgt, t), axis=-1)
-        # print(X_train.shape)
-        # print(X_train.T.shape)
         X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], 1, X_train.shape[2])
-        # print(X_train.shape)
+
         y_train = np.asarray(data[0]['class'])
-        # print(np.unique(y_train))
+
         X_train, y_train = shuffle(X_train, y_train, random_state=42)
         y_train = change_classes(y_train)
         y_train = to_categorical(y_train)
@@ -129,16 +123,14 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
         mgt = np.asarray(data[0]['generated_magnitude'])
         t = np.asarray(data[0]['time'])
         X_train = np.stack((mgt, t), axis=-1)
-        # print(X_train.shape)
-        # print(X_train.T.shape)
         X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], 1, X_train.shape[2])
         # print(X_train.shape)
         y_train = np.asarray(data[0]['class'])
-        # print(np.unique(y_train))
+        print(np.unique(y_train))
         X_train, y_train = shuffle(X_train, y_train, random_state=42)
-        #	for i in y_train:
-        #		if i != None:
-        #			print(i)
+        #  for i in y_train:
+        #     if i != None:
+        #        print(i)
         y_train = change_classes(y_train)
         y_train = to_categorical(y_train)
 
@@ -186,90 +178,41 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
         return X, y
 
-    def evaluation(X_test, y_test, n_classes):
-        y_pred_prob = model.predict_proba(X_test)
-
-        n = 10
-        probs = np.array_split(y_pred_prob, n)
-
-        score = []
-        mean = []
-        std = []
-
-        Y = []
-        for prob in probs:
-            ys = np.zeros(n_classes)  # [0, 0
-            for class_i in range(n_classes):
-                for j in prob:
-                    ys[class_i] = ys[class_i] + j[class_i]
-
-            ys[:] = [x / len(prob) for x in ys]
-
-            Y.append(np.asarray(ys))
-
-        ep = 1e-12
-        tmp = []
-        for s in range(n):
-            kl = (probs[s] * np.log((probs[s] + ep) / Y[s])).sum(axis=1)
-            E = np.mean(kl)
-            IS = np.exp(E)
-            # pdb.set_trace()
-            tmp.append(IS)
-
-        score.append(tmp)
-        mean.append(np.mean(tmp))
-        std.append(np.std(tmp))
-
-        print('Inception Score:\nMean score : ', mean[-1])
-        print('Std : ', std[-1])
-
-        return score, mean, std
-
     def check_dir(directory):
         if not os.path.exists(directory):
             os.makedirs(directory)
 
-    check_dir('TRTS_' + date)
-    check_dir('TRTS_' + date + '/train/')
-    check_dir('TRTS_' + date + '/train/')
-    check_dir('TRTS_' + date + '/train/' + folder)
-    check_dir('TRTS_' + date + '/test/')
-    check_dir('TRTS_' + date + '/test/' + folder)
+    check_dir('TSTR_' + date)
+    check_dir('TSTR_' + date + '/train/')
+    check_dir('TSTR_' + date + '/train/')
+    check_dir('TSTR_' + date + '/train/' + syn_data_name)
+    check_dir('TSTR_' + date + '/test/')
+    check_dir('TSTR_' + date + '/test/' + syn_data_name)
 
-    # if os.path.isfile('TRTS_' + date + '/train/' + folder + '/train_model.h5'):
-    #    os.remove('TRTS_' + date + '/train/' + folder + '/train_model.h5')
-    #    shutil.rmtree('TRTS_' + date + '/test/' + folder)
-
-    # else:
-
+    # if else
     irr = True
+    dataset_syn_pkl = syn_data_name + '_generated.pkl'
     one_d = False
 
-    ## Train on real
+    ## Train on synthetic
 
-    # dataset_real = 'catalina_random_full_north_9classes'
-    if irr == True:
-        X_train, y_train, X_val, y_val, X_test, y_test = read_data_original_irr(
-            'TSTR_data/' + in_TSTR_FOLDER + dataset_real + '.pkl')  # datasets_original/REAL/' + dataset_real + '.pkl')
-    else:
-        X_train, y_train, X_val, y_val, X_test, y_test = read_data(
-            'TSTR_data/' + in_TSTR_FOLDER + dataset_real + '.pkl')
+    X_train_syn, y_train_syn, X_val_syn, y_val_syn, X_test_syn, y_test_syn = read_data_generated_irr(
+        os.path.join('TSTR_data', 'generated', syn_data_name, dataset_syn_pkl))
+    X_train_real, y_train_real, X_val_real, y_val_real, X_test_real, y_test_real = read_data_original_irr(
+        os.path.join('TSTR_data', real_data_folder, dataset_real_pkl))
+
 
     print('')
     print('Training new model')
     print('')
 
     batch_size = 512
-    epochs = 200
+    epochs = 10000
 
     num_classes = 3
 
     m = Model_(batch_size, 100, num_classes, drop_rate=DROP_OUT_RATE)
 
-    # if one_d == True:
-    #    model = m.cnn()
-    # else:
-    #    model = m.cnn2()
     if BN_CONDITION == 'batch_norm_':
         model = m.cnn2_batch()
     else:
@@ -279,14 +222,12 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
     ## callbacks
     history = my_callbacks.Histories()
-    # rocauc = my_callbacks.ROC_AUC(X_train, y_train, X_test, y_test)
-    # inception = my_callbacks.Inception(X_test, num_classes)
 
-    checkpoint = ModelCheckpoint('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5', monitor='val_acc',
-                                 verbose=1, save_best_only=True, mode='max')
+    checkpoint = ModelCheckpoint('TSTR_' + date + '/train/' + syn_data_name + '/weights.best.trainonsynthetic.hdf5',
+                                 monitor='val_acc', verbose=1, save_best_only=True, mode='max')
     earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=PATIENCE, verbose=1, mode='max')
 
-    model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, validation_data=(X_val, y_val),
+    model.fit(X_train_syn, y_train_syn, epochs=epochs, batch_size=batch_size, validation_data=(X_val_real, y_val_real),
               callbacks=[history,
                          checkpoint,
                          earlyStopping  # ,
@@ -294,129 +235,71 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
                          # inception
                          ])
 
-    model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
-    os.remove('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
-
-    # Create dictionary, then save into two different documments.
-    ## Loss
-    history_dictionary_loss = history.loss
-    np.save('TRTS_' + date + '/train/' + folder + '/train_history_loss.npy', history_dictionary_loss)
-    ## Val Loss
-    history_dictionary_val_loss = history.val_loss
-    np.save('TRTS_' + date + '/train/' + folder + '/train_history_val_loss.npy', history_dictionary_val_loss)
-    ## Acc
-    history_dictionary_acc = history.acc
-    np.save('TRTS_' + date + '/train/' + folder + '/train_history_acc.npy', history_dictionary_acc)
-    ## Val Acc
-    history_dictionary_val_acc = history.val_acc
-    np.save('TRTS_' + date + '/train/' + folder + '/train_history_val_acc.npy', history_dictionary_val_acc)
-    ## AUC ROC
-    # roc_auc_dictionary = rocauc.roc_auc
-    # np.save('TRTS_' + date + '/train/' + folder + '/train_rocauc_dict.npy', roc_auc_dictionary)
-    ## IS
-    # scores_dict = inception.score
-    # np.save('TRTS_' + date + '/train/' + folder + '/train_is.npy', scores_dict)
-    # mean_scores_dict = inception.mean
-    # np.save('TRTS_' + date + '/train/' + folder + '/train_is_mean.npy', mean_scores_dict)
-    # std_scores_dict = inception.std
-    # np.save('TRTS_' + date + '/train/' + folder + '/train_is_std.npy', std_scores_dict)
-
-    ### plot loss and validation_loss v/s epochs
-    plt.figure(1)
-    plt.yscale("log")
-    plt.plot(history.loss)
-    plt.plot(history.val_loss)
-    plt.title('model loss')
-    plt.ylabel('loss')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'val'], loc='upper right')
-    plt.savefig('TRTS_' + date + '/train/' + folder + '/train_loss.png')
-    ### plot acc and validation acc v/s epochs
-    plt.figure(2)
-    plt.yscale("log")
-    plt.plot(history.acc)
-    plt.plot(history.val_acc)
-    plt.title('model acc')
-    plt.ylabel('Acc')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'val'], loc='upper right')
-    plt.savefig('TRTS_' + date + '/train/' + folder + '/train_acc.png')
+    model = load_model('TSTR_' + date + '/train/' + syn_data_name + '/weights.best.trainonsynthetic.hdf5')
 
     print('Training metrics:')
-    # print('Inception Score:\nMean score : ', mean_scores_dict[-1])
-    # print('Std : ', std_scores_dict[-1])
 
-    # model = load_model('TRTS_' + date + '/train/' + folder + '/weights.best.train.hdf5')
-
-    score_train = model.evaluate(X_train, y_train, verbose=1)
-    score_val = model.evaluate(X_val, y_val, verbose=1)
+    score_train = model.evaluate(X_train_syn, y_train_syn, verbose=1)
+    score_val = model.evaluate(X_val_real, y_val_real, verbose=1)
 
     print('ACC : ', score_train[1])
     print('VAL_ACC : ', score_val[1])
     print('LOSS : ', score_train[0])
     print('VAL_LOSS : ', score_val[0])
 
-    ## Test on synthetic
+
+
+    #fine tunning
+    #K.set_value(model.optimizer.lr, 0.00005)
+
+    checkpoint = ModelCheckpoint('TSTR_' + date + '/train/' + syn_data_name + '/weights.best.trainfinetune.hdf5',
+                                 monitor='val_acc', verbose=1, save_best_only=True, mode='max')
+    earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=PATIENCE_FINE, verbose=1, mode='max')
+    model.fit(X_train_real, y_train_real, epochs=epochs, batch_size=batch_size, validation_data=(X_val_real, y_val_real),
+              callbacks=[history,
+                         checkpoint,
+                         earlyStopping  # ,
+                         # rocauc,
+                         # inception
+                         ])
+
+    model = load_model('TSTR_' + date + '/train/' + syn_data_name + '/weights.best.trainfinetune.hdf5')
+
+    ## Test on real
+
+    score_val = model.evaluate(X_val_real, y_val_real, verbose=1)
+
+    print('fine tune VAL_ACC : ', score_val[1])
+    print('fine tune VAL_LOSS : ', score_val[0])
+
 
     print('\nTest metrics:')
     print('\nTest on real:')
 
-    dataset_syn = folder + '_generated'
-
-    # sc, me, st = evaluation(X_test, y_test, num_classes)
-    # np.save('TRTS_' + date + '/test/' + folder + '/test_onreal_is.npy', sc)
-    # np.save('TRTS_' + date + '/test/' + folder + '/test_onreal_is_mean.npy', me)
-    # np.save('TRTS_' + date + '/test/' + folder + '/test_onreal_is_std.npy', st)
-
-    score = model.evaluate(X_test, y_test, verbose=1)
+    score = model.evaluate(X_test_real, y_test_real, verbose=1)
     print('Test loss:', score[0])
     print('Test accuracy:', score[1])
-
-    np.save('TRTS_' + date + '/test/' + folder + '/test_onreal_score.npy', score)
-
-    # y_pred = model.predict(X_test)
-    # roc = roc_auc_score(y_test, y_pred)
-    # print('auc roc', roc)
-    # np.save('TRTS_' + date + '/test/' + folder + '/test_onreal_rocauc.npy', roc)
 
     result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing'] = {
         'test loss on real': score[0], 'Test accuracy on real': score[1]  # , 'auc roc on real': roc
     }
 
+    ## Test on syn
+
     print('\nTest on synthetic:')
-    if irr == True:
-        X_train2, y_train2, X_val2, y_val2, X_test2, y_test2 = read_data_generated_irr(
-            'TSTR_data/generated/' + folder + '/' + dataset_syn + '.pkl')
-    else:
-        X_train2, y_train2, X_val2, y_val2, X_test2, y_test2 = read_data(
-            'TSTR_data/generated/' + folder + '/' + dataset_syn + '.pkl')
 
-    # sc, me, st = evaluation(X_test2, y_test2, num_classes)
-    # np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_is.npy', sc)
-    # np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_is_mean.npy', me)
-    # np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_is_std.npy', st)
-
-    score = model.evaluate(X_test2, y_test2, verbose=1)
+    score = model.evaluate(X_test_syn, y_test_syn, verbose=1)
     print('Test loss:', score[0])
     print('Test accuracy:', score[1])
 
-    # np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_score.npy', score)
-
-    # y_pred = model.predict(X_test2)
-    # roc = roc_auc_score(y_test2, y_pred)
-    # print('auc roc', roc)
-
     result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['training'] = {
-        #   'IS Mean': mean_scores_dict[-1],
-        #   'IS Std': std_scores_dict[-1], 'ACC': np.mean(history_dictionary_acc),
         'VAL_ACC': score_val[1], 'TRAIN_ACC': score_train[1],
         'TRAIN_LOSS': score_train[0], 'VAL_LOSS': score_val[0]
     }
 
     result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['test loss on syn'] = score[0]
     result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['Test accuracy on syn'] = score[1]
-    # result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['auc roc on syn'] = roc
-    # np.save('TRTS_' + date + '/test/' + folder + '/test_onsyn_rocauc.npy', roc)
+
     keras.backend.clear_session()
     del model
 

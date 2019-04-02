@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e579d4b7-5a0a-4dbd-9630-c1d5e19cf80a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/finetune_starlight.py" beforeDir="false" afterPath="$PROJECT_DIR$/finetune_starlight.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plot_all_same.py" beforeDir="false" afterPath="$PROJECT_DIR$/plot_all_same.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trtr_from_ft_starlight.py" beforeDir="false" afterPath="$PROJECT_DIR$/trtr_from_ft_starlight.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finetune_starlight_from_best_gan.py" beforeDir="false" afterPath="$PROJECT_DIR$/finetune_starlight_from_best_gan.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/finetune_starlight_multi_run_to_choose_best_gan.py" beforeDir="false" afterPath="$PROJECT_DIR$/finetune_starlight_multi_run_to_choose_best_gan.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,11 +34,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/plot_all_same.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="86" column="9" selection-start-line="86" selection-start-column="9" selection-end-line="86" selection-end-column="9" />
+            <state relative-caret-position="157">
+              <caret line="61" column="46" selection-start-line="61" selection-start-column="46" selection-end-line="61" selection-end-column="46" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -49,8 +49,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/finetune_starlight.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5205">
-              <caret line="347" column="14" selection-start-line="347" selection-start-column="14" selection-end-line="347" selection-end-column="14" />
+            <state relative-caret-position="276">
+              <caret line="349" lean-forward="true" selection-start-line="349" selection-end-line="349" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/finetune_starlight_multi_run_to_choose_best_gan.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4290">
+              <caret line="304" column="13" selection-start-line="304" selection-start-column="13" selection-end-line="304" selection-end-column="13" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -78,7 +90,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>3</find>
       <find>9</find>
       <find>dataset</find>
       <find>datasets_ori</find>
@@ -108,6 +119,7 @@
       <find>versions</find>
       <find>Test accuracy on real</find>
       <find>epochs</find>
+      <find>set</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -138,10 +150,11 @@
         <option value="$PROJECT_DIR$/tstr_starlight.py" />
         <option value="$PROJECT_DIR$/trts_starlight.py" />
         <option value="$PROJECT_DIR$/trtr_starlight.py" />
-        <option value="$PROJECT_DIR$/finetune_starlight_multi_run_to_choose_best_gan.py" />
         <option value="$PROJECT_DIR$/trtr_from_ft_starlight.py" />
         <option value="$PROJECT_DIR$/finetune_starlight.py" />
         <option value="$PROJECT_DIR$/plot_all_same.py" />
+        <option value="$PROJECT_DIR$/finetune_starlight_from_best_gan.py" />
+        <option value="$PROJECT_DIR$/finetune_starlight_multi_run_to_choose_best_gan.py" />
       </list>
     </option>
   </component>
@@ -394,12 +407,12 @@
       <workItem from="1554081008195" duration="75000" />
       <workItem from="1554087988989" duration="3551000" />
       <workItem from="1554134631565" duration="24559000" />
-      <workItem from="1554176528246" duration="1718000" />
+      <workItem from="1554176528246" duration="3173000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="131760000" />
+    <option name="totallyTimeSpent" value="133215000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -414,7 +427,7 @@
     <frame x="67" y="25" width="1299" height="743" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18914606" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.39185953" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -429,7 +442,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="11" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="12" visible="true" weight="0.31921825" />
+      <window_info anchor="bottom" id="Python Console" order="12" visible="true" weight="0.31921825" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -634,35 +647,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/finetune_starlight_from_best_gan.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-450" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/finetune_starlight_multi_run_to_choose_best_gan.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5006">
-          <caret line="15" column="19" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/trtr_starlight.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="39" column="4" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/finetune_starlight.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5205">
-          <caret line="347" column="14" selection-start-line="347" selection-start-column="14" selection-end-line="347" selection-end-column="14" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
@@ -678,10 +666,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/plot_all_same.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="86" column="9" selection-start-line="86" selection-start-column="9" selection-end-line="86" selection-end-column="9" />
+        <state relative-caret-position="157">
+          <caret line="61" column="46" selection-start-line="61" selection-start-column="46" selection-end-line="61" selection-end-column="46" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finetune_starlight_from_best_gan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finetune_starlight.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="349" lean-forward="true" selection-start-line="349" selection-end-line="349" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finetune_starlight_multi_run_to_choose_best_gan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4290">
+          <caret line="304" column="13" selection-start-line="304" selection-start-column="13" selection-end-line="304" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
           </folding>
         </state>
       </provider>
