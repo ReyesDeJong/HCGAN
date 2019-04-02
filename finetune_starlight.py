@@ -225,9 +225,9 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     ## callbacks
     history = my_callbacks.Histories()
 
-    weight_path_syn = os.path.join('TSTR_' + date, 'train', RESULTS_NAME, syn_data_name, 'weights.best.trainonsynthetic.hdf5')
-    check_dir(weight_path_syn)
-    checkpoint = ModelCheckpoint(weight_path_syn,
+    weight_folder_syn = os.path.join('TSTR_' + date, 'train', RESULTS_NAME, syn_data_name)
+    check_dir(weight_folder_syn)
+    checkpoint = ModelCheckpoint(os.path.join(weight_folder_syn, 'weights.best.trainonsynthetic.hdf5'),
                                  monitor=EARLY_STOP_ON, verbose=1, save_best_only=True, mode=EARLY_STOP_ON_COD)
     earlyStopping = EarlyStopping(monitor=EARLY_STOP_ON, min_delta=0.00000001, patience=PATIENCE, verbose=1, mode=EARLY_STOP_ON_COD)
 
@@ -239,7 +239,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
                          # inception
                          ])
 
-    model = load_model(weight_path_syn)
+    model = load_model(os.path.join(weight_folder_syn, 'weights.best.trainonsynthetic.hdf5'))
 
     print('Training metrics:')
 
@@ -256,8 +256,8 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     #fine tunning
     K.set_value(model.optimizer.lr, K.eval(model.optimizer.lr)*LR_VAL_MULT)
 
-    weight_path_fine_tune = os.path.join('TSTR_' + date, 'train', RESULTS_NAME, syn_data_name, 'weights.best.trainfinetune.hdf5')
-    checkpoint = ModelCheckpoint(weight_path_fine_tune,
+    weight_folder_fine_tune = os.path.join('TSTR_' + date, 'train', RESULTS_NAME, syn_data_name)
+    checkpoint = ModelCheckpoint(os.path.join(weight_folder_fine_tune, 'weights.best.trainfinetune.hdf5'),
                                  monitor=EARLY_STOP_ON, verbose=1, save_best_only=True, mode=EARLY_STOP_ON_COD)
     earlyStopping = EarlyStopping(monitor=EARLY_STOP_ON, min_delta=0.00000001, patience=PATIENCE_FINE, verbose=1, mode=EARLY_STOP_ON_COD)
     model.fit(X_train_real, y_train_real, epochs=epochs, batch_size=batch_size, validation_data=(X_val_real, y_val_real),
@@ -268,7 +268,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
                          # inception
                          ])
 
-    model = load_model(weight_path_fine_tune)
+    model = load_model(os.path.join(weight_folder_fine_tune, 'weights.best.trainfinetune.hdf5'))
 
     ## Test on real
 
