@@ -17,8 +17,9 @@ PATIENCE = 20
 BN_CONDITION = 'batch_norm_'  # ''
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
 versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
-RESULTS_NAME = 'trtr_FT_val_loss_%sdp_%.1f_pt_%i_%s' % (
-    BN_CONDITION, DROP_OUT_RATE, PATIENCE, BASE_REAL_NAME)
+AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'
+RESULTS_NAME = 'taugtr_%sdp_%.1f_pt_%i_%s_%s' % (
+BN_CONDITION, DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
 FOLDER_TO_SAVE_IN = 'fine_tune'
 RUNS = 10
 
