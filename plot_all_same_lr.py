@@ -44,7 +44,9 @@ def plot_metric(results_list, set_to_plot, metric_to_plot, x_axis_name, y_axis_n
     plt.ylabel(y_axis_name)
     #plt.ylim(0.9,1)
     plt.legend()
+    plt.savefig('fig.png')
     plt.show()
+
 
 
 def get_results_from_path(path):
