@@ -321,6 +321,9 @@
       <module name="HCGAN" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -359,11 +362,11 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.plot_all_same" />
       <item itemvalue="Python.finetune_starlight" />
       <item itemvalue="Python.finetune_starlight_multi_run_to_choose_best_gan" />
-      <item itemvalue="Python.trtr_from_ft_starlight" />
+      <item itemvalue="Python.plot_all_same" />
       <item itemvalue="Python.plot_all_same_lr" />
+      <item itemvalue="Python.trtr_from_ft_starlight" />
     </list>
     <recent_temporary>
       <list>

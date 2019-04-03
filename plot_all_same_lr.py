@@ -63,7 +63,7 @@ results_trtr_bn = get_results_from_path(
     os.path.join(
         PATH_TO_PROJECT, 'results', 'fine_tune',
         #'random_gan_resultstrtr_FT_batch_norm_dp_0.5_pt_20_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
-        'trtr_FT_val_loss_batch_norm_dp_0.5_pt_20_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl'
+        'trtr_FT_val_loss_batch_norm_dp_0.5_pt_20_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
 )
 
 results_fine_tune = get_results_from_path(
@@ -113,19 +113,19 @@ metric_to_plot_trtr = 'Test accuracy on real'
 #             [metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr],
 #             '% of least populated classes kept', 'Accuracy', plot_label=['TRTR', 'Aug', 'Aug_BEST'])
 
-# plot_metric([results_trtr_bn, results_fine_tune_3], set_to_plot,
-#             [metric_to_plot_trtr, metric_to_plot_trtr],
-# '% of least populated classes kept', 'Accuracy', plot_label = ['TRTR_BN',
-#                                                                'Fine_tune_x3'
-#                                                                ])
+plot_metric([results_trtr_bn, results_fine_tune_3], set_to_plot,
+            [metric_to_plot_trtr, metric_to_plot_trtr],
+            '% of least populated classes kept', 'Accuracy', plot_label = ['TRTR_BN',
+                                                               'Fine_tune_x3'
+                                                               ])
 
-plot_metric(
-    [results_fine_tune_3, results_fine_tune_1, results_fine_tune_03, results_fine_tune_01],
-    'training',
-    ['VAL_ACC', 'VAL_ACC', 'VAL_ACC', 'VAL_ACC'],
-    '% of least populated classes kept', 'Accuracy',
-    plot_label = ['Fine_tune_x3', 'Fine_tune_x1', 'Fine_tune_x03', 'Fine_tune_x01'])
-
+# plot_metric(
+#     [results_fine_tune_3, results_fine_tune_1, results_fine_tune_03, results_fine_tune_01],
+#     'training',
+#     ['VAL_ACC', 'VAL_ACC', 'VAL_ACC', 'VAL_ACC'],
+#     '% of least populated classes kept', 'Accuracy',
+#     plot_label = ['Fine_tune_x3', 'Fine_tune_x1', 'Fine_tune_x03', 'Fine_tune_x01'])
+#
 
 
 # plot_metric(
