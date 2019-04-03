@@ -118,12 +118,12 @@ metric_to_plot_trtr = 'Test accuracy on real'
 #                                                                'Fine_tune_x3'
 #                                                                ])
 
-plot_metric([results_fine_tune_3, results_fine_tune_1, results_fine_tune_03, results_fine_tune_01],
-            set_to_plot,
-            [metric_to_plot_trtr, metric_to_plot_trtr],
-'% of least populated classes kept', 'Accuracy', plot_label = ['TRTR_BN',
-                                                               'Fine_tune_x3'
-                                                               ])
+plot_metric(
+    [results_fine_tune_3, results_fine_tune_1, results_fine_tune_03, results_fine_tune_01],
+    'training',
+    ['VAL_ACC', 'VAL_ACC', 'VAL_ACC', 'VAL_ACC'],
+    '% of least populated classes kept', 'Accuracy',
+    plot_label = ['Fine_tune_x3', 'Fine_tune_x1', 'Fine_tune_x03', 'Fine_tune_x01'])
 
 
 
