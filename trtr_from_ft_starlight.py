@@ -17,7 +17,7 @@ PATIENCE = 20
 BN_CONDITION = 'batch_norm_'  # ''
 BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
 versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
-RESULTS_NAME = 'trtr_FT_%sdp_%.1f_pt_%i_%s' % (
+RESULTS_NAME = 'trtr_FT_val_loss_%sdp_%.1f_pt_%i_%s' % (
     BN_CONDITION, DROP_OUT_RATE, PATIENCE, BASE_REAL_NAME)
 FOLDER_TO_SAVE_IN = 'fine_tune'
 RUNS = 10
@@ -31,6 +31,8 @@ BEST_METRIC_KEY = 'VAL_ACC'
 
 PATIENCE = 30
 PATIENCE_FINE = 200
+EARLY_STOP_ON = 'val_loss'
+EARLY_STOP_ON_COD = 'min'
 
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -224,8 +226,8 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     history = my_callbacks.Histories()
 
     checkpoint = ModelCheckpoint('TSTR_' + date + '/train/' + syn_data_name + '/weights.best.trainonsynthetic.hdf5',
-                                 monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=PATIENCE, verbose=1, mode='max')
+                                 monitor=EARLY_STOP_ON, verbose=1, save_best_only=True, mode=EARLY_STOP_ON_COD)
+    earlyStopping = EarlyStopping(monitor=EARLY_STOP_ON, min_delta=0.00000001, patience=PATIENCE, verbose=1, mode=EARLY_STOP_ON_COD)
 
     model.fit(X_train_real, y_train_real, epochs=epochs, batch_size=batch_size, validation_data=(X_val_real, y_val_real),
               callbacks=[history,
@@ -239,7 +241,7 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
     print('Training metrics:')
 
-    score_train = model.evaluate(X_train_syn, y_train_syn, verbose=1)
+    score_train = model.evaluate(X_train_real, y_train_real, verbose=1)
     score_val = model.evaluate(X_val_real, y_val_real, verbose=1)
 
     print('ACC : ', score_train[1])
@@ -276,12 +278,12 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
     print('\nTest metrics:')
     print('\nTest on real:')
 
-    score = model.evaluate(X_test_real, y_test_real, verbose=1)
-    print('Test loss:', score[0])
-    print('Test accuracy:', score[1])
+    score_test = model.evaluate(X_test_real, y_test_real, verbose=1)
+    print('Test loss:', score_test[0])
+    print('Test accuracy:', score_test[1])
 
     result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing'] = {
-        'test loss on real': score[0], 'Test accuracy on real': score[1]  # , 'auc roc on real': roc
+        'test loss on real': score_test[0], 'Test accuracy on real': score_test[1]  # , 'auc roc on real': roc
     }
 
     ## Test on syn
@@ -297,8 +299,8 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
         'TRAIN_LOSS': score_train[0], 'VAL_LOSS': score_val[0]
     }
 
-    result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['test loss on syn'] = score[0]
-    result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['Test accuracy on syn'] = score[1]
+    #result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['test loss on syn'] = score[0]
+    #result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['Test accuracy on syn'] = score[1]
 
     keras.backend.clear_session()
     del model
@@ -342,10 +344,10 @@ if __name__ == '__main__':
 
     check_dir(os.path.join('results', FOLDER_TO_SAVE_IN))
     pickle.dump(result_dict_for_different_versions_runs, open(
-        os.path.join('results', FOLDER_TO_SAVE_IN, 'single_gan_results' + RESULTS_NAME + '_'.join(versions) + '.pkl'),
+        os.path.join('results', FOLDER_TO_SAVE_IN,  RESULTS_NAME + '_'.join(versions) + '.pkl'),
         "wb"))
     check_dir(os.path.join('results', FOLDER_TO_SAVE_IN))
     pickle.dump(result_dict_for_different_versions_runs, open(
-        os.path.join('results', FOLDER_TO_SAVE_IN, 'single_gan_results' + RESULTS_NAME + '_'.join(versions) + '.pkl'),
+        os.path.join('results', FOLDER_TO_SAVE_IN, RESULTS_NAME + '_'.join(versions) + '.pkl'),
         "wb"))
 
