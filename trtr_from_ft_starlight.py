@@ -15,9 +15,9 @@ import keras.backend as K
 DROP_OUT_RATE = 0.5
 PATIENCE = 20
 BN_CONDITION = 'batch_norm_'  # ''
-BASE_REAL_NAME = 'starlight_new_naive_'#'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
+BASE_REAL_NAME = 'starlight_new_basic_'#'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
 versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
-RESULTS_NAME = 'trtr_naive_%s' % (
+RESULTS_NAME = 'trtr_basic_%s' % (
     BASE_REAL_NAME)
 FOLDER_TO_SAVE_IN = 'new_results'
 RUNS = 10
