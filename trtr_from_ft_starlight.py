@@ -15,17 +15,18 @@ import keras.backend as K
 DROP_OUT_RATE = 0.5
 PATIENCE = 20
 BN_CONDITION = 'batch_norm_'  # ''
-BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
+BASE_REAL_NAME = 'starlight_new_bal_'#'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
 versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
-RESULTS_NAME = 'trtr_FT_val_loss_%sdp_%.1f_pt_%i_%s' % (
-    BN_CONDITION, DROP_OUT_RATE, PATIENCE, BASE_REAL_NAME)
-FOLDER_TO_SAVE_IN = 'fine_tune'
+RESULTS_NAME = 'trtr_balanced_%s' % (
+    BASE_REAL_NAME)
+FOLDER_TO_SAVE_IN = 'new_results'
 RUNS = 10
 
 #from best 50-50 gan
 AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'
+BASE_GAN_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
 BEST_GAN_NAME = 'trts_%sdp_%.1f_pt_%i_%s_%s' % (
-BN_CONDITION, DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
+BN_CONDITION, DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_GAN_NAME)
 SET_KEY_FOR_BEST_METRIC = 'training'
 BEST_METRIC_KEY = 'VAL_ACC'
 
@@ -198,8 +199,8 @@ def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v='')
 
     ## Train on synthetic
 
-    X_train_syn, y_train_syn, X_val_syn, y_val_syn, X_test_syn, y_test_syn = read_data_generated_irr(
-        os.path.join('TSTR_data', 'generated', syn_data_name, dataset_syn_pkl))
+    # X_train_syn, y_train_syn, X_val_syn, y_val_syn, X_test_syn, y_test_syn = read_data_generated_irr(
+    #     os.path.join('TSTR_data', 'generated', syn_data_name, dataset_syn_pkl))
     X_train_real, y_train_real, X_val_real, y_val_real, X_test_real, y_test_real = read_data_original_irr(
         os.path.join('TSTR_data', real_data_folder, dataset_real_pkl))
 

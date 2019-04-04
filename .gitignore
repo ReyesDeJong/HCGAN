@@ -26,5 +26,6 @@ workspace.xml
 *.iws
 *.npy
 *.hdf5
+*.save
 *.h5
 weights.best.trainonsynthetic.hdf5
