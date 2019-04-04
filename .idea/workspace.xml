@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e579d4b7-5a0a-4dbd-9630-c1d5e19cf80a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tstr_catalina_conf_mat.py" beforeDir="false" afterPath="$PROJECT_DIR$/tstr_catalina_conf_mat.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -80,8 +80,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tstr_catalina_conf_mat.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="339" column="96" selection-start-line="339" selection-start-column="96" selection-end-line="339" selection-end-column="96" />
+            <state relative-caret-position="2265">
+              <caret line="164" column="49" selection-start-line="164" selection-start-column="49" selection-end-line="164" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -448,12 +448,12 @@
       <workItem from="1554262541213" duration="2530000" />
       <workItem from="1554308538956" duration="8641000" />
       <workItem from="1554326713274" duration="4509000" />
-      <workItem from="1554403534900" duration="10163000" />
+      <workItem from="1554403534900" duration="11758000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="164781000" />
+    <option name="totallyTimeSpent" value="166376000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -532,7 +532,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/HCGAN$trtr_catalina_conf_mat.coverage" NAME="trtr_catalina_conf_mat Coverage Results" MODIFIED="1554415949602" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/HCGAN$tstr_catalina_conf_mat.coverage" NAME="tstr_catalina_conf_mat Coverage Results" MODIFIED="1554416687695" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HCGAN$tstr_catalina_conf_mat.coverage" NAME="tstr_catalina_conf_mat Coverage Results" MODIFIED="1554417325994" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
@@ -805,8 +805,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tstr_catalina_conf_mat.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="339" column="96" selection-start-line="339" selection-start-column="96" selection-end-line="339" selection-end-column="96" />
+        <state relative-caret-position="2265">
+          <caret line="164" column="49" selection-start-line="164" selection-start-column="49" selection-end-line="164" selection-end-column="49" />
         </state>
       </provider>
     </entry>

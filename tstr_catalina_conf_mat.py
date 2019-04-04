@@ -162,7 +162,7 @@ def main(result_dict={}, catalina_n_classes=1):
 
     # if else
     # irr = True
-    dataset_syn_pkl = syn_data_name + '_generated_20000.pkl'
+    dataset_syn_pkl = syn_data_name + '_generated.pkl'
     # one_d = False
 
     ## Train on real
