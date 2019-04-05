@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e579d4b7-5a0a-4dbd-9630-c1d5e19cf80a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/finetune_starlight_multi_run_to_choose_best_gan.py" beforeDir="false" afterPath="$PROJECT_DIR$/finetune_starlight_multi_run_to_choose_best_gan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plot_all_same.py" beforeDir="false" afterPath="$PROJECT_DIR$/plot_all_same.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,46 +33,13 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/finetune_starlight_multi_run_to_choose_best_gan.py">
+        <entry file="file://$PROJECT_DIR$/projection/tsfresh_curves_tinkerin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="58">
-              <caret line="267" column="46" selection-start-line="267" selection-start-column="46" selection-end-line="267" selection-end-column="46" />
+            <state relative-caret-position="232">
+              <caret line="91" selection-start-line="91" selection-end-line="134" selection-end-column="14" />
               <folding>
-                <element signature="e#0#25#0" expanded="true" />
+                <element signature="e#0#20#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plot_all_same.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="585">
-              <caret line="114" column="1" selection-start-line="114" selection-start-column="1" selection-end-line="114" selection-end-column="1" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/finetune_starlight.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#25#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/finetune_starlight_from_best_gan.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="604">
-              <caret line="327" column="92" selection-start-line="326" selection-start-column="73" selection-end-line="327" selection-end-column="92" />
             </state>
           </provider>
         </entry>
@@ -159,7 +124,10 @@
         <option value="$PROJECT_DIR$/tstr_catalina_conf_mat.py" />
         <option value="$PROJECT_DIR$/finetune_starlight.py" />
         <option value="$PROJECT_DIR$/plot_all_same.py" />
+        <option value="$PROJECT_DIR$/projection/tsfresh_tinkerin.py" />
         <option value="$PROJECT_DIR$/finetune_starlight_multi_run_to_choose_best_gan.py" />
+        <option value="$PROJECT_DIR$/projection/raw_curves_tinkerin.py" />
+        <option value="$PROJECT_DIR$/projection/tsfresh_curves_tinkerin.py" />
       </list>
     </option>
   </component>
@@ -187,7 +155,7 @@
             <path>
               <item name="HCGAN" type="b2602c69:ProjectViewProjectNode" />
               <item name="HCGAN" type="462c0819:PsiDirectoryNode" />
-              <item name="TSTR_data" type="462c0819:PsiDirectoryNode" />
+              <item name="projection" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -199,7 +167,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../harvardgan" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/projection" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -208,12 +176,13 @@
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/TSTR_data" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/projection" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/TSTR_data" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -228,7 +197,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.finetune_starlight_multi_run_to_choose_best_gan">
+  <component name="RunManager" selected="Python.tsfresh_curves_tinkerin">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="HCGAN" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -270,20 +239,17 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="plot_all_same_lr" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="raw_curves_tinkerin" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="HCGAN" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/projection" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/plot_all_same_lr.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/projection/raw_curves_tinkerin.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -314,20 +280,17 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="trtr_from_ft_starlight" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="tsfresh_curves_tinkerin" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="HCGAN" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/projection" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/trtr_from_ft_starlight.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/projection/tsfresh_curves_tinkerin.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -359,19 +322,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.plot_all_same_lr" />
-      <item itemvalue="Python.trtr_from_ft_starlight" />
       <item itemvalue="Python.trtr_catalina_conf_mat" />
       <item itemvalue="Python.tstr_catalina_conf_mat" />
       <item itemvalue="Python.finetune_starlight_multi_run_to_choose_best_gan" />
+      <item itemvalue="Python.raw_curves_tinkerin" />
+      <item itemvalue="Python.tsfresh_curves_tinkerin" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.tsfresh_curves_tinkerin" />
+        <item itemvalue="Python.raw_curves_tinkerin" />
         <item itemvalue="Python.finetune_starlight_multi_run_to_choose_best_gan" />
         <item itemvalue="Python.tstr_catalina_conf_mat" />
         <item itemvalue="Python.trtr_catalina_conf_mat" />
-        <item itemvalue="Python.trtr_from_ft_starlight" />
-        <item itemvalue="Python.plot_all_same_lr" />
       </list>
     </recent_temporary>
   </component>
@@ -415,12 +378,12 @@
       <workItem from="1554308538956" duration="8641000" />
       <workItem from="1554326713274" duration="4509000" />
       <workItem from="1554403534900" duration="11759000" />
-      <workItem from="1554474394071" duration="11473000" />
+      <workItem from="1554474394071" duration="24330000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="177850000" />
+    <option name="totallyTimeSpent" value="190707000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -434,7 +397,7 @@
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29164362" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29164362" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -449,7 +412,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="11" />
-      <window_info anchor="bottom" id="Python Console" order="12" visible="true" weight="0.50863934" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="12" visible="true" weight="0.41792658" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -499,6 +462,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/HCGAN$trtr_catalina_conf_mat.coverage" NAME="trtr_catalina_conf_mat Coverage Results" MODIFIED="1554415949602" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/HCGAN$tstr_catalina_conf_mat.coverage" NAME="tstr_catalina_conf_mat Coverage Results" MODIFIED="1554417325994" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/HCGAN$raw_curves_tinkerin.coverage" NAME="raw_curves_tinkerin Coverage Results" MODIFIED="1554495095115" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/projection" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
@@ -746,6 +710,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/plot_all_same.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1069">
+          <caret line="114" column="1" selection-start-line="114" selection-start-column="1" selection-end-line="114" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/tf/lib/python3.6/site-packages/sklearn/preprocessing/data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="624" selection-start-line="624" selection-end-line="624" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/tf/lib/python3.6/site-packages/matplotlib/artist.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="911" selection-start-line="911" selection-end-line="911" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projection/tsfresh_tinkerin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projection/raw_curves_tinkerin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="51" column="33" selection-start-line="51" selection-start-column="33" selection-end-line="51" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finetune_starlight_multi_run_to_choose_best_gan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" selection-start-line="8" selection-end-line="8" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/finetune_starlight.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -756,22 +768,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/plot_all_same.py">
+    <entry file="file://$PROJECT_DIR$/projection/tsfresh_curves_tinkerin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="114" column="1" selection-start-line="114" selection-start-column="1" selection-end-line="114" selection-end-column="1" />
+        <state relative-caret-position="232">
+          <caret line="91" selection-start-line="91" selection-end-line="134" selection-end-column="14" />
           <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/finetune_starlight_multi_run_to_choose_best_gan.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="58">
-          <caret line="267" column="46" selection-start-line="267" selection-start-column="46" selection-end-line="267" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#0#20#0" expanded="true" />
           </folding>
         </state>
       </provider>

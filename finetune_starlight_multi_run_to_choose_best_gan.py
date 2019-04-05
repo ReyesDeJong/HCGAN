@@ -43,7 +43,6 @@ def targets_to_numbers(targets):
     target_keys = np.unique(targets)
     target_keys_idxs = np.argsort(np.unique(targets))
     targets_as_numbers = target_keys_idxs[np.searchsorted(target_keys, targets, sorter=target_keys_idxs)]
-    print(np.mean(targets_as_numbers == targets_as_numbers))
     return targets_as_numbers
 
 
