@@ -1,305 +1,173 @@
 from model_keras import *
-from keras.callbacks import History, ModelCheckpoint, EarlyStopping
+from keras.callbacks import ModelCheckpoint, EarlyStopping
 import pickle
 import my_callbacks
 import numpy as np
 from keras.utils import to_categorical
 import os
-import matplotlib.pyplot as plt
+import sys
 from sklearn.utils import shuffle
-import shutil
-from keras.models import Model, load_model
-from sklearn.metrics import roc_auc_score, accuracy_score
+from keras.models import load_model
 import keras
 import keras.backend as K
 
+PATH_TO_PROJECT = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(PATH_TO_PROJECT)
+
+MIN_LIM = 10
+MAX_LIM = 100
+LR_VAL_MULT = 3
 DROP_OUT_RATE = 0.5
-PATIENCE = 20
-BN_CONDITION = 'batch_norm_'  # ''
-BASE_REAL_NAME = 'starlight_noisy_irregular_all_same_set_amp_balanced_larger_train'
-AUGMENTED_OR_NOT_EXTRA_STR = '_augmented_50-50'  # ''##
-versions = ['v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9']
-RUNS = 10
-RESULTS_NAME = 'fine_tune_SAME_lr_%sdp_%.1f_pt_%i_%s_%s' % (
-BN_CONDITION, DROP_OUT_RATE, PATIENCE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
-FOLDER_TO_SAVE_IN = 'fine_tune'
-
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-date = '2803'
-SET_KEY_FOR_BEST_METRIC = 'training'
-BEST_METRIC_KEY = 'VAL_ACC'
-
 PATIENCE = 30
 PATIENCE_FINE = 200
+TEST_SET_KEY = 'testing'
+TEST_METRIC_KEY = 'Test accuracy on real'
+SET_KEY_FOR_BEST_METRIC = 'training'
+BEST_METRIC_KEY = 'VAL_ACC'
+EARLY_STOP_ON = 'val_loss'
+EARLY_STOP_ON_COD = 'min'
+BN_CONDITION = 'batch_norm_'
+BASE_REAL_NAME = 'starlight_new_bal_'
+AUGMENTED_OR_NOT_EXTRA_STR = ''  # '_augmented_50-50'  # #
+versions = ['', 'v2', 'v3', 'v4', 'v5']
+RUNS = 10
+RESULTS_NAME = 'fine_tune_lr%s_dp%.1f%s_%s' % (
+    BN_CONDITION, DROP_OUT_RATE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
+FOLDER_TO_SAVE_IN = 'new_results'
 
-
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 date = '2803'
 
 
-def main(result_dict={}, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE=1.0, v=''):
-    real_data_folder = os.path.join('datasets_original', 'REAL')
-    dataset_real_pkl = '%s%.2f.pkl' % (BASE_REAL_NAME, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    syn_data_name = os.path.join('%s%s%.2f' % (BASE_REAL_NAME, v, PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE))
+def targets_to_numbers(targets):
+    target_keys = np.unique(targets)
+    target_keys_idxs = np.argsort(np.unique(targets))
+    targets_as_numbers = target_keys_idxs[np.searchsorted(target_keys, targets, sorter=target_keys_idxs)]
+    print(np.mean(targets_as_numbers == targets_as_numbers))
+    return targets_as_numbers
 
-    PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY = str(PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE)
-    result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY] = {'training': {}, 'testing': {}}
-    print("REAL Training set to load %s" % dataset_real_pkl)
+
+def get_data_from_set(set, magnitude_key, time_key):
+    magnitudes = np.asarray(set[magnitude_key])
+    time = np.asarray(set[time_key])
+    x = np.stack((magnitudes, time), axis=-1)
+    x = x.reshape(x.shape[0], x.shape[1], 1, x.shape[2])
+    y = np.asarray(set['class'])
+    x, y = shuffle(x, y, random_state=42)
+    y = targets_to_numbers(y)
+    y = to_categorical(y)  # to one-hot
+    return x, y
+
+
+def read_data_irregular_sampling(file, magnitude_key='original_magnitude', time_key='time', verbose=False):
+    dataset_partitions = np.load(file)
+    if verbose:
+        print(dataset_partitions[0].keys())
+    x_train, y_train = get_data_from_set(dataset_partitions[0], magnitude_key, time_key)
+    x_val, y_val = get_data_from_set(dataset_partitions[1], magnitude_key, time_key)
+    x_test, y_test = get_data_from_set(dataset_partitions[2], magnitude_key, time_key)
+    return x_train, y_train, x_val, y_val, x_test, y_test
+
+
+def check_dir(directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+
+def main(result_dict={}, percentage_of_samples_to_keep_for_imbalance=1.0, v=''):
+    real_data_folder = os.path.join('datasets_original', 'REAL')
+    dataset_real_pkl = '%s%.2f.pkl' % (BASE_REAL_NAME, percentage_of_samples_to_keep_for_imbalance)
+    syn_data_name = os.path.join('%s%s%.2f' % (BASE_REAL_NAME, v, percentage_of_samples_to_keep_for_imbalance))
+
+    percentage_of_samples_to_keep_for_imbalance_key = str(percentage_of_samples_to_keep_for_imbalance)
+    result_dict[percentage_of_samples_to_keep_for_imbalance_key] = {'training': {}, 'testing': {}}
+    print("\nREAL Training set to load %s" % dataset_real_pkl)
     print("SYN Training set to load %s" % syn_data_name)
 
-    def read_data(file):
-
-        with open(file, 'rb') as f: data = pickle.load(f)
-
-        X_train = np.asarray(data[0]['generated_magnitude'])
-        # print(X_train.shape)
-        X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], 1, 1)
-        # print(X_train.shape)
-        y_train = np.asarray(data[0]['class'])
-        X_train, y_train = shuffle(X_train, y_train, random_state=42)
-        y_train = change_classes(y_train)
-        y_train = to_categorical(y_train)
-
-        X_val = np.asarray(data[1]['generated_magnitude'])
-        X_val = X_val.reshape(X_val.shape[0], X_val.shape[1], 1, 1)
-        y_val = np.asarray(data[1]['class'])
-        y_val = change_classes(y_val)
-        y_val = to_categorical(y_val)
-        X_val, y_val = shuffle(X_val, y_val, random_state=42)
-
-        X_test = np.asarray(data[2]['generated_magnitude'])
-        X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], 1, 1)
-        y_test = np.asarray(data[2]['class'])
-        y_test = change_classes(y_test)
-        y_test = to_categorical(y_test)
-        X_test, y_test = shuffle(X_test, y_test, random_state=42)
-
-        return X_train, y_train, X_val, y_val, X_test, y_test
-
-    def read_data_original_irr(file):
-
-        with open(file, 'rb') as f: data = pickle.load(f)
-
-        print(data[0].keys())
-
-        mgt = np.asarray(data[0]['original_magnitude'])
-        t = np.asarray(data[0]['time'])
-        X_train = np.stack((mgt, t), axis=-1)
-        X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], 1, X_train.shape[2])
-
-        y_train = np.asarray(data[0]['class'])
-
-        X_train, y_train = shuffle(X_train, y_train, random_state=42)
-        y_train = change_classes(y_train)
-        y_train = to_categorical(y_train)
-
-        mgt = np.asarray(data[1]['original_magnitude'])
-        t = np.asarray(data[1]['time'])
-        X_val = np.stack((mgt, t), axis=-1)
-        X_val = X_val.reshape(X_val.shape[0], X_val.shape[1], 1, X_val.shape[2])
-        y_val = np.asarray(data[1]['class'])
-        y_val = change_classes(y_val)
-        y_val = to_categorical(y_val)
-        X_val, y_val = shuffle(X_val, y_val, random_state=42)
-
-        mgt = np.asarray(data[2]['original_magnitude'])
-        t = np.asarray(data[2]['time'])
-        X_test = np.stack((mgt, t), axis=-1)
-        X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], 1, X_test.shape[2])
-        y_test = np.asarray(data[2]['class'])
-        y_test = change_classes(y_test)
-        y_test = to_categorical(y_test)
-        X_test, y_test = shuffle(X_test, y_test, random_state=42)
-
-        return X_train, y_train, X_val, y_val, X_test, y_test
-
-    def read_data_generated_irr(file):
-
-        with open(file, 'rb') as f: data = pickle.load(f)
-
-        print(data[0].keys())
-
-        mgt = np.asarray(data[0]['generated_magnitude'])
-        t = np.asarray(data[0]['time'])
-        X_train = np.stack((mgt, t), axis=-1)
-        X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], 1, X_train.shape[2])
-        # print(X_train.shape)
-        y_train = np.asarray(data[0]['class'])
-        print(np.unique(y_train))
-        X_train, y_train = shuffle(X_train, y_train, random_state=42)
-        #  for i in y_train:
-        #     if i != None:
-        #        print(i)
-        y_train = change_classes(y_train)
-        y_train = to_categorical(y_train)
-
-        mgt = np.asarray(data[1]['generated_magnitude'])
-        t = np.asarray(data[1]['time'])
-        X_val = np.stack((mgt, t), axis=-1)
-        X_val = X_val.reshape(X_val.shape[0], X_val.shape[1], 1, X_val.shape[2])
-        y_val = np.asarray(data[1]['class'])
-        y_val = change_classes(y_val)
-        y_val = to_categorical(y_val)
-        X_val, y_val = shuffle(X_val, y_val, random_state=42)
-
-        mgt = np.asarray(data[2]['generated_magnitude'])
-        t = np.asarray(data[2]['time'])
-        X_test = np.stack((mgt, t), axis=-1)
-        X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], 1, X_test.shape[2])
-        y_test = np.asarray(data[2]['class'])
-        y_test = change_classes(y_test)
-        y_test = to_categorical(y_test)
-        X_test, y_test = shuffle(X_test, y_test, random_state=42)
-
-        return X_train, y_train, X_val, y_val, X_test, y_test
-
-    def change_classes(targets):
-        # print(targets)
-        target_keys = np.unique(targets)
-        # print(target_keys)
-        target_keys_idxs = np.argsort(np.unique(targets))
-        targets = target_keys_idxs[np.searchsorted(target_keys, targets, sorter=target_keys_idxs)]
-
-        return targets
-
-    def open_data(file):
-
-        with open(file, 'rb') as f: data = pickle.load(f)
-
-        print(len(data['generated_magnitude']))
-
-        X = np.asarray(data['generated_magnitude'])
-        X = X.reshape(X.shape[0], X.shape[1], 1, 1)
-        y = np.asarray(data['class'])
-        X, y = shuffle(X, y, random_state=42)
-        y = change_classes(y)
-        y = to_categorical(y)
-
-        return X, y
-
-    def check_dir(directory):
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-
-    check_dir('TSTR_' + date)
-    check_dir('TSTR_' + date + '/train/')
-    check_dir('TSTR_' + date + '/train/')
-    check_dir('TSTR_' + date + '/train/' + syn_data_name)
-    check_dir('TSTR_' + date + '/test/')
-    check_dir('TSTR_' + date + '/test/' + syn_data_name)
-
-    # if else
-    irr = True
     dataset_syn_pkl = syn_data_name + '_generated.pkl'
-    one_d = False
+
+    # load syn and real data
+    x_train_syn, y_train_syn, x_val_syn, y_val_syn, x_test_syn, y_test_syn = read_data_irregular_sampling(
+        os.path.join('TSTR_data', 'generated', syn_data_name, dataset_syn_pkl), magnitude_key='generated_magnitude',
+        time_key='time')
+    x_train_real, y_train_real, x_val_real, y_val_real, x_test_real, y_test_real = read_data_irregular_sampling(
+        os.path.join('TSTR_data', real_data_folder, dataset_real_pkl), magnitude_key='generated_magnitude',
+        time_key='time')
 
     ## Train on synthetic
-
-    X_train_syn, y_train_syn, X_val_syn, y_val_syn, X_test_syn, y_test_syn = read_data_generated_irr(
-        os.path.join('TSTR_data', 'generated', syn_data_name, dataset_syn_pkl))
-    X_train_real, y_train_real, X_val_real, y_val_real, X_test_real, y_test_real = read_data_original_irr(
-        os.path.join('TSTR_data', real_data_folder, dataset_real_pkl))
-
-
-    print('')
-    print('Training new model')
-    print('')
-
+    print('\nTraining new model\n')
     batch_size = 512
     epochs = 10000
-
     num_classes = 3
-
+    # choose model
     m = Model_(batch_size, 100, num_classes, drop_rate=DROP_OUT_RATE)
-
     if BN_CONDITION == 'batch_norm_':
         model = m.cnn2_batch()
     else:
         model = m.cnn2()
 
     model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-
     ## callbacks
     history = my_callbacks.Histories()
+    weight_folder = os.path.join('TSTR_' + date, 'train', RESULTS_NAME, syn_data_name)
+    check_dir(weight_folder)
+    checkpoint = ModelCheckpoint(os.path.join(weight_folder, 'weights.best.trainonsynthetic.hdf5'),
+                                 monitor=EARLY_STOP_ON, verbose=1, save_best_only=True, mode=EARLY_STOP_ON_COD)
+    earlyStopping = EarlyStopping(monitor=EARLY_STOP_ON, min_delta=0.00000001, patience=PATIENCE, verbose=1,
+                                  mode=EARLY_STOP_ON_COD)
 
-    checkpoint = ModelCheckpoint('TSTR_' + date + '/train/' + syn_data_name + '/weights.best.trainonsynthetic.hdf5',
-                                 monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=PATIENCE, verbose=1, mode='max')
-
-    model.fit(X_train_syn, y_train_syn, epochs=epochs, batch_size=batch_size, validation_data=(X_val_real, y_val_real),
+    model.fit(x_train_syn, y_train_syn, epochs=epochs, batch_size=batch_size, validation_data=(x_val_real, y_val_real),
               callbacks=[history,
                          checkpoint,
-                         earlyStopping  # ,
-                         # rocauc,
-                         # inception
+                         earlyStopping
                          ])
+    model = load_model(os.path.join(weight_folder, 'weights.best.trainonsynthetic.hdf5'))
 
-    model = load_model('TSTR_' + date + '/train/' + syn_data_name + '/weights.best.trainonsynthetic.hdf5')
-
-    print('Training metrics:')
-
-    score_train = model.evaluate(X_train_syn, y_train_syn, verbose=1)
-    score_val = model.evaluate(X_val_real, y_val_real, verbose=1)
-
+    print('Syn Training metrics:')
+    score_train = model.evaluate(x_train_syn, y_train_syn, verbose=1)
+    score_val = model.evaluate(x_val_real, y_val_real, verbose=1)
+    score_tstr = model.evaluate(x_test_real, y_test_real, verbose=1)
     print('ACC : ', score_train[1])
     print('VAL_ACC : ', score_val[1])
     print('LOSS : ', score_train[0])
     print('VAL_LOSS : ', score_val[0])
+    print('TSTR loss: %f ;-; accuracy: %f' % (score_tstr[0], score_tstr[1]))
+    result_dict[percentage_of_samples_to_keep_for_imbalance_key]['testing'] = {
+        'tstr loss': score_tstr[0], 'tstr accuracy': score_tstr[1]
+    }
 
+    # fine tunning
+    K.set_value(model.optimizer.lr, K.eval(model.optimizer.lr) * LR_VAL_MULT)
+    checkpoint = ModelCheckpoint(os.path.join(weight_folder, 'weights.best.trainfinetune.hdf5'),
+                                 monitor=EARLY_STOP_ON, verbose=1, save_best_only=True, mode=EARLY_STOP_ON_COD)
+    earlyStopping = EarlyStopping(monitor=EARLY_STOP_ON, min_delta=0.00000001, patience=PATIENCE_FINE, verbose=1,
+                                  mode=EARLY_STOP_ON_COD)
 
-
-    #fine tunning
-    #K.set_value(model.optimizer.lr, 0.00005)
-
-    checkpoint = ModelCheckpoint('TSTR_' + date + '/train/' + syn_data_name + '/weights.best.trainfinetune.hdf5',
-                                 monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    earlyStopping = EarlyStopping(monitor='val_acc', min_delta=0.00000001, patience=PATIENCE_FINE, verbose=1, mode='max')
-    model.fit(X_train_real, y_train_real, epochs=epochs, batch_size=batch_size, validation_data=(X_val_real, y_val_real),
+    model.fit(x_train_real, y_train_real, epochs=epochs, batch_size=batch_size,
+              validation_data=(x_val_real, y_val_real),
               callbacks=[history,
                          checkpoint,
-                         earlyStopping  # ,
-                         # rocauc,
-                         # inception
+                         earlyStopping
                          ])
-
-    model = load_model('TSTR_' + date + '/train/' + syn_data_name + '/weights.best.trainfinetune.hdf5')
+    model = load_model(os.path.join(weight_folder, 'weights.best.trainfinetune.hdf5'))
 
     ## Test on real
-
-    score_val = model.evaluate(X_val_real, y_val_real, verbose=1)
-
+    score_val = model.evaluate(x_val_real, y_val_real, verbose=1)
     print('fine tune VAL_ACC : ', score_val[1])
     print('fine tune VAL_LOSS : ', score_val[0])
 
-
     print('\nTest metrics:')
     print('\nTest on real:')
-
-    score = model.evaluate(X_test_real, y_test_real, verbose=1)
+    score = model.evaluate(x_test_real, y_test_real, verbose=1)
     print('Test loss:', score[0])
     print('Test accuracy:', score[1])
 
-    result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing'] = {
-        'test loss on real': score[0], 'Test accuracy on real': score[1]  # , 'auc roc on real': roc
-    }
-
-    ## Test on syn
-
-    print('\nTest on synthetic:')
-
-    score = model.evaluate(X_test_syn, y_test_syn, verbose=1)
-    print('Test loss:', score[0])
-    print('Test accuracy:', score[1])
-
-    result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['training'] = {
+    result_dict[percentage_of_samples_to_keep_for_imbalance_key]['testing']['test loss on real'] = score[0]
+    result_dict[percentage_of_samples_to_keep_for_imbalance_key]['testing']['Test accuracy on real'] = score[1]
+    result_dict[percentage_of_samples_to_keep_for_imbalance_key]['training'] = {
         'VAL_ACC': score_val[1], 'TRAIN_ACC': score_train[1],
         'TRAIN_LOSS': score_train[0], 'VAL_LOSS': score_val[0]
     }
-
-    result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['test loss on syn'] = score[0]
-    result_dict[PERCENTAGE_OF_SAMPLES_TO_KEEP_FOR_DISBALANCE_KEY]['testing']['Test accuracy on syn'] = score[1]
 
     keras.backend.clear_session()
     del model
@@ -323,7 +191,6 @@ def get_percentage_version_mean_metric_dict(results_dict, set_key, metric_key):
             for percentage in percentage_keys:
                 mean_metrics_dict[percentage][version][run] = results_dict[run][version][percentage][set_key][
                     metric_key]
-
     # generate means
     for percentage in percentage_keys:
         for version in versions_keys:
@@ -351,42 +218,66 @@ def get_best_gans(results_dict, set_key, metric_key):
     return best_gan_dict, mean_metric_dict
 
 
-def check_dir(directory):
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+# create dict to plot format; runs-percentages
+def from_best_gan_get_metric(results_dict, best_gans_dict, set_key, metric_key):
+    mean_metrics_dict = get_percentage_version_mean_metric_dict(results_dict, set_key, metric_key)
+    metrics_to_return_dict = {}
+    # create empty dict
+    runs_keys = list(results_dict.keys())
+    versions_keys = list(results_dict[runs_keys[0]].keys())
+    percentage_keys = list(results_dict[runs_keys[0]][versions_keys[0]].keys())
+    for run in runs_keys:
+        metrics_to_return_dict[run] = {}
+        for percentage in percentage_keys:
+            metrics_to_return_dict[run][percentage][metric_key] = None
+    # fill new dict
+    for percentage in percentage_keys:
+        best_gan_version = best_gans_dict[percentage]['best_version']
+        runs_of_best_gan = mean_metrics_dict[percentage][best_gan_version]
+        for run in runs_keys:
+            metrics_to_return_dict[run][percentage] = runs_of_best_gan[run]
+    return metrics_to_return_dict
+
+
+def print_gans_means(results_dict, set_key, metric_key):
+    mean_metrics_dict = get_percentage_version_mean_metric_dict(results_dict, set_key, metric_key)
+    runs_keys = list(results_dict.keys())
+    versions_keys = list(results_dict[runs_keys[0]].keys())
+    percentage_keys = list(results_dict[runs_keys[0]][versions_keys[0]].keys())
+    for percentage in percentage_keys:
+        str_to_print = '\nMean %s, for gan versions trained with keep percentage %s:\n' % (metric_key, percentage)
+        for version in versions_keys:
+            metric_value = mean_metrics_dict[percentage][version]['mean_%s' % metric_key]
+            str_to_print += '%s:.4f; ' % (version, metric_value)
+        print(str_to_print)
 
 
 if __name__ == '__main__':
     multi_runs_dict = {}
+    # different runs for every version and percentage
     for run_i in range(RUNS):
         # build dict of dicts:
         result_dict_for_different_versions = {}
         for v in versions:
             result_dict_for_different_versions[v] = {}
+        # get percentage results for different version
         for v in result_dict_for_different_versions.keys():
             dict_single_version = result_dict_for_different_versions[v]
-            MIN_LIM = 10
-            MAX_LIM = 100
             keep_samples_list = np.round(np.logspace(np.log10(MIN_LIM), np.log10(MAX_LIM), num=6)) / 100
             for keep_sample in keep_samples_list:
+                print('\n\nRUN %i, keep %.2f%%' % (run_i, keep_sample))
                 main(dict_single_version, keep_sample, v)
-            print(dict_single_version)
-        print(result_dict_for_different_versions)
         multi_runs_dict['run%i' % run_i] = result_dict_for_different_versions
 
-    best_gan_dict, mean_metric_dict = get_best_gans(multi_runs_dict, SET_KEY_FOR_BEST_METRIC, BEST_METRIC_KEY)
+    best_gan_dict, _ = get_best_gans(multi_runs_dict, SET_KEY_FOR_BEST_METRIC, BEST_METRIC_KEY)
+    results_dict = from_best_gan_get_metric(multi_runs_dict, best_gan_dict, TEST_SET_KEY, TEST_METRIC_KEY)
 
-    check_dir(os.path.join('results', FOLDER_TO_SAVE_IN))
+    results_path = os.path.join(PATH_TO_PROJECT, 'results', FOLDER_TO_SAVE_IN)
+    check_dir(results_path)
     pickle.dump(multi_runs_dict, open(
-        os.path.join('results', FOLDER_TO_SAVE_IN, str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'),
-        "wb"))
-    pickle.dump(mean_metric_dict, open(
-        os.path.join('results', FOLDER_TO_SAVE_IN,
-                     'mean_metric_dict_' + str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
-    pickle.dump(best_gan_dict, open(
-        os.path.join('results', FOLDER_TO_SAVE_IN,
-                     'best_gan_dict_' + str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
+        os.path.join(results_path, str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
+    pickle.dump(results_dict, open(
+        os.path.join(results_path, RESULTS_NAME + '_best_versions' + '.pkl'), "wb"))
     print('RESULTS')
-    print('multi_runs_dict\n', multi_runs_dict)
-    print('mean_metric_dict\n', mean_metric_dict)
     print('best_gan_dict\n', best_gan_dict)
+    print_gans_means(multi_runs_dict, SET_KEY_FOR_BEST_METRIC, BEST_METRIC_KEY)

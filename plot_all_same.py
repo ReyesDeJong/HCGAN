@@ -112,7 +112,7 @@ results_fine_tune_same = get_results_from_path(
 # )
 
 set_to_plot = 'testing'
-metric_to_plot_tstr = 'Test accuracy'
+#metric_to_plot_tstr = 'Test accuracy'
 metric_to_plot_trtr = 'Test accuracy on real'
 # 'Test accuracy'
 
