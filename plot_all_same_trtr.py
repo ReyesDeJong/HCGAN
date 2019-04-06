@@ -63,19 +63,31 @@ results_trtr_bn = get_results_from_path(
 results_trtr_bal = get_results_from_path(
     os.path.join(
         PATH_TO_PROJECT, 'results', 'new_results',
-        'trtr_balanced_starlight_new_bal_v2_v3_v4_v5_v6_v7_v8_v9.pkl')
+        'trtr_balanced_starlight_new_bal.pkl')
 )
 
 results_trtr_naive = get_results_from_path(
     os.path.join(
         PATH_TO_PROJECT, 'results', 'new_results',
-        'trtr_naive_starlight_new_naive_v2_v3_v4_v5_v6_v7_v8_v9.pkl')
+        'trtr_naive_starlight_new_naive.pkl')
 )
 
 results_trtr_basic = get_results_from_path(
     os.path.join(
         PATH_TO_PROJECT, 'results', 'new_results',
-        'trtr_basic_starlight_new_basic_v2_v3_v4_v5_v6_v7_v8_v9.pkl')
+        'trtr_basic_starlight_new_basic.pkl')
+)
+
+results_fine_tunning = get_results_from_path(
+    os.path.join(
+        PATH_TO_PROJECT, 'results', 'new_results',
+        'fine_tune_lr3_dp0.5_starlight_new_bal_best_versions.pkl')
+)
+
+results_fine_tune_3 = get_results_from_path(
+    os.path.join(
+        PATH_TO_PROJECT, 'results', 'fine_tune',
+        'single_gan_resultsfinetune_loss_stop_lr3.0_batch_norm_dp_0.5_pt_20_starlight_noisy_irregular_all_same_set_amp_balanced_larger_trainv2_v3_v4_v5_v6_v7_v8_v9.pkl')
 )
 
 
@@ -87,23 +99,9 @@ metric_to_plot_tstr = 'Test accuracy'
 metric_to_plot_trtr = 'Test accuracy on real'
 # 'Test accuracy'
 
-plot_metric([results_trtr_bn, results_trtr_bal, results_trtr_basic, results_trtr_naive], set_to_plot,
-            [metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr],
-            '% of least populated classes kept', 'Accuracy', plot_label = ['TRTR_BN', 'TRTR_bal', 'TRTR_basic', 'TRTR_naive'
+plot_metric([results_trtr_bn, results_trtr_bal, results_trtr_basic, results_trtr_naive, results_fine_tunning, results_fine_tune_3], set_to_plot,
+            [metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr],
+            '% of least populated classes kept', 'Accuracy', plot_label = ['TRTR_BN', 'TRTR_bal', 'TRTR_basic', 'TRTR_naive',
+                                                                           'Fine_tunning', 'Fine_tune_old'
                                                                ])
-
-# plot_metric(
-#     [results_fine_tune_3, results_fine_tune_1, results_fine_tune_03, results_fine_tune_01],
-#     'training',
-#     ['VAL_ACC', 'VAL_ACC', 'VAL_ACC', 'VAL_ACC'],
-#     '% of least populated classes kept', 'Accuracy',
-#     plot_label = ['Fine_tune_x3', 'Fine_tune_x1', 'Fine_tune_x03', 'Fine_tune_x01'])
-#
-
-
-# plot_metric(
-#     [results_trtr, results_trtr_bn, results_aug, results_aug_bn],
-#     set_to_plot, [metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr, metric_to_plot_trtr],
-#     '% of least populated classes kept', 'Accuracy',
-#     plot_label = ['TRTR', 'TRTR_BN','Augmented_BEST', 'Augmented_BEST_BN'])
 

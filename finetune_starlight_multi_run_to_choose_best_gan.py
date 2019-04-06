@@ -12,7 +12,7 @@ import keras
 import keras.backend as K
 
 PATH_TO_PROJECT = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..'))
+    os.path.join(os.path.dirname(__file__), ''))
 sys.path.append(PATH_TO_PROJECT)
 
 MIN_LIM = 10
@@ -33,7 +33,7 @@ AUGMENTED_OR_NOT_EXTRA_STR = ''  # '_augmented_50-50'  # #
 versions = ['', 'v2', 'v3', 'v4', 'v5']
 RUNS = 10
 RESULTS_NAME = 'fine_tune_lr%s_dp%.1f%s_%s' % (
-    BN_CONDITION, DROP_OUT_RATE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
+    LR_VAL_MULT, DROP_OUT_RATE, AUGMENTED_OR_NOT_EXTRA_STR, BASE_REAL_NAME)
 FOLDER_TO_SAVE_IN = 'new_results'
 
 date = '2803'
@@ -228,13 +228,19 @@ def from_best_gan_get_metric(results_dict, best_gans_dict, set_key, metric_key):
     for run in runs_keys:
         metrics_to_return_dict[run] = {}
         for percentage in percentage_keys:
-            metrics_to_return_dict[run][percentage][metric_key] = None
+            metrics_to_return_dict[run][percentage] = {}
+            metrics_to_return_dict[run][percentage][set_key] = {}
+            metrics_to_return_dict[run][percentage][set_key][metric_key] = {}
     # fill new dict
+    print(metrics_to_return_dict)
     for percentage in percentage_keys:
         best_gan_version = best_gans_dict[percentage]['best_version']
         runs_of_best_gan = mean_metrics_dict[percentage][best_gan_version]
+        print('best_gan_version : %s VAL mean %f Test mean %f' % (best_gan_version,
+                                                                  best_gans_dict[percentage]['mean_%s' % BEST_METRIC_KEY],
+                                                                  runs_of_best_gan['mean_%s' % TEST_METRIC_KEY],))
         for run in runs_keys:
-            metrics_to_return_dict[run][percentage] = runs_of_best_gan[run]
+            metrics_to_return_dict[run][percentage][set_key][metric_key] = runs_of_best_gan[run]
     return metrics_to_return_dict
 
 
@@ -247,7 +253,7 @@ def print_gans_means(results_dict, set_key, metric_key):
         str_to_print = '\nMean %s, for gan versions trained with keep percentage %s:\n' % (metric_key, percentage)
         for version in versions_keys:
             metric_value = mean_metrics_dict[percentage][version]['mean_%s' % metric_key]
-            str_to_print += '%s:.4f; ' % (version, metric_value)
+            str_to_print += '%s:%.4f; ' % (version, metric_value)
         print(str_to_print)
 
 
@@ -269,14 +275,14 @@ if __name__ == '__main__':
         multi_runs_dict['run%i' % run_i] = result_dict_for_different_versions
 
     best_gan_dict, _ = get_best_gans(multi_runs_dict, SET_KEY_FOR_BEST_METRIC, BEST_METRIC_KEY)
-    results_dict = from_best_gan_get_metric(multi_runs_dict, best_gan_dict, TEST_SET_KEY, TEST_METRIC_KEY)
+    best_versions_test_results_dict = from_best_gan_get_metric(multi_runs_dict, best_gan_dict, TEST_SET_KEY, TEST_METRIC_KEY)
 
     results_path = os.path.join(PATH_TO_PROJECT, 'results', FOLDER_TO_SAVE_IN)
     check_dir(results_path)
     pickle.dump(multi_runs_dict, open(
-        os.path.join(results_path, str(RUNS) + '_runs' + RESULTS_NAME + '_'.join(versions) + '.pkl'), "wb"))
-    pickle.dump(results_dict, open(
-        os.path.join(results_path, RESULTS_NAME + '_best_versions' + '.pkl'), "wb"))
+        os.path.join(results_path, str(RUNS) + '_runs' + RESULTS_NAME + ''.join(versions) + '.pkl'), "wb"))
+    pickle.dump(best_versions_test_results_dict, open(
+        os.path.join(results_path, RESULTS_NAME + 'best_versions' + '.pkl'), "wb"))
     print('RESULTS')
     print('best_gan_dict\n', best_gan_dict)
     print_gans_means(multi_runs_dict, SET_KEY_FOR_BEST_METRIC, BEST_METRIC_KEY)

@@ -6,6 +6,10 @@ PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), ''))
 sys.path.append(PATH_TO_PROJECT)
 
+"""
+obsolete DUNO WHATS THIS
+"""
+
 N_SIGMAS = 1
 
 dicts = np.load(os.path.join(PATH_TO_PROJECT, 'results', 'same_set', 'trts_same_all_v2_v3_v4_v5_v6_v7_v9_v10.pkl'))

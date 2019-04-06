@@ -17,7 +17,11 @@ workspace.xml
 /results
 /catalina
 /generated
+/FATS
 
+*.csv
+*.rst
+.DS_Store
 *.pyc
 *.pkl
 *.pickle

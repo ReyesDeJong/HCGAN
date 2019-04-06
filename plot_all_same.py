@@ -12,7 +12,7 @@ sys.path.append(PATH_TO_PROJECT)
 N_SIGMAS = 1
 
 
-def get_all_ro_plot(results_list, metric_to_plot):
+def get_all_ro_plot(results_list, metric_to_plot, set_to_plot):
     all_results_metrics_list = []
     for result in results_list:
         percentages_str = list(result.keys())
@@ -30,18 +30,21 @@ def get_all_ro_plot(results_list, metric_to_plot):
 
 
 def plot_metric(results_list, set_to_plot, metric_to_plot, x_axis_name, y_axis_name, fig_size=8, plot_label=''):
+    if isinstance(set_to_plot, str):
+        set_to_plot = [set_to_plot for i in range(len(metric_to_plot))]
     plt.figure(figsize=(fig_size, fig_size))
     for result_idx in range(len(results_list)):
         percentages_float, all_results_metrics_mean, all_results_metrics_low_bound, all_results_metrics_up_bound = get_all_ro_plot(
-            results_list[result_idx], metric_to_plot[result_idx])
+            results_list[result_idx], metric_to_plot[result_idx], set_to_plot[result_idx])
         print(all_results_metrics_mean)
         plt.plot(percentages_float, all_results_metrics_mean, 'o-', label=plot_label[result_idx])
         plt.fill_between(percentages_float, all_results_metrics_low_bound, all_results_metrics_up_bound, alpha=.1)
     plt.title('Starlight Accuracy as a function of unbalance (Same set, with through away)')  # % set_to_plot)
     plt.xlabel(x_axis_name)
     plt.ylabel(y_axis_name)
-    plt.ylim(0.9,1)
+    #plt.ylim(0.9,1)
     plt.legend()
+    plt.savefig('fig.png')
     plt.show()
 
 
