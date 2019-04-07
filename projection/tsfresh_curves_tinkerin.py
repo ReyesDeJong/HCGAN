@@ -28,7 +28,7 @@ def get_data_from_set(set, magnitude_key, time_key):
     magnitudes = np.asarray(set[magnitude_key])
     time = np.asarray(set[time_key])
     x = np.stack((magnitudes, time), axis=-1)
-    x = x.reshape(x.shape[0], x.shape[1], 1, x.shape[2])
+    x = x.reshape(x.shape[0], x.shape[1], x.shape[2])
     y = np.asarray(set['class'])
     x, y = shuffle(x, y, random_state=42)
     y = targets_to_numbers(y)
