@@ -46,7 +46,7 @@ def get_data_as_df(data):
 
 
 def get_tsfresh(data):
-    dataset = Dataset(data_array=data, data_labels=data, BATCH_SIZE=BATCH_SIZE)
+    dataset = Dataset(data_array=data, data_labels=data, BATCH_SIZE=data.shape[0])
     extraction_settings = ComprehensiveFCParameters()
     features_to_return = []
     start_time = time.time()
