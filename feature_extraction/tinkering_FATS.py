@@ -16,6 +16,7 @@ import datetime
 
 REAL_DATA_FOLDER = os.path.join('datasets_original', 'REAL', '9classes_100_100')
 REAL_DATA_NAME = 'catalina_north9classes.pkl'#'starlight_new_bal_0.10.pkl'#
+SAVE_NAME = 'catalina_north9classes_features.pkl'
 VERBOSE = False
 
 """
@@ -145,8 +146,8 @@ if __name__ == "__main__":
 
 
     pkl.dump({'train': train_features, 'val': val_features, 'test': test_features}, open(
-        os.path.join(PATH_TO_PROJECT, 'TSTR_data', 'features',
-                     'catalina_9classes_features.pkl'), "wb"))
+        os.path.join(PATH_TO_PROJECT, 'TSTR_data', REAL_DATA_FOLDER,
+                     SAVE_NAME), "wb"))
 
 
 
