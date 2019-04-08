@@ -1,16 +1,12 @@
-import pandas as pd
 import sys
 import os
-
-# sys.path.append("/home/rodrigo/FATS-2.0/")
-sys.path.append("../../FATS-2.0/")
 import FATS
 import numpy as np
-import time
-import itertools
 import pickle as pkl
-import h5py
 import sklearn
+import time
+import datetime
+
 
 PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..'))
@@ -37,6 +33,10 @@ def get_data_from_set(set, magnitude_key, time_key):
     x, y = sklearn.utils.shuffle(x, y, random_state=42)
     return x, y
 
+def load_pickle(path):
+    infile = open(path, 'rb')
+    dataset_partitions = pkl.load(infile)
+    return dataset_partitions
 
 def read_data_irregular_sampling(file, magnitude_key='original_magnitude', time_key='time', verbose=False):
     infile = open(file, 'rb')
@@ -49,11 +49,44 @@ def read_data_irregular_sampling(file, magnitude_key='original_magnitude', time_
     x_test, y_test = get_data_from_set(dataset_partitions[2], magnitude_key, time_key)
     return x_train, y_train, x_val, y_val, x_test, y_test
 
+def split_data_into_mag_and_time(data_array):
+    magnitude = data_array[..., 0]
+    time = data_array[..., 1]
+    return magnitude, time
 
 def get_data_fraction_as_mag_and_time(data_array, n_samples_to_get=3):
-    magnitude = data_array[:n_samples_to_get, :, 0]
-    time = data_array[:n_samples_to_get, :, 1]
-    return magnitude, time
+    return split_data_into_mag_and_time(data_array[:n_samples_to_get])
+
+def get_useful_FATS_features(magnitudes, times):
+    lc_example = np.array([magnitudes[0], times[0]])
+    a = FATS.FeatureSpace(Data=['magnitude', 'time'])
+    b = a.calculateFeature(lc_example)
+    feature_list = np.array(list(b.result('dict').keys()))
+    feature_values = np.array(list(b.result('dict').values()))
+    useful_features = list(feature_list[np.argwhere(~np.isnan(feature_values.astype(np.float64)))])#list(feature_list[np.where(feature_values != None)])
+    print('%i features calculated' % len(useful_features))
+    return useful_features
+
+def get_FATS(magnitudes, times, useful_features):
+    filtered_a = FATS.FeatureSpace(featureList=useful_features,
+                          Data=['magnitude', 'time'])
+    fats_features = []
+    start_time = time.time()
+    for i in range(magnitudes.shape[0]):
+        lc_aux = np.array([magnitudes[i], times[i]])
+        features_obj = filtered_a.calculateFeature(lc_aux)
+        features_results = np.array(features_obj.result('array'))
+        fats_features.append(features_results)
+        if i%100==0:
+            time_usage = str(datetime.timedelta(
+                seconds=int(round(time.time() - start_time))))
+            print("it %i Time usage: %s" % (i, str(time_usage)), flush=True)
+    fats_features = np.array(fats_features)
+    time_usage = str(datetime.timedelta(
+        seconds=int(round(time.time() - start_time))))
+    print("Total Time usage: %s\n" % (str(time_usage)), flush=True)
+
+    return fats_features
 
 
 if __name__ == "__main__":
@@ -62,22 +95,22 @@ if __name__ == "__main__":
         read_data_irregular_sampling(
             path_to_real_data, magnitude_key='original_magnitude_random', time_key='time_random')
 
-    train_mag, train_time = get_data_fraction_as_mag_and_time(x_train_real)
+    train_magnitudes, train_times = split_data_into_mag_and_time(x_train_real)
+    val_magnitudes, val_times = split_data_into_mag_and_time(x_val_real)
+    test_magnitudes, test_times = split_data_into_mag_and_time(x_test_real)
 
-    lc_example = np.array([train_mag[0], train_time[0]])
+    useful_features_names = get_useful_FATS_features(train_magnitudes, train_times)
 
-    a = FATS.FeatureSpace(Data=['magnitude', 'time'])
-    b = a.calculateFeature(lc_example)
-    results = np.array(b.result('array'))
+    train_features = get_FATS(train_magnitudes, train_times, useful_features_names)
+    val_features = get_FATS(val_magnitudes, val_times, useful_features_names)
+    test_features = get_FATS(test_magnitudes, test_times, useful_features_names)
 
-    feature_list = np.array(list(b.result('dict').keys()))
-    feature_values = np.array(list(b.result('dict').values()))
-    useful_features = list(feature_list[np.argwhere(~np.isnan(feature_values.astype(np.float64)))])#list(feature_list[np.where(feature_values != None)])
 
-    filtered_a = FATS.FeatureSpace(featureList=useful_features,
-                          Data=['magnitude', 'time'])
-    filtered_b = filtered_a.calculateFeature(lc_example)
-    results_filtered = np.array(filtered_b.result('array'))
+    pkl.dump({'train': train_features, 'val': val_features, 'test': test_features}, open(
+        os.path.join(PATH_TO_PROJECT, 'TSTR_data', 'features',
+                     'catalina_9classes_features.pkl'), "wb"))
+
+
 
 
 

@@ -1,29 +1,22 @@
-import pandas as pd
 import sys
-#sys.path.append("/home/rodrigo/FATS-2.0/")
-sys.path.append("../../FATS-2.0/")
+import os
 import FATS
 import numpy as np
-from tqdm import tqdm
+import pickle as pkl
+import sklearn
 import time
-import itertools
-import pickle
-import h5py
+import datetime
+
+PATH_TO_PROJECT = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(PATH_TO_PROJECT)
+
 
 class ComputeFATS(object):
 
-    def __init__(self, csv_path, save_path):
-        self.csv_path = csv_path
-        self.save_path = save_path
-        self.csv_data = pd.read_csv(self.csv_path)
-        self.object_id_list = np.unique(self.csv_data["object_id"].values)
-        self.point_id = self.csv_data["object_id"].values
-        self.n_points_id = len(self.point_id)
-        self.n_lightcurves = len(self.object_id_list)
-        print(self.csv_path)
-        #print("n lc", self.n_lightcurves)
-        self.single_band_feature_keys()
-        self.light_curve_features = {"object_id": [], "features": [], "short_sequence": [], "lengths": []}
+    def __init__(self, pkl_data_path):
+        self.pkl_data_path = pkl_data_path
+
 
     def single_band_feature_keys(self):
         gal_feat_list = ['Amplitude', 'AndersonDarling', 'Autocor_length',

@@ -158,7 +158,8 @@ class SlottedA_length(Base):
             for k in np.arange(K1, K):
                 idx = np.where(ks == k)
                 if len(idx[0]) != 0:
-                    prod[k] = sum(data[idx[0]] * data[idx[1]]) / (len(idx[0]))
+                    #TODO: harcoeded int()
+                    prod[int(k)] = sum(data[idx[0]] * data[idx[1]]) / (len(idx[0]))
                     slots[i - 1] = k
                     i = i + 1
                 else:
@@ -166,7 +167,7 @@ class SlottedA_length(Base):
                     # print(prod)
                     # print(prod.shape)
                     #print(prod[int(k)])
-                    #TODO: Hardcoded
+                    #TODO: Hardcoded int()
                     prod[int(k)] = np.infty
             np.trim_zeros(prod, trim='b')
 

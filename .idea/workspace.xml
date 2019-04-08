@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e579d4b7-5a0a-4dbd-9630-c1d5e19cf80a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FATS/FeatureFunctionLib.py" beforeDir="false" afterPath="$PROJECT_DIR$/FATS/FeatureFunctionLib.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_extraction/calculate_FATS.py" beforeDir="false" afterPath="$PROJECT_DIR$/feature_extraction/FATS_extractor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/feature_extraction/tinkering_FATS.py" beforeDir="false" afterPath="$PROJECT_DIR$/feature_extraction/tinkering_FATS.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projection/tsfresh_curves_tinkerin.py" beforeDir="false" afterPath="$PROJECT_DIR$/projection/tsfresh_curves_tinkerin.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,14 +35,44 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="127">
+              <caret line="503" column="113" selection-start-line="501" selection-start-column="4" selection-end-line="503" selection-end-column="113" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/feature_extraction/tinkering_FATS.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="78">
-              <caret line="78" column="56" lean-forward="true" selection-start-line="78" selection-start-column="56" selection-end-line="78" selection-end-column="56" />
+            <state relative-caret-position="150">
+              <caret line="38" column="29" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/feature_extraction/rf_over_FATS.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="24" column="42" selection-start-line="24" selection-start-column="42" selection-end-line="24" selection-end-column="42" />
               <folding>
-                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#0#10#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/FATS/FeatureFunctionLib.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="944">
+              <caret line="160" column="42" selection-start-line="160" selection-start-column="42" selection-end-line="160" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -130,11 +161,13 @@
         <option value="$PROJECT_DIR$/plot_trtr_same_set.py" />
         <option value="$PROJECT_DIR$/plot_all_same_trtr.py" />
         <option value="$PROJECT_DIR$/FATS/calculate_FATS.py" />
-        <option value="$PROJECT_DIR$/feature_extraction/calculate_FATS.py" />
         <option value="$PROJECT_DIR$/projection/tsfresh_curves_tinkerin.py" />
         <option value="$PROJECT_DIR$/FATS/Feature.py" />
-        <option value="$PROJECT_DIR$/feature_extraction/tinkering_FATS.py" />
+        <option value="$PROJECT_DIR$/feature_extraction/calculate_FATS.py" />
+        <option value="$PROJECT_DIR$/feature_extraction/FATS_extractor.py" />
         <option value="$PROJECT_DIR$/FATS/FeatureFunctionLib.py" />
+        <option value="$PROJECT_DIR$/feature_extraction/tinkering_FATS.py" />
+        <option value="$PROJECT_DIR$/feature_extraction/rf_over_FATS.py" />
       </list>
     </option>
   </component>
@@ -163,11 +196,6 @@
             <path>
               <item name="HCGAN" type="b2602c69:ProjectViewProjectNode" />
               <item name="HCGAN" type="462c0819:PsiDirectoryNode" />
-              <item name="FATS" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="HCGAN" type="b2602c69:ProjectViewProjectNode" />
-              <item name="HCGAN" type="462c0819:PsiDirectoryNode" />
               <item name="feature_extraction" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -184,7 +212,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/feature_extraction" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -215,7 +243,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.tinkering_FATS">
+  <component name="RunManager" selected="Python.rf_over_FATS">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="HCGAN" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -230,28 +258,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="finetune_starlight_multi_run_to_choose_best_gan" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="HCGAN" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/finetune_starlight_multi_run_to_choose_best_gan.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -304,6 +310,25 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="rf_over_FATS" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="HCGAN" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/feature_extraction" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/feature_extraction/rf_over_FATS.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="tinkering_FATS" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="HCGAN" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -346,19 +371,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.finetune_starlight_multi_run_to_choose_best_gan" />
       <item itemvalue="Python.plot_all_same_trtr" />
       <item itemvalue="Python.raw_curves_tinkerin" />
       <item itemvalue="Python.tsfresh_curves_tinkerin" />
       <item itemvalue="Python.tinkering_FATS" />
+      <item itemvalue="Python.rf_over_FATS" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.rf_over_FATS" />
         <item itemvalue="Python.tinkering_FATS" />
         <item itemvalue="Python.plot_all_same_trtr" />
         <item itemvalue="Python.tsfresh_curves_tinkerin" />
         <item itemvalue="Python.raw_curves_tinkerin" />
-        <item itemvalue="Python.finetune_starlight_multi_run_to_choose_best_gan" />
       </list>
     </recent_temporary>
   </component>
@@ -403,12 +428,12 @@
       <workItem from="1554326713274" duration="4509000" />
       <workItem from="1554403534900" duration="11759000" />
       <workItem from="1554474394071" duration="31245000" />
-      <workItem from="1554653316852" duration="10884000" />
+      <workItem from="1554653316852" duration="15215000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="208506000" />
+    <option name="totallyTimeSpent" value="212837000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -421,9 +446,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1299" height="743" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29688746" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29688746" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -438,7 +462,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="11" />
-      <window_info anchor="bottom" id="Python Console" order="12" visible="true" weight="0.53094465" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="12" visible="true" weight="0.47882736" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -634,16 +658,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4725">
-          <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/taugtr_from_ft_starlight.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -808,16 +822,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/feature_extraction/calculate_FATS.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-30">
-          <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/FATS/lomb.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
@@ -864,22 +868,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="503" column="113" selection-start-line="501" selection-start-column="4" selection-end-line="503" selection-end-column="113" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/FATS/FeatureFunctionLib.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-157">
-          <caret line="186" column="17" selection-start-line="186" selection-start-column="17" selection-end-line="186" selection-end-column="17" />
+        <state relative-caret-position="944">
+          <caret line="160" column="42" selection-start-line="160" selection-start-column="42" selection-end-line="160" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/feature_extraction/FATS_extractor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="583">
+          <caret line="141" selection-start-line="141" selection-end-line="141" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/feature_extraction/tinkering_FATS.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="78" column="56" lean-forward="true" selection-start-line="78" selection-start-column="56" selection-end-line="78" selection-end-column="56" />
+        <state relative-caret-position="150">
+          <caret line="38" column="29" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/feature_extraction/rf_over_FATS.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="24" column="42" selection-start-line="24" selection-start-column="42" selection-end-line="24" selection-end-column="42" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
