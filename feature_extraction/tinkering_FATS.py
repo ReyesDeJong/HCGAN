@@ -101,7 +101,7 @@ def get_useful_FATS_features(magnitudes, times):
     feature_values = np.array(list(b.result('dict').values()))
     useful_features = list(feature_list[np.argwhere(~np.isnan(feature_values.astype(np.float64)))])#list(feature_list[np.where(feature_values != None)])
     print('%i features calculated' % len(useful_features))
-    print(useful_features)
+    print([x[0] for x in useful_features])
     return useful_features
 
 def get_FATS(magnitudes, times, useful_features):
