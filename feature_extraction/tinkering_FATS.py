@@ -1,5 +1,9 @@
 import sys
 import os
+PATH_TO_PROJECT = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(PATH_TO_PROJECT)
+
 import FATS
 import numpy as np
 import pickle as pkl
@@ -8,9 +12,7 @@ import time
 import datetime
 
 
-PATH_TO_PROJECT = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..'))
-sys.path.append(PATH_TO_PROJECT)
+
 
 REAL_DATA_FOLDER = os.path.join('datasets_original', 'REAL', '9classes_100_100')
 REAL_DATA_NAME = 'catalina_north9classes.pkl'#'starlight_new_bal_0.10.pkl'#
