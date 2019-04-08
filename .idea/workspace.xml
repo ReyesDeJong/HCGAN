@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e579d4b7-5a0a-4dbd-9630-c1d5e19cf80a" name="Default Changelist" comment="" />
+    <list default="true" id="e579d4b7-5a0a-4dbd-9630-c1d5e19cf80a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projection/tsfresh_curves_tinkerin.py" beforeDir="false" afterPath="$PROJECT_DIR$/projection/tsfresh_curves_tinkerin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projection/tsfresh_tinkerin.py" beforeDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,44 +33,47 @@
     <select />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/feature_extraction/rf_over_FATS.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="90" column="26" selection-start-line="90" selection-start-column="26" selection-end-line="90" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/feature_extraction/tinkering_FATS.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-416">
-              <caret line="103" column="25" selection-start-line="103" selection-start-column="25" selection-end-line="103" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/feature_extraction/syn_FATS.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="25" column="3" selection-start-line="25" selection-start-column="3" selection-end-line="25" selection-end-column="3" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.38148445">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/projection/tsfresh_curves_tinkerin.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="443">
+                  <caret line="87" lean-forward="true" selection-start-line="83" selection-start-column="4" selection-end-line="87" />
+                  <folding>
+                    <element signature="e#0#20#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/modules/data_set_generic.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-495" />
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/feature_extraction/tsfresh_extractor.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="413">
+                  <caret line="86" column="43" lean-forward="true" selection-start-line="86" selection-start-column="43" selection-end-line="86" selection-end-column="43" />
+                  <folding>
+                    <element signature="e#0#10#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -77,7 +84,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>results_dict</find>
       <find>drop</find>
       <find>0</find>
       <find>Model</find>
@@ -107,6 +113,7 @@
       <find>n_class_val</find>
       <find>TODO</find>
       <find>load_pi</find>
+      <find>load</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -149,7 +156,6 @@
         <option value="$PROJECT_DIR$/plot_trtr_same_set.py" />
         <option value="$PROJECT_DIR$/plot_all_same_trtr.py" />
         <option value="$PROJECT_DIR$/FATS/calculate_FATS.py" />
-        <option value="$PROJECT_DIR$/projection/tsfresh_curves_tinkerin.py" />
         <option value="$PROJECT_DIR$/FATS/Feature.py" />
         <option value="$PROJECT_DIR$/feature_extraction/calculate_FATS.py" />
         <option value="$PROJECT_DIR$/feature_extraction/FATS_extractor.py" />
@@ -158,6 +164,9 @@
         <option value="$PROJECT_DIR$/FATS/FeatureFunctionLib.py" />
         <option value="$PROJECT_DIR$/feature_extraction/syn_FATS.py" />
         <option value="$PROJECT_DIR$/feature_extraction/tinkering_FATS.py" />
+        <option value="$USER_HOME$/anaconda3/envs/tf/lib/python3.6/site-packages/tsfresh/utilities/distribution.py" />
+        <option value="$PROJECT_DIR$/projection/tsfresh_curves_tinkerin.py" />
+        <option value="$PROJECT_DIR$/feature_extraction/tsfresh_extractor.py" />
       </list>
     </option>
   </component>
@@ -191,6 +200,11 @@
             <path>
               <item name="HCGAN" type="b2602c69:ProjectViewProjectNode" />
               <item name="HCGAN" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="HCGAN" type="b2602c69:ProjectViewProjectNode" />
+              <item name="HCGAN" type="462c0819:PsiDirectoryNode" />
               <item name="projection" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -202,7 +216,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/feature_extraction" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/modules" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -212,6 +226,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/modules" />
       <recent name="$PROJECT_DIR$/feature_extraction" />
       <recent name="$PROJECT_DIR$/projection" />
       <recent name="$PROJECT_DIR$" />
@@ -233,7 +248,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.syn_FATS">
+  <component name="RunManager" selected="Python.tsfresh_curves_tinkerin">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="HCGAN" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -339,9 +354,6 @@
       <module name="HCGAN" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/projection" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -366,11 +378,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.tsfresh_curves_tinkerin" />
         <item itemvalue="Python.syn_FATS" />
         <item itemvalue="Python.tinkering_FATS" />
         <item itemvalue="Python.rf_over_FATS" />
         <item itemvalue="Python.plot_all_same_trtr" />
-        <item itemvalue="Python.tsfresh_curves_tinkerin" />
       </list>
     </recent_temporary>
   </component>
@@ -415,12 +427,12 @@
       <workItem from="1554326713274" duration="4509000" />
       <workItem from="1554403534900" duration="11759000" />
       <workItem from="1554474394071" duration="31245000" />
-      <workItem from="1554653316852" duration="25716000" />
+      <workItem from="1554653316852" duration="29735000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="223338000" />
+    <option name="totallyTimeSpent" value="227357000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -433,8 +445,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1299" height="743" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29688746" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.29608938" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -449,7 +462,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="11" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="12" visible="true" weight="0.32410422" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.45276874" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -717,23 +730,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/projection/tsfresh_tinkerin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/projection/raw_curves_tinkerin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="51" column="33" selection-start-line="51" selection-start-column="33" selection-end-line="51" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/finetune_starlight.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -835,16 +831,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/projection/tsfresh_curves_tinkerin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-315">
-          <caret line="30" column="41" selection-start-line="30" selection-start-column="41" selection-end-line="30" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/trts_starlight_multi_run_to_choose_best_gan.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1027">
@@ -892,20 +878,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/feature_extraction/syn_FATS.py">
+    <entry file="file://$PROJECT_DIR$/feature_extraction/tinkering_FATS.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="25" column="3" selection-start-line="25" selection-start-column="3" selection-end-line="25" selection-end-column="3" />
+        <state relative-caret-position="1758">
+          <caret line="149" column="39" selection-start-line="149" selection-start-column="39" selection-end-line="149" selection-end-column="39" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/feature_extraction/tinkering_FATS.py">
+    <entry file="file://$PROJECT_DIR$/projection/tsfresh_tinkerin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-416">
-          <caret line="103" column="25" selection-start-line="103" selection-start-column="25" selection-end-line="103" selection-end-column="25" />
+        <state relative-caret-position="30">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projection/raw_curves_tinkerin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="825">
+          <caret line="91" column="14" lean-forward="true" selection-start-line="91" selection-start-column="14" selection-end-line="91" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/feature_extraction/syn_FATS.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="36" column="31" selection-start-line="36" selection-start-column="31" selection-end-line="36" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/envs/tf/lib/python3.6/site-packages/tsfresh/utilities/distribution.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="147" selection-start-line="147" selection-end-line="147" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projection/tsfresh_curves_tinkerin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="443">
+          <caret line="87" lean-forward="true" selection-start-line="83" selection-start-column="4" selection-end-line="87" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/data_set_generic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-495" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/feature_extraction/tsfresh_extractor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="413">
+          <caret line="86" column="43" lean-forward="true" selection-start-line="86" selection-start-column="43" selection-end-line="86" selection-end-column="43" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>

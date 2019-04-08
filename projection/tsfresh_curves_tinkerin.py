@@ -11,12 +11,13 @@ from sklearn.utils import shuffle
 from tsfresh import extract_features, extract_relevant_features, select_features
 from tsfresh.utilities.dataframe_functions import impute
 from tsfresh.feature_extraction import ComprehensiveFCParameters
+from feature_extraction.tinkering_FATS import load_pickle
 
 PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(PATH_TO_PROJECT)
 
-REAL_DATA_NAME = 'starlight_new_bal_1.00.pkl'
+REAL_DATA_NAME = 'starlight_new_bal_0.10.pkl'
 
 def targets_to_numbers(targets):
     target_keys = np.unique(targets)
@@ -36,7 +37,7 @@ def get_data_from_set(set, magnitude_key, time_key):
 
 
 def read_data_irregular_sampling(file, magnitude_key='original_magnitude', time_key='time', verbose=False):
-    dataset_partitions = np.load(file)
+    dataset_partitions = load_pickle(file)#np.load(file)
     if verbose:
         print(dataset_partitions[0].keys())
     x_train, y_train = get_data_from_set(dataset_partitions[0], magnitude_key, time_key)
@@ -53,8 +54,8 @@ if __name__ == '__main__':
     x_train_real = x_val_real[:100]
     y_train_real = y_val_real[:100]
 
-    x_train_real_mag = x_train_real[:, :, 0, 0]
-    x_train_real_time = x_train_real[:, :, 0, 1]
+    x_train_real_mag = x_train_real[:, :, 0]
+    x_train_real_time = x_train_real[:, :, 1]
     ids = [np.full(x_train_real_mag.shape[1], id+1) for id in np.arange(x_train_real.shape[0])]
     time_for_ts_fresh = [np.arange(x_train_real.shape[1]) for id in np.arange(x_train_real.shape[0])]
     labels_replicated = [np.full(x_train_real_mag.shape[1], label_val) for label_val in y_train_real]
@@ -83,7 +84,7 @@ if __name__ == '__main__':
     X = extract_features(dataset_df,
                          column_id='ids', column_sort='time',
                          default_fc_parameters=extraction_settings,
-                         impute_function=impute)
+                         impute_function=impute, n_jobs=-1)
 
     impute(X)
     y = pd.Series(y_train_real, index=np.arange(y_train_real.shape[0])+1)
