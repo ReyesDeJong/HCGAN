@@ -25,30 +25,6 @@ changed prod[k] to prod[int(k)] in FeatureFunctionLib.py->SlottedA_length->slott
 See some timestamp with repeated values
 """
 
-
-def get_FATS(magnitudes, times, useful_features):
-    filtered_a = FATS.FeatureSpace(featureList=useful_features,
-                          Data=['magnitude', 'time'])
-    fats_features = []
-    start_time = time.time()
-    for i in range(magnitudes.shape[0]):
-        print(i)
-        lc_aux = np.array([magnitudes[i], times[i]])
-        features_obj = filtered_a.calculateFeature(lc_aux)
-        features_results = np.array(features_obj.result('array'))
-        fats_features.append(features_results)
-        if i%100==0:
-            time_usage = str(datetime.timedelta(
-                seconds=int(round(time.time() - start_time))))
-            print("it %i Time usage: %s" % (i, str(time_usage)), flush=True)
-    fats_features = np.array(fats_features)
-    time_usage = str(datetime.timedelta(
-        seconds=int(round(time.time() - start_time))))
-    print("Total Time usage: %s\n" % (str(time_usage)), flush=True)
-
-    return fats_features
-
-
 if __name__ == "__main__":
     path_to_real_data = os.path.join(PATH_TO_PROJECT, 'TSTR_data', REAL_DATA_FOLDER, REAL_DATA_NAME)
     x_train_real, y_train_real, x_val_real, y_val_real, x_test_real, y_test_real = \

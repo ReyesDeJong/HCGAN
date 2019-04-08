@@ -16,7 +16,7 @@ import datetime
 
 REAL_DATA_FOLDER = os.path.join('datasets_original', 'REAL', '9classes_100_100')
 REAL_DATA_NAME = 'catalina_north9classes.pkl'#'starlight_new_bal_0.10.pkl'#
-VERBOSE = True
+VERBOSE = False
 
 """
 needed to change 
