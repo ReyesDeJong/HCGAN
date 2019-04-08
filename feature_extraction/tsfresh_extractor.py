@@ -53,12 +53,12 @@ def get_tsfresh(data):
     eval_not_finished = 1
     while eval_not_finished != 0:
         # time_checked = check_times(times[i])
-        data_batch = dataset.get_batch_eval()
+        data_batch, _ = dataset.get_batch_eval()
         batch_df = get_data_as_df(data_batch)
         X = extract_features(batch_df,
                              column_id='ids', column_sort='time',
                              default_fc_parameters=extraction_settings,
-                             impute_function=impute, n_jobs=-1)
+                             impute_function=impute, n_jobs=10)
         impute(X)
         fetures_batch = X.values
         features_to_return.append(fetures_batch)
@@ -80,6 +80,7 @@ if __name__ == "__main__":
         FATS_extractor.read_data_irregular_sampling(
             path_to_real_data, magnitude_key='original_magnitude_random', time_key='time_random')
 
+    print('shape', x_test_real.shape)
     train_features = get_tsfresh(x_train_real)
     val_features = get_tsfresh(x_val_real)
     test_features = get_tsfresh(x_test_real)
