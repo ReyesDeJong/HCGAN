@@ -8,13 +8,16 @@ import time
 import datetime
 from sklearn.ensemble import RandomForestClassifier
 import feature_extraction.tinkering_FATS as FATS_extractor
+import matplotlib.pyplot as plt
 
 PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(PATH_TO_PROJECT)
 
-REAL_DATA_NAME = 'catalina_north9classes.pkl'#'starlight_new_bal_0.10.pkl'#
+REAL_DATA_NAME = 'catalina_north9classes.pkl'  # 'starlight_new_bal_0.10.pkl'#
 FEATURES_NAME = 'catalina_9classes_features.pkl'
+TEST_TYPE = 'FATS'
+
 
 def plot_confusion_matrix(cm, classes, n_class_val,
                           normalize=False,
@@ -71,6 +74,7 @@ def plot_confusion_matrix(cm, classes, n_class_val,
         fig.savefig(
             os.path.join(path_to_save, '%s_conf_matrix_class%i.png' % (TEST_TYPE, n_class_val)))
 
+
 if __name__ == "__main__":
     path_to_real_data = os.path.join(PATH_TO_PROJECT, 'TSTR_data', 'datasets_original', 'REAL', REAL_DATA_NAME)
     x_train_real, y_train_real, x_val_real, y_val_real, x_test_real, y_test_real = \
@@ -86,12 +90,16 @@ if __name__ == "__main__":
     clf = RandomForestClassifier()
     clf.fit(train_features, y_train_real)
     print(clf.feature_importances_)
-    test_predictions = clf.predict(test_features)
+    y_predict_classes_test = clf.predict(test_features)
 
+    confusion_matrix = sklearn.metrics.confusion_matrix(y_test_real, y_predict_classes_test)
+    print('Accuracy Test conf %.4f' % (
+            np.trace(confusion_matrix) / np.sum(confusion_matrix)))
 
-
-
-
-
-
-
+    plot_confusion_matrix(
+        cm=confusion_matrix, classes=['EW', 'RRc', 'EA', 'RRab', 'RS CVn', 'LPV', 'RRd', 'beta Lyrae', 'HADS'],
+        n_class_val=0,
+        title='%s Conf matrix for %i classes; Acc %.4f' % ('FATS',
+                                                           9,
+                                                           np.trace(confusion_matrix) / np.sum(confusion_matrix)))
+    plt.show()
