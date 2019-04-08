@@ -183,10 +183,15 @@ class SlottedA_length(Base):
             deltaT = time[1:] - time[:-1]
             sorted_deltaT = np.sort(deltaT)
             self.T = sorted_deltaT[int(N * 0.05)+1]
-            #TODO: hardcodede this
-            if self.T==0:
+            #TODO: hardcodede this, aperently not necesary with time checking
+            if self.T<1e-7: #==0:
                 #print('strange value of delta time 0 encountered')
-                self.T = sorted_deltaT[np.nonzero(sorted_deltaT)[0][0]+int(N * 0.05) + 1]
+                first_above_thr = next(x[0] for x in enumerate(sorted_deltaT) if x[1] > 1e-7)
+                #print('deltaT', deltaT)
+                #print(sorted_deltaT)
+                #print(first_above_thr)
+                self.T = sorted_deltaT[first_above_thr + int(N * 0.05) + 1]
+                #self.T = sorted_deltaT[np.nonzero(sorted_deltaT)[0][0]+int(N * 0.05) + 1]
             #print(np.nonzero(sorted_deltaT)[0][0])
             #print(int(N * 0.05)+1)
             #print(time)
@@ -1419,6 +1424,14 @@ class StructureFunction_index_21(Base):
         time_int = np.linspace(np.min(time), np.max(time), Np)
         mag_int = f(time_int)
 
+        #TODO:
+        #print('mag', magnitude)
+        #print('mag_int', mag_int)
+        #print('time', np.array(time))
+        #print('time', np.array(time)+1e-8)
+        #print('time int', time_int)
+
+
         for tau in np.arange(1, Nsf):
             sf1[tau-1] = np.mean(np.power(np.abs(mag_int[0:Np-tau] - mag_int[tau:Np]) , 1.0))
             sf2[tau-1] = np.mean(np.abs(np.power(np.abs(mag_int[0:Np-tau] - mag_int[tau:Np]) , 2.0)))
@@ -1426,7 +1439,9 @@ class StructureFunction_index_21(Base):
         sf1_log = np.log10(np.trim_zeros(sf1))
         sf2_log = np.log10(np.trim_zeros(sf2))
         sf3_log = np.log10(np.trim_zeros(sf3))
-
+        #print(sf1_log)
+        #print(sf2_log)
+        #print(sf3_log)
         m_21, b_21 = np.polyfit(sf1_log, sf2_log, 1)
         m_31, b_31 = np.polyfit(sf1_log, sf3_log, 1)
         m_32, b_32 = np.polyfit(sf2_log, sf3_log, 1)
