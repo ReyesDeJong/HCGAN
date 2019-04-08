@@ -80,7 +80,6 @@ if __name__ == "__main__":
         FATS_extractor.read_data_irregular_sampling(
             path_to_real_data, magnitude_key='original_magnitude_random', time_key='time_random')
 
-    print('shape', x_test_real.shape)
     train_features = get_tsfresh(x_train_real)
     val_features = get_tsfresh(x_val_real)
     test_features = get_tsfresh(x_test_real)
