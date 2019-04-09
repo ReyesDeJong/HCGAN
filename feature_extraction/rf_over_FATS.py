@@ -1,5 +1,8 @@
 import sys
 import os
+PATH_TO_PROJECT = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(PATH_TO_PROJECT)
 import FATS
 import numpy as np
 import pickle as pkl
@@ -9,10 +12,6 @@ import datetime
 from sklearn.ensemble import RandomForestClassifier
 import feature_extraction.tinkering_FATS as FATS_extractor
 import matplotlib.pyplot as plt
-
-PATH_TO_PROJECT = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..'))
-sys.path.append(PATH_TO_PROJECT)
 
 REAL_DATA_NAME = 'catalina_north9classes.pkl'  # 'starlight_new_bal_0.10.pkl'#
 FEATURES_NAME = 'catalina_north9classes_features.pkl'
