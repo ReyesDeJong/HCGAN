@@ -12,15 +12,16 @@ import time
 import datetime
 import feature_extraction.tinkering_FATS as FATS_extractor
 from tsfresh import extract_features, extract_relevant_features, select_features
+#from tsfresh.feature_extraction import
 from tsfresh.utilities.dataframe_functions import impute
-from tsfresh.feature_extraction import ComprehensiveFCParameters
+from tsfresh.feature_extraction import ComprehensiveFCParameters, EfficientFCParameters, MinimalFCParameters
 from modules.data_set_generic import Dataset
 
 REAL_DATA_FOLDER = os.path.join('datasets_original', 'REAL', '9classes_100_100')
 REAL_DATA_NAME = 'catalina_north9classes.pkl'  # 'starlight_new_bal_0.10.pkl'#
 SAVE_NAME = 'catalina_north9classes_features_tsfresh.pkl'
 VERBOSE = False
-BATCH_SIZE = 20
+BATCH_SIZE = 100
 
 """
 """
@@ -36,7 +37,7 @@ def get_data_as_df(data):
     mag_flatten = np.reshape(magnitudes, (-1))
     time_stamp_flatten = np.reshape(times, (-1))
     dataset_dict = {
-        'time': time_flatten,  # [idexes_to_get],
+        #'time': time_flatten,  # [idexes_to_get],
         'ids': ids_flatten,  # [idexes_to_get],
         'magnitude': mag_flatten,  # [idexes_to_get],
         'timestamp': time_stamp_flatten  # [idexes_to_get]
@@ -47,7 +48,7 @@ def get_data_as_df(data):
 
 def get_tsfresh(data):
     dataset = Dataset(data_array=data, data_labels=data, BATCH_SIZE=BATCH_SIZE)
-    extraction_settings = ComprehensiveFCParameters()
+    extraction_settings = ComprehensiveFCParameters()#EfficientFCParameters()#MinimalFCParameters()#
     features_to_return = []
     start_time = time.time()
     eval_not_finished = 1
@@ -56,7 +57,7 @@ def get_tsfresh(data):
         data_batch, _ = dataset.get_batch_eval()
         batch_df = get_data_as_df(data_batch)
         X = extract_features(batch_df,
-                             column_id='ids', column_sort='time',
+                             column_id='ids', column_sort='timestamp',
                              default_fc_parameters=extraction_settings,
                              impute_function=impute, n_jobs=10)
         impute(X)
@@ -67,7 +68,7 @@ def get_tsfresh(data):
             time_usage = str(datetime.timedelta(
                 seconds=int(round(time.time() - start_time))))
             print("it %i Time usage: %s" % (dataset.BATCH_COUNTER_EVAL, str(time_usage)), flush=True)
-    features_to_return = np.stack(features_to_return)
+    features_to_return = np.concatenate(features_to_return)
     time_usage = str(datetime.timedelta(
         seconds=int(round(time.time() - start_time))))
     print("Total Time usage: %s\n" % (str(time_usage)), flush=True)
@@ -80,9 +81,9 @@ if __name__ == "__main__":
         FATS_extractor.read_data_irregular_sampling(
             path_to_real_data, magnitude_key='original_magnitude_random', time_key='time_random')
 
-    train_features = get_tsfresh(x_train_real[:40])
-    val_features = 0#get_tsfresh(x_val_real)
-    test_features = 0#get_tsfresh(x_test_real)
+    train_features = get_tsfresh(x_train_real)
+    val_features = get_tsfresh(x_val_real)
+    test_features = get_tsfresh(x_test_real)
 
     pkl.dump({'train': train_features, 'val': val_features, 'test': test_features}, open(
         os.path.join(PATH_TO_PROJECT, 'TSTR_data', REAL_DATA_FOLDER,
