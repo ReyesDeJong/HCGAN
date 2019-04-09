@@ -37,10 +37,10 @@ def get_data_as_df(data):
     mag_flatten = np.reshape(magnitudes, (-1))
     time_stamp_flatten = np.reshape(times, (-1))
     dataset_dict = {
-        #'time': time_flatten,  # [idexes_to_get],
+        'time': time_flatten,  # [idexes_to_get],
         'ids': ids_flatten,  # [idexes_to_get],
         'magnitude': mag_flatten,  # [idexes_to_get],
-        'timestamp': time_stamp_flatten  # [idexes_to_get]
+        #'timestamp': time_stamp_flatten  # [idexes_to_get]
     }
     dataset_df = pd.DataFrame(dataset_dict, columns=list(dataset_dict.keys()))
     return dataset_df
@@ -57,7 +57,7 @@ def get_tsfresh(data):
         data_batch, _ = dataset.get_batch_eval()
         batch_df = get_data_as_df(data_batch)
         X = extract_features(batch_df,
-                             column_id='ids', column_sort='timestamp',
+                             column_id='ids', column_sort='time',
                              default_fc_parameters=extraction_settings,
                              impute_function=impute, n_jobs=10)
         impute(X)
