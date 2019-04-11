@@ -120,7 +120,7 @@ def get_FATS(magnitudes, times, useful_features):
             time_usage = str(datetime.timedelta(
                 seconds=int(round(time.time() - start_time))))
             print("it %i Time usage: %s" % (i, str(time_usage)), flush=True)
-    fats_features = np.array(fats_features)
+    fats_features = np.array(fats_features) #shouled this be concatenate?
     time_usage = str(datetime.timedelta(
         seconds=int(round(time.time() - start_time))))
     print("Total Time usage: %s\n" % (str(time_usage)), flush=True)
