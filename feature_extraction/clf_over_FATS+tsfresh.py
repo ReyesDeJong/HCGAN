@@ -79,7 +79,7 @@ def plot_confusion_matrix(cm, classes, n_class_val,
                 ha="center", va="center",
                 color="white" if cm[i, j] > thresh else "black")
     fig.tight_layout()
-    check_dir(path_to_save)
+    check_dir(os.path.join(PATH_TO_PROJECT, path_to_save))
     if path_to_save != '':
       fig.savefig(
           os.path.join(PATH_TO_PROJECT, path_to_save,
@@ -178,7 +178,7 @@ def train_clf_and_plot_conf_matrix(test_type):
         cm=confusion_matrix,
         classes=['EW', 'RRc', 'EA', 'RRab', 'RS CVn', 'LPV', 'RRd', 'beta Lyrae',
                  'HADS'],
-        n_class_val=0,
+        n_class_val=np.unique(y_train_real).shape[0],
         title='%s Conf matrix for %i classes; Acc %.4f' % (TEST_TYPE,
                                                            np.unique(
                                                                y_train_real).shape[
