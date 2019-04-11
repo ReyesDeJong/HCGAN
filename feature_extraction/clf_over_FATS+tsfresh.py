@@ -4,12 +4,8 @@ import os
 PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(PATH_TO_PROJECT)
-import FATS
 import numpy as np
-import pickle as pkl
 import sklearn
-import time
-import datetime
 from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 from lightgbm import LGBMClassifier

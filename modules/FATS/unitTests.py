@@ -1,17 +1,13 @@
 import pandas as pd
-from pandas import read_csv
 import numpy as np
-import FATS
 import pickle
 
 from tqdm import tqdm
-import timeit
-import multiprocessing as mp
 
 import pytest
 
 
-from FATS.Feature import FeatureSpace
+from modules.FATS.Feature import FeatureSpace
 
 ts_path = "/Users/JonathanWihl/Desktop/FATS 2.0/CSSAllVarPhot.csv"
 ts_save_path = "lcs.pkl"

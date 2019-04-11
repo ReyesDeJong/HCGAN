@@ -1,13 +1,9 @@
-import os
 import sys
-import time
 import inspect
 
 import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
 
-from FATS import featureFunction
+from modules.FATS import featureFunction
 
 
 class FeatureSpace:

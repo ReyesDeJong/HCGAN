@@ -3,8 +3,7 @@ import os
 PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(PATH_TO_PROJECT)
-
-import FATS
+from modules import FATS
 import numpy as np
 import pickle as pkl
 import sklearn
@@ -107,7 +106,7 @@ def get_useful_FATS_features(magnitudes, times):
 
 def get_FATS(magnitudes, times, useful_features):
     filtered_a = FATS.FeatureSpace(featureList=useful_features,
-                          Data=['magnitude', 'time'])
+                                   Data=['magnitude', 'time'])
     fats_features = []
     start_time = time.time()
     for i in range(magnitudes.shape[0]):

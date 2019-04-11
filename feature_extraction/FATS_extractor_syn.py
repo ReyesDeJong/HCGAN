@@ -3,12 +3,7 @@ import os
 PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(PATH_TO_PROJECT)
-import FATS
-import numpy as np
 import pickle as pkl
-import sklearn
-import time
-import datetime
 import feature_extraction.FATS_extractor as FATS_extractor
 
 REAL_DATA_FOLDER = os.path.join('generated', 'catalina_amp_irregular_9classes')
