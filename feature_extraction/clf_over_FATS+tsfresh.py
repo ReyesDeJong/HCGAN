@@ -13,6 +13,8 @@ import feature_extraction.FATS_extractor as FATS_extractor
 import matplotlib.pyplot as plt
 from parameters import general_keys
 
+TEST_TYPE = 'FATS+tsfresh_LGBM_TSTR'
+PATH_TO_SAVE_CONF_MAT = os.path.join('results', 'conf_mat', 'trees')
 NAME_REAL_DATA = 'catalina_north9classes.pkl'
 NAME_SYN_DATA = 'catalina_amp_irregular_9classes_generated_10000.pkl'
 FOLDER_REAL_DATA = os.path.join('TSTR_data', 'datasets_original', 'REAL',
@@ -23,8 +25,12 @@ NAME_REAL_FATS_FEATURES = 'catalina_north9classes_features_fats.pkl'
 NAME_REAL_TSFRESH_FEATURES = 'catalina_north9classes_features_tsfresh.pkl'
 NAME_SYN_TSFRESH_FEATURES = 'catalina_north9classes_features_tsfresh_concatenated.pkl'
 NAME_SYN_FATS_FEATURES = 'catalina_north9classes_features_fats.pkl'
-TEST_TYPE = 'FATS+tsfresh_RF_TSTR'
 
+
+
+def check_dir(directory):
+  if not os.path.exists(directory):
+    os.makedirs(directory)
 
 def plot_confusion_matrix(cm, classes, n_class_val,
     normalize=False,
@@ -73,9 +79,10 @@ def plot_confusion_matrix(cm, classes, n_class_val,
                 ha="center", va="center",
                 color="white" if cm[i, j] > thresh else "black")
     fig.tight_layout()
+    check_dir(path_to_save)
     if path_to_save != '':
       fig.savefig(
-          os.path.join(path_to_save,
+          os.path.join(PATH_TO_PROJECT, path_to_save,
                        '%s_conf_matrix_class%i.png' % (TEST_TYPE, n_class_val)))
 
 
@@ -178,9 +185,11 @@ def train_clf_and_plot_conf_matrix(test_type):
                                                                0],
                                                            np.trace(
                                                                confusion_matrix) / np.sum(
-                                                               confusion_matrix)))
+                                                               confusion_matrix)),
+         path_to_save=PATH_TO_SAVE_CONF_MAT)
     plt.show()
+    return confusion_matrix
 
 
 if __name__ == "__main__":
-    train_clf_and_plot_conf_matrix(TEST_TYPE)
+    cm = train_clf_and_plot_conf_matrix(TEST_TYPE)
