@@ -13,9 +13,8 @@ import datetime
 from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 from lightgbm import LGBMClassifier
-import feature_extraction.tinkering_FATS as FATS_extractor
+import feature_extraction.FATS_extractor as FATS_extractor
 import matplotlib.pyplot as plt
-from feature_extraction.rf_over_FATS import plot_confusion_matrix
 from parameters import general_keys
 
 NAME_REAL_DATA = 'catalina_north9classes.pkl'
@@ -28,7 +27,60 @@ NAME_REAL_FATS_FEATURES = 'catalina_north9classes_features_fats.pkl'
 NAME_REAL_TSFRESH_FEATURES = 'catalina_north9classes_features_tsfresh.pkl'
 NAME_SYN_TSFRESH_FEATURES = 'catalina_north9classes_features_tsfresh_concatenated.pkl'
 NAME_SYN_FATS_FEATURES = 'catalina_north9classes_features_fats.pkl'
-TEST_TYPE = 'FATS_TRTR'
+TEST_TYPE = 'FATS+tsfresh_RF_TSTR'
+
+
+def plot_confusion_matrix(cm, classes, n_class_val,
+    normalize=False,
+    title=None,
+    cmap=plt.cm.Blues, path_to_save=''):
+    """
+    This function prints and plots the confusion matrix.
+    Normalization can be applied by setting `normalize=True`.
+    """
+    if not title:
+      if normalize:
+        title = 'Normalized confusion matrix'
+      else:
+        title = 'Confusion matrix, without normalization'
+
+    if normalize:
+      cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
+      print("Normalized confusion matrix")
+    else:
+      print('Confusion matrix, without normalization')
+
+    print(cm)
+
+    fig, ax = plt.subplots()
+    im = ax.imshow(cm, interpolation='nearest', cmap=cmap)
+    ax.figure.colorbar(im, ax=ax)
+    # We want to show all ticks...
+    ax.set(xticks=np.arange(cm.shape[1]),
+           yticks=np.arange(cm.shape[0]),
+           # ... and label them with the respective list entries
+           xticklabels=classes, yticklabels=classes,
+           title=title,
+           ylabel='True label',
+           xlabel='Predicted label')
+
+    # Rotate the tick labels and set their alignment.
+    plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
+             rotation_mode="anchor")
+
+    # Loop over data dimensions and create text annotations.
+    fmt = '.2f' if normalize else 'd'
+    thresh = cm.max() / 2.
+    for i in range(cm.shape[0]):
+      for j in range(cm.shape[1]):
+        ax.text(j, i, format(cm[i, j], fmt),
+                ha="center", va="center",
+                color="white" if cm[i, j] > thresh else "black")
+    fig.tight_layout()
+    if path_to_save != '':
+      fig.savefig(
+          os.path.join(path_to_save,
+                       '%s_conf_matrix_class%i.png' % (TEST_TYPE, n_class_val)))
 
 
 def load_multiple_sets(path_list):
@@ -77,9 +129,9 @@ def train_clf_and_plot_conf_matrix(test_type):
                                                 NAME_SYN_TSFRESH_FEATURES)
 
     real_merged_features = load_and_concatenate_features(
-        [path_to_real_fats_features])#, path_to_real_tsfresh_features])
+        [path_to_real_fats_features, path_to_real_tsfresh_features])
     syn_merged_features = load_and_concatenate_features(
-        [path_to_syn_fats_features])#, path_to_syn_tsfresh_features])
+        [path_to_syn_fats_features, path_to_syn_tsfresh_features])
 
     if 'TRTR' in test_type:
         train_features = real_merged_features[general_keys.TRAIN_SET_KEY]
@@ -90,27 +142,25 @@ def train_clf_and_plot_conf_matrix(test_type):
     val_features = real_merged_features[general_keys.VAL_SET_KEY]
     test_features = real_merged_features[general_keys.TEST_SET_KEY]
 
-    params = {'n_jobs': -1, 'n_estimators': 100, 'criterion': 'entropy',
-              'max_depth': 10, 'min_samples_leaf': 3, 'min_samples_split': 2,
-    'max_features': None}
-    clf = RandomForestClassifier()#**params)
-
-    # params = {'n_jobs': -1, 'max_depth': 9, 'n_estimators': 200,
-    #           'learning_rate': 0.1, 'subsample': 1.0,
-    #           'colsample_bytree': 0.8, 'gamma': 0.5, 'min_child_weight': 5,
-    #           'objective': 'multi:softprob'}
-    # clf = XGBClassifier(**params)
-
-    # params = {'n_jobs': -1, 'max_depth': 9, 'n_estimators': 200,
-    # 'learning_rate': 0.1, 'subsample': 1.0,
-    #           'colsample_bytree': 0.8, 'gamma': 0.5, 'min_child_weight': 5,
-    #           'objective': 'multi:softprob'}
-    # clf = LGBMClassifier(**params) #default params: #clf.get_params().keys()
+    if 'RF' in test_type:
+      params = {'n_jobs': -1, 'n_estimators': 100, 'criterion': 'entropy',
+                'max_depth': 10, 'min_samples_leaf': 3, 'min_samples_split': 2,
+      'max_features': None}
+      clf = RandomForestClassifier(**params)
+    elif 'XGB' in test_type:
+      params = {'n_jobs': -1, 'max_depth': 9, 'n_estimators': 200,
+                'learning_rate': 0.1, 'subsample': 1.0,
+                'colsample_bytree': 0.8, 'gamma': 0.5, 'min_child_weight': 5,
+                'objective': 'multi:softprob'}
+      clf = XGBClassifier(**params)
+    elif 'LGB' in test_type:
+      params = {'n_jobs': -1, 'max_depth': 9, 'n_estimators': 200,
+      'learning_rate': 0.1, 'subsample': 1.0,
+                'colsample_bytree': 0.8, 'gamma': 0.5, 'min_child_weight': 5,
+                'objective': 'multi:softprob'}
+      clf = LGBMClassifier(**params) #default params: #clf.get_params().keys()
 
     clf.fit(X=train_features, y=y_train)
-
-
-    # clf.fit(X=train_features, y=y_train)
 
     print('feature importances %s' % str(
         np.array(clf.feature_importances_) / np.sum(clf.feature_importances_)))

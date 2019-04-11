@@ -10,7 +10,7 @@ import pandas as pd
 import sklearn
 import time
 import datetime
-import feature_extraction.tinkering_FATS as FATS_extractor
+import feature_extraction.FATS_extractor as FATS_extractor
 import feature_extraction.tsfresh_extractor as tsfresh_extractor
 
 REAL_DATA_FOLDER = os.path.join('generated', 'catalina_amp_irregular_9classes')

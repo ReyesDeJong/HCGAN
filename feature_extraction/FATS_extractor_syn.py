@@ -9,7 +9,7 @@ import pickle as pkl
 import sklearn
 import time
 import datetime
-import feature_extraction.tinkering_FATS as FATS_extractor
+import feature_extraction.FATS_extractor as FATS_extractor
 
 REAL_DATA_FOLDER = os.path.join('generated', 'catalina_amp_irregular_9classes')
 REAL_DATA_NAME = 'catalina_amp_irregular_9classes_generated_10000.pkl'#'starlight_new_bal_0.10.pkl'#

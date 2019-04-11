@@ -11,7 +11,7 @@ from sklearn.utils import shuffle
 from tsfresh import extract_features, extract_relevant_features, select_features
 from tsfresh.utilities.dataframe_functions import impute
 from tsfresh.feature_extraction import ComprehensiveFCParameters
-from feature_extraction.tinkering_FATS import load_pickle
+from feature_extraction.FATS_extractor import load_pickle
 
 PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..'))

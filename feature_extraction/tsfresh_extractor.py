@@ -10,7 +10,7 @@ import pandas as pd
 import sklearn
 import time
 import datetime
-import feature_extraction.tinkering_FATS as FATS_extractor
+import feature_extraction.FATS_extractor as FATS_extractor
 from tsfresh import extract_features, extract_relevant_features, select_features
 #from tsfresh.feature_extraction import
 from tsfresh.utilities.dataframe_functions import impute

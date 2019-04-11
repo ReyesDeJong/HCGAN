@@ -1,5 +1,9 @@
 import sys
 import os
+PATH_TO_PROJECT = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(PATH_TO_PROJECT)
+
 import FATS
 import numpy as np
 import pickle as pkl
@@ -7,136 +11,146 @@ import sklearn
 import time
 import datetime
 
-PATH_TO_PROJECT = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..'))
-sys.path.append(PATH_TO_PROJECT)
 
 
-class ComputeFATS(object):
 
-    def __init__(self, pkl_data_path):
-        self.pkl_data_path = pkl_data_path
+REAL_DATA_FOLDER = os.path.join('datasets_original', 'REAL', '9classes_100_100')
+REAL_DATA_NAME = 'catalina_north9classes.pkl'#'starlight_new_bal_0.10.pkl'#
+SAVE_NAME = 'catalina_north9classes_features.pkl'
+VERBOSE = False
 
+"""
+needed to change 
+from scipy.interpolate import interp1d as interscipy 
+in file FeatureFunctionLib.py
+changed prod[k] to prod[int(k)] in FeatureFunctionLib.py->SlottedA_length->slotted_autocorrelation 
 
-    def single_band_feature_keys(self):
-        gal_feat_list = ['Amplitude', 'AndersonDarling', 'Autocor_length',
-                         'Beyond1Std', 'CAR_sigma', 'CAR_mean', 'CAR_tau',
-                         'Con', 'Eta_e', 'FluxPercentileRatioMid20',
-                         'FluxPercentileRatioMid35',
-                         'FluxPercentileRatioMid50',
-                         'FluxPercentileRatioMid65',
-                         'FluxPercentileRatioMid80',
-                         'Gskew', 'LinearTrend',
-                         'MaxSlope', 'Mean', 'Meanvariance', 'MedianAbsDev',
-                         'MedianBRP', 'PairSlopeTrend', 'PercentAmplitude',
-                         'PercentDifferenceFluxPercentile', 'PeriodLS',
-                         'Period_fit', 'Psi_CS', 'Psi_eta', 'Q31', 'Rcs',
-                         'Skew', 'SmallKurtosis', 'Std',
-                         'StetsonK', 'VariabilityIndex']  # , 'StetsonK_AC']# 'SlottedA_length'
+See some timestamp with repeated values
 
-        harmonics_features = []
-        for f in range(3):
-            for index in range(4):
-                harmonics_features.append("Freq" + str(f + 1) + "_harmonics_amplitude_" + str(index))
-                harmonics_features.append("Freq" + str(f + 1) + "_harmonics_rel_phase_" + str(index))
-
-        gal_feat_list += harmonics_features
-
-        self.single_band_features_keys = gal_feat_list
-        self.all_band_features = []
-
-        for i in range(6):
-            for f in gal_feat_list:
-                self.all_band_features.append(f + "_" + str(i))
-
-    def create_lightcurve_features(self):
-        start_index = 0
-        end_index = 0
-        last_id = self.point_id[0]
-        current_n = 0
-        n_files_written = 0
-        for i, ob_id in enumerate(self.point_id):
-            if last_id != ob_id or i == (self.n_points_id - 1):
-                current_n += 1
-                #last_id = ob_id
-                if i == (self.n_points_id - 1):
-                    end_index = self.n_points_id
-                else:
-                    end_index = i
-                lightcurve_frame = self.csv_data[start_index:end_index]
-                features, short_sequence = self.compute_fats_features(lightcurve_frame)
-                self.light_curve_features["object_id"].append(last_id)
-                self.light_curve_features["features"].append(features)
-                self.light_curve_features["short_sequence"].append(short_sequence)
-                self.light_curve_features["lengths"].append(len(lightcurve_frame))
-                n_files_written += 1
-                #print(n_files_written)
-                start_index = end_index
-                last_id = ob_id
-                #if n_files_written >= 100:
-                #    break
-        self.light_curve_features["object_id"] = np.array(self.light_curve_features["object_id"]).astype("S")
-        self.light_curve_features["features"] = np.array(self.light_curve_features["features"])
-        self.light_curve_features["short_sequence"] = np.array(self.light_curve_features["short_sequence"])
-        self.light_curve_features["feature_list"] = np.array(self.all_band_features).astype("S")
-        self.light_curve_features["lengths"] = np.array(self.light_curve_features["lengths"])
-        hdf5_file = h5py.File(save_path, "w")
-        dt = h5py.special_dtype(vlen=str)
-        for data_key in self.light_curve_features.keys():
-            if data_key in ["feature_list", "object_id"]:
-                hdf5_file.create_dataset(data_key, data=self.light_curve_features[data_key], dtype=dt)
-            else:
-                hdf5_file.create_dataset(data_key, data=self.light_curve_features[data_key])
+NASTY TIME FIXING
+"""
 
 
-    def compute_fats_features(self, lightcurve_frame):
+def get_data_from_set(set, magnitude_key, time_key):
+    magnitudes = np.asarray(set[magnitude_key])
+    time = np.asarray(set[time_key])
+    x = np.stack((magnitudes, time), axis=-1)
+    x = x.reshape(x.shape[0], x.shape[1], x.shape[2])
+    y = np.asarray(set['class'])
+    x, y = sklearn.utils.shuffle(x, y, random_state=42)
+    return x, y
 
-        def single_band_features(lc, errors, mjds):
+def load_pickle(path):
+    infile = open(path, 'rb')
+    dataset_partitions = pkl.load(infile)
+    return dataset_partitions
 
-            fats = FATS.FeatureSpace(Data=['magnitude', 'time', 'error'],
-                                     featureList=self.single_band_features_keys,
-                                     excludeList=['StetsonJ', 'StetsonL',
-                                                  'Eta_color', 'Q31_color',
-                                                  'Color'])
-            data = np.array([lc, mjds, errors])
-            features = fats.calculateFeature(data)
-            return features  # , gal_feat_list
+def read_data_irregular_sampling(file, magnitude_key='original_magnitude', time_key='time', verbose=False):
+    dataset_partitions = np.load(file)
+    # dataset_partitions = np.load(file)
+    if verbose:
+        print(dataset_partitions[0].keys())
+    x_train, y_train = get_data_from_set(dataset_partitions[0], magnitude_key, time_key)
+    x_val, y_val = get_data_from_set(dataset_partitions[1], magnitude_key, time_key)
+    x_test, y_test = get_data_from_set(dataset_partitions[2], magnitude_key, time_key)
+    return x_train, y_train, x_val, y_val, x_test, y_test
 
-        band_list = np.unique(lightcurve_frame["passband"].values)
-        lightcurve_features = []
-        short_sequence = False
-        for band in band_list:
-            band_frame = lightcurve_frame[lightcurve_frame["passband"] == band]
-            lc = band_frame["flux"].values
-            errors = band_frame["flux_err"].values
-            mjds = band_frame["mjd"].values
-            if len(mjds) >= 4:
-                features = single_band_features(lc=lc, errors=errors, mjds=mjds)
-                features = features.result(method="array")
-            else:
-                features = np.zeros(shape=(58,))
-                short_sequence = True
-            lightcurve_features.append(features)
+def split_data_into_mag_and_time(data_array):
+    magnitude = data_array[..., 0]
+    time = data_array[..., 1]
+    return magnitude, time
 
-        lightcurve_features = np.concatenate(lightcurve_features)
+def get_data_fraction_as_mag_and_time(data_array, n_samples_to_get=3):
+    return split_data_into_mag_and_time(data_array[:n_samples_to_get])
 
-        """combinations = list(itertools.combinations(band_list, 2))
-        for pair in combinations:
-            band_frame1 = lightcurve_frame[lightcurve_frame["passband"] == pair[0]]
-            band_frame2 = lightcurve_frame[lightcurve_frame["passband"] == pair[1]]
-        """
 
-        return lightcurve_features, short_sequence
+#TODO: check why s this necessary
+def repair_time(time):
+    previous_time_step = time[0]
+    for time_step_idx in range(time.shape[0] - 1):
+        time_step_to_be_compered = time[time_step_idx + 1]
+        if time_step_to_be_compered == previous_time_step:
+            time[time_step_idx + 1] = previous_time_step + 1e-7
+            #print('unique', np.unique(np.sort(time)).shape)
+            #print(time_step_idx)
+            #print(time_step_to_be_compered, '==', previous_time_step)
+            #print(time[time_step_idx + 1])
+            #print(time_step_to_be_compered + 2e-8)
+            #print('sort', np.sort(time))
+            return np.sort(time)
+        previous_time_step = time[time_step_idx + 1]
+    return time
+
+def check_times(time, verbose=VERBOSE):
+    original_time_shape = time.shape[0]
+    if verbose:
+        if np.unique(time).shape[0] != original_time_shape:
+            print('NASTY TIME >:(')
+    while np.unique(time).shape[0] != original_time_shape:
+        time = repair_time(time)
+    return time
+
+
+def get_useful_FATS_features(magnitudes, times):
+    #print('time orig', times[0])
+    time_checked = check_times(times[0])
+    #print('time check', time)
+    lc_example = np.array([magnitudes[0], time_checked])
+    a = FATS.FeatureSpace(Data=['magnitude', 'time'])
+    b = a.calculateFeature(lc_example)
+    feature_list = np.array(list(b.result('dict').keys()))
+    feature_values = np.array(list(b.result('dict').values()))
+    useful_features = list(feature_list[np.argwhere(~np.isnan(feature_values.astype(np.float64)))])#list(feature_list[np.where(feature_values != None)])
+    print('%i features calculated' % len(useful_features))
+    print([x[0] for x in useful_features])
+    return useful_features
+
+def get_FATS(magnitudes, times, useful_features):
+    filtered_a = FATS.FeatureSpace(featureList=useful_features,
+                          Data=['magnitude', 'time'])
+    fats_features = []
+    start_time = time.time()
+    for i in range(magnitudes.shape[0]):
+        time_checked = check_times(times[i])
+        lc_aux = np.array([magnitudes[i], time_checked])
+        features_obj = filtered_a.calculateFeature(lc_aux)
+        features_results = np.array(features_obj.result('array'))
+        fats_features.append(features_results)
+        if i%100==0:
+            time_usage = str(datetime.timedelta(
+                seconds=int(round(time.time() - start_time))))
+            print("it %i Time usage: %s" % (i, str(time_usage)), flush=True)
+    fats_features = np.array(fats_features) #shouled this be concatenate?
+    time_usage = str(datetime.timedelta(
+        seconds=int(round(time.time() - start_time))))
+    print("Total Time usage: %s\n" % (str(time_usage)), flush=True)
+
+    return fats_features
+
 
 if __name__ == "__main__":
+    path_to_real_data = os.path.join(PATH_TO_PROJECT, 'TSTR_data', REAL_DATA_FOLDER, REAL_DATA_NAME)
+    x_train_real, y_train_real, x_val_real, y_val_real, x_test_real, y_test_real = \
+        read_data_irregular_sampling(
+            path_to_real_data, magnitude_key='original_magnitude_random', time_key='time_random')
 
-    index = sys.argv[1]
-    csv_path = "../../training_data/partitions/test_set_part" + index + ".csv"
-    save_path = "../../training_data/features/features_test_set" + index + ".hdf5"
-    #save_path = "../../training_data/features/blablabla" + index + ".hdf5"
+    train_magnitudes, train_times = split_data_into_mag_and_time(x_train_real)
+    val_magnitudes, val_times = split_data_into_mag_and_time(x_val_real)
+    test_magnitudes, test_times = split_data_into_mag_and_time(x_test_real)
+
+    useful_features_names = get_useful_FATS_features(train_magnitudes, train_times)
+
+    train_features = get_FATS(train_magnitudes, train_times, useful_features_names)
+    val_features = get_FATS(val_magnitudes, val_times, useful_features_names)
+    test_features = get_FATS(test_magnitudes, test_times, useful_features_names)
 
 
-    feature_calculator = ComputeFATS(csv_path, save_path)
-    start = time.time()
-    feature_calculator.create_lightcurve_features()
-print(csv_path, time.time()-start)
+    pkl.dump({'train': train_features, 'val': val_features, 'test': test_features}, open(
+        os.path.join(PATH_TO_PROJECT, 'TSTR_data', REAL_DATA_FOLDER,
+                     SAVE_NAME), "wb"))
+
+
+
+
+
+
