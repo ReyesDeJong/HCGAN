@@ -1,5 +1,6 @@
 import sys
 import os
+
 PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(PATH_TO_PROJECT)
@@ -40,20 +41,17 @@ class DataLoader(object):
   """
   magnitude and time are stacked as a channel in the end
   """
+
   def get_data_from_set_as_x_y(self, set):
     magnitudes, time, y = self.get_data_from_set(set)
     x = np.stack((magnitudes, time), axis=-1)
     return x, y
 
-
   def get_all_sets_data(self):
     dataset_partitions = self.load_data(self.data_path)
-    if self.verbose: #TODO: verbose as printr manager not as a condition
-        print(dataset_partitions[0].keys())
-    x_train, y_train = self.get_data_from_set_as_x_y(
-        dataset_partitions[0], self.magnitude_key, self.time_key)
-    x_val, y_val = self.get_data_from_set_as_x_y(
-        dataset_partitions[1], self.magnitude_key, self.time_key)
-    x_test, y_test = self.get_data_from_set_as_x_y(
-        dataset_partitions[2], self.magnitude_key, self.time_key)
+    if self.verbose:  # TODO: verbose as printr manager not as a condition
+      print(dataset_partitions[0].keys())
+    x_train, y_train = self.get_data_from_set_as_x_y(dataset_partitions[0])
+    x_val, y_val = self.get_data_from_set_as_x_y(dataset_partitions[1])
+    x_test, y_test = self.get_data_from_set_as_x_y(dataset_partitions[2])
     return x_train, y_train, x_val, y_val, x_test, y_test

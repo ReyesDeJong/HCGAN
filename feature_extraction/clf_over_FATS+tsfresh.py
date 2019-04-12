@@ -138,13 +138,13 @@ def train_clf_and_plot_conf_matrix(test_type):
         [path_to_syn_fats_features, path_to_syn_tsfresh_features])
 
     if 'TRTR' in test_type:
-        train_features = real_merged_features[general_keys.TRAIN_SET_KEY]
+        train_features = real_merged_features[general_keys.TRAIN_SET]
         y_train = y_train_real
     elif 'TSTR' in test_type:
-        train_features = syn_merged_features[general_keys.TRAIN_SET_KEY]
+        train_features = syn_merged_features[general_keys.TRAIN_SET]
         y_train = y_train_syn
-    val_features = real_merged_features[general_keys.VAL_SET_KEY]
-    test_features = real_merged_features[general_keys.TEST_SET_KEY]
+    val_features = real_merged_features[general_keys.VAL_SET]
+    test_features = real_merged_features[general_keys.TEST_SET]
 
     if 'RF' in test_type:
       params = {'n_jobs': -1, 'n_estimators': 100, 'criterion': 'entropy',

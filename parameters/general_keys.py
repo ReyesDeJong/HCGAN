@@ -1,6 +1,11 @@
 """Module that defines miscellaneous keys to manipulate the model"""
 
 # set names
-TRAIN_SET_KEY = 'train'
-VAL_SET_KEY = 'val'
-TEST_SET_KEY = 'test'
+TRAIN_SET = 'train'
+VAL_SET = 'val'
+TEST_SET = 'test'
+
+#set keys
+ORIGINAL_MAGNITUDE = 'original_magnitude'
+TIME = 'time'
+
