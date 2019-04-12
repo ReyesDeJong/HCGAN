@@ -189,6 +189,7 @@ def train_clf_and_plot_conf_matrix(test_type):
                                                                confusion_matrix)),
          path_to_save=PATH_TO_SAVE_CONF_MAT, test_type=test_type)
     #plt.show()
+    plt.close()
     return confusion_matrix
 
 
