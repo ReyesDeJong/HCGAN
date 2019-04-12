@@ -9,11 +9,11 @@ import modules.utils as utils
 import sklearn
 
 """
-Pipeline method, first designed for projections
+Pipeline method to transformate input data, first designed for projections
 """
 
 
-class Pipeline(object):
+class DataTransformPipeline(object):
 
   def __init__(self, list_of_pipeline_objects):
     self.list_of_pipeline_objects = list_of_pipeline_objects
@@ -31,7 +31,7 @@ class Pipeline(object):
   After training objects of pipeline, run to get pipeline output for a test
   or val set
   """
-  def eval(self, data_array):
+  def transform(self, data_array):
     for object in self.list_of_pipeline_objects:
-      data_array = object.eval(data_array)
+      data_array = object.transform(data_array)
     return data_array

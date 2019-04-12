@@ -2,7 +2,7 @@ import sys
 import os
 
 PATH_TO_PROJECT = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '../..'))
+    os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.append(PATH_TO_PROJECT)
 import numpy as np
 import modules.utils as utils
