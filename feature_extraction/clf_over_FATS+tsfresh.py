@@ -10,6 +10,7 @@ from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 from lightgbm import LGBMClassifier
 import feature_extraction.FATS_extractor as FATS_extractor
+from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 from parameters import general_keys
 
@@ -145,6 +146,12 @@ def train_clf_and_plot_conf_matrix(test_type):
         y_train = y_train_syn
     val_features = real_merged_features[general_keys.VAL_SET]
     test_features = real_merged_features[general_keys.TEST_SET]
+
+    scaler = StandardScaler()
+    scaler.fit(train_features)
+    train_features = scaler.transform(train_features)
+    val_features = scaler.transform(val_features)
+    test_features = scaler.transform(test_features)
 
     if 'RF' in test_type:
       params = {'n_jobs': -1, 'n_estimators': 100, 'criterion': 'entropy',
