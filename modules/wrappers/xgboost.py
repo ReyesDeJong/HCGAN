@@ -4,6 +4,7 @@ import sys
 PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.append(PATH_TO_PROJECT)
+from modules.wrappers.random_forest import RandomForest
 from xgboost import XGBClassifier
 from parameters import param_keys
 
@@ -12,7 +13,7 @@ RF wrapper, first designed for projections
 """
 
 
-class RandomForest(object):
+class XGBoost(RandomForest):
 
   def __init__(self, params_to_update=None):
     super().__init__(params_to_update)

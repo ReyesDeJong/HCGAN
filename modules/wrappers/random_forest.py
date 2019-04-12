@@ -41,7 +41,7 @@ class RandomForest(object):
 
   def fit(self, train_data_array, train_labels):
     self.clf.fit(X=train_data_array, y=train_labels)
-    train_data_array = self.clf.transform(train_data_array)
+    train_data_array = self.transform(train_data_array)
     return train_data_array, train_labels
 
   def transform(self, data_array):
@@ -52,7 +52,7 @@ class RandomForest(object):
   def get_n_most_important_features_from_array(self, data_array):
     features_importance = np.array(self.clf.feature_importances_) \
                           / np.sum(self.clf.feature_importances_)
-    most_important_indexs_sorted = np.argsort(features_importance)
+    most_important_indexs_sorted = np.argsort(features_importance)[::-1]
     sorted_features = data_array[:, most_important_indexs_sorted]
     return sorted_features[:,
            :self.params[param_keys.N_IMPORTANT_FEATURE_TO_KEEP]]
