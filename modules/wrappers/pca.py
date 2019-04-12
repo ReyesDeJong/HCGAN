@@ -23,7 +23,7 @@ class PCA(object):
 
   def set_default_params(self):
     params = {
-      param_keys.VARIANCE_PERCENTAGE_TO_KEEP: 0.9
+      param_keys.VARIANCE_PERCENTAGE_TO_KEEP: 0.95
     }
     return params
 
