@@ -151,13 +151,13 @@ def train_clf_and_plot_conf_matrix(test_type):
                 'max_depth': 10, 'min_samples_leaf': 3, 'min_samples_split': 2,
       'max_features': None}
       clf = RandomForestClassifier(**params)
-    elif 'XGB' in test_type:
+    elif 'XG' in test_type:
       params = {'n_jobs': -1, 'max_depth': 9, 'n_estimators': 200,
                 'learning_rate': 0.1, 'subsample': 1.0,
                 'colsample_bytree': 0.8, 'gamma': 0.5, 'min_child_weight': 5,
                 'objective': 'multi:softprob'}
       clf = XGBClassifier(**params)
-    elif 'LGB' in test_type:
+    elif 'LG' in test_type:
       params = {'n_jobs': -1, 'max_depth': 9, 'n_estimators': 200,
       'learning_rate': 0.1, 'subsample': 1.0,
                 'colsample_bytree': 0.8, 'gamma': 0.5, 'min_child_weight': 5,
