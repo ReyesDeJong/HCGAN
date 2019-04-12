@@ -13,7 +13,8 @@ import feature_extraction.FATS_extractor as FATS_extractor
 import matplotlib.pyplot as plt
 from parameters import general_keys
 
-TEST_TYPE = 'FATS+tsfresh_LGBM_TSTR'
+TEST_TYPE_LIST = ['FATS+tsfresh_RF_TRTR', 'FATS+tsfresh_RF_TSTR', 'FATS+tsfresh_XGboost_TRTR',
+             'FATS+tsfresh_XGboost_TSTR', 'FATS+tsfresh_LGBM_TRTR', 'FATS+tsfresh_LGBM_TSTR']
 PATH_TO_SAVE_CONF_MAT = os.path.join('results', 'conf_mat', 'trees')
 NAME_REAL_DATA = 'catalina_north9classes.pkl'
 NAME_SYN_DATA = 'catalina_amp_irregular_9classes_generated_10000.pkl'
@@ -35,7 +36,7 @@ def check_dir(directory):
 def plot_confusion_matrix(cm, classes, n_class_val,
     normalize=False,
     title=None,
-    cmap=plt.cm.Blues, path_to_save=''):
+    cmap=plt.cm.Blues, path_to_save='', test_type=''):
     """
     This function prints and plots the confusion matrix.
     Normalization can be applied by setting `normalize=True`.
@@ -83,7 +84,7 @@ def plot_confusion_matrix(cm, classes, n_class_val,
     if path_to_save != '':
       fig.savefig(
           os.path.join(PATH_TO_PROJECT, path_to_save,
-                       '%s_conf_matrix_class%i.png' % (TEST_TYPE, n_class_val)))
+                       '%s_conf_matrix_class%i.png' % (test_type, n_class_val)))
 
 
 def load_multiple_sets(path_list):
@@ -179,17 +180,18 @@ def train_clf_and_plot_conf_matrix(test_type):
         classes=['EW', 'RRc', 'EA', 'RRab', 'RS CVn', 'LPV', 'RRd', 'beta Lyrae',
                  'HADS'],
         n_class_val=np.unique(y_train_real).shape[0],
-        title='%s Conf matrix for %i classes; Acc %.4f' % (TEST_TYPE,
+        title='%s Conf matrix for %i classes; Acc %.4f' % (test_type,
                                                            np.unique(
                                                                y_train_real).shape[
                                                                0],
                                                            np.trace(
                                                                confusion_matrix) / np.sum(
                                                                confusion_matrix)),
-         path_to_save=PATH_TO_SAVE_CONF_MAT)
-    plt.show()
+         path_to_save=PATH_TO_SAVE_CONF_MAT, test_type=test_type)
+    #plt.show()
     return confusion_matrix
 
 
 if __name__ == "__main__":
-    cm = train_clf_and_plot_conf_matrix(TEST_TYPE)
+    for test_type in TEST_TYPE_LIST:
+        train_clf_and_plot_conf_matrix(test_type)
