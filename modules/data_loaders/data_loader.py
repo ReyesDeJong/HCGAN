@@ -2,7 +2,7 @@ import sys
 import os
 
 PATH_TO_PROJECT = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..'))
+    os.path.join(os.path.dirname(__file__), '../..'))
 sys.path.append(PATH_TO_PROJECT)
 import numpy as np
 import modules.utils as utils
@@ -34,8 +34,8 @@ class DataLoader(object):
     time = np.asarray(set_partition[self.time_key])
     time = np.squeeze(time)
     y = np.asarray(set_partition['class'])
-    magnitudes, time, y = sklearn.utils.shuffle(magnitudes, time, y,
-                                                random_state=42)
+    # magnitudes, time, y = sklearn.utils.shuffle(magnitudes, time, y,
+    #                                             random_state=42)
     return magnitudes, time, y
 
   """
