@@ -49,7 +49,8 @@ class Projector(object):
     if save_fig_name is not None:
       save_path = os.path.join(PATH_TO_PROJECT, 'results', 'projections')
       utils.check_dir(save_path)
-      fig.savefig(os.path.join(save_path, '%s.png' % save_fig_name))
+      fig.savefig(os.path.join(save_path, '%s.png' % save_fig_name),
+                  bbox_inches='tight')
 
   def _split_data_by_label(self, data_array, labels) -> dict:
     label_values = np.unique(labels)
@@ -66,7 +67,7 @@ class Projector(object):
     data_dict = self._project_real_syn(data_dict)
     self._plot_real_syn_and_both(data_dict, title, save_fig_name)
 
-  # TODO: how to avoid this kind of data manipulations
+  # TODO: how to avoid this kind of data manipulations [CODE SMELL]
   def _plot_real_syn_and_both(self, data_dict: dict, title, save_fig_name):
     fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(24, 8))
     self._silent_plot_data_projection(
@@ -77,10 +78,10 @@ class Projector(object):
         data_dict[general_keys.REAL][general_keys.LABELS], 'Real data')
     concatenated_projections = np.concatenate(
         [data_dict[general_keys.REAL][general_keys.PROJECTED_DATA],
-        data_dict[general_keys.SYN][general_keys.PROJECTED_DATA]])
+         data_dict[general_keys.SYN][general_keys.PROJECTED_DATA]])
     concatenated_labels = np.concatenate(
         [data_dict[general_keys.REAL][general_keys.LABELS],
-        data_dict[general_keys.SYN][general_keys.LABELS]])
+         data_dict[general_keys.SYN][general_keys.LABELS]])
     self._silent_plot_data_projection(
         ax[2], concatenated_projections,
         concatenated_labels, 'GAN + real data')
@@ -98,7 +99,7 @@ class Projector(object):
     ax.legend()
     return ax
 
-  # TODO: how to avoid this kind of data manipulations
+  # TODO: how to avoid this kind of data manipulations [CODE SMELL]
   def _project_real_syn(self, data_dict: dict):
     data_to_project = np.concatenate(
         [data_dict[general_keys.REAL][general_keys.DATA_ARRAY],
