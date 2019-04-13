@@ -68,7 +68,7 @@ class Projector(object):
 
   # TODO: how to avoid this kind of data manipulations
   def _plot_real_syn_and_both(self, data_dict: dict, title, save_fig_name):
-    fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(4, 12))
+    fig, ax = plt.subplots(nrows=1, ncols=3, figsize=(24, 8))
     self._silent_plot_data_projection(
         ax[0], data_dict[general_keys.SYN][general_keys.PROJECTED_DATA],
         data_dict[general_keys.SYN][general_keys.LABELS], 'GAN data')
@@ -76,11 +76,11 @@ class Projector(object):
         ax[1], data_dict[general_keys.REAL][general_keys.PROJECTED_DATA],
         data_dict[general_keys.REAL][general_keys.LABELS], 'Real data')
     concatenated_projections = np.concatenate(
-        [data_dict[general_keys.REAL][general_keys.PROJECTED_DATA]],
-        data_dict[general_keys.SYN][general_keys.PROJECTED_DATA])
+        [data_dict[general_keys.REAL][general_keys.PROJECTED_DATA],
+        data_dict[general_keys.SYN][general_keys.PROJECTED_DATA]])
     concatenated_labels = np.concatenate(
-        [data_dict[general_keys.REAL][general_keys.LABELS]],
-        data_dict[general_keys.SYN][general_keys.LABELS])
+        [data_dict[general_keys.REAL][general_keys.LABELS],
+        data_dict[general_keys.SYN][general_keys.LABELS]])
     self._silent_plot_data_projection(
         ax[2], concatenated_projections,
         concatenated_labels, 'GAN + real data')

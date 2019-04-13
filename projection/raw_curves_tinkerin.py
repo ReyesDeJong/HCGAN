@@ -34,3 +34,5 @@ if __name__ == '__main__':
   projector = Projector(pipeline)
   projector.fit(x_train_real, y_train_real)
   projector.project_and_plot_data(x_train_real, y_train_real, save_fig_name='try')
+  projector.project_and_plot_real_syn(
+      x_train_real, y_train_real, x_train_real, y_train_real)
