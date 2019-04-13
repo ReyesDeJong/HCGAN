@@ -13,7 +13,7 @@ Pipeline method to transformate input data, first designed for projections
 """
 
 
-class DataTransformPipeline(object):
+class Pipeline(object):
 
   def __init__(self, list_of_pipeline_objects):
     self.list_of_pipeline_objects = list_of_pipeline_objects

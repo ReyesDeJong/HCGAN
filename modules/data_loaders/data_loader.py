@@ -34,8 +34,8 @@ class DataLoader(object):
     time = np.asarray(set_partition[self.time_key])
     time = np.squeeze(time)
     y = np.asarray(set_partition['class'])
-    # magnitudes, time, y = sklearn.utils.shuffle(magnitudes, time, y,
-    #                                             random_state=42)
+    magnitudes, time, y = sklearn.utils.shuffle(magnitudes, time, y,
+                                                random_state=42)
     return magnitudes, time, y
 
   """

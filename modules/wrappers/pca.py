@@ -4,7 +4,7 @@ import sys
 PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.append(PATH_TO_PROJECT)
-from sklearn.decomposition import PCA
+import sklearn.decomposition as decomposition
 from parameters import param_keys
 import numpy as np
 
@@ -19,7 +19,7 @@ class PCA(object):
     self.params = self.set_default_params()
     if params_to_update is not None:
       self.params.update(params_to_update)
-    self.pca = PCA()
+    self.pca = decomposition.PCA()
 
   def set_default_params(self):
     params = {

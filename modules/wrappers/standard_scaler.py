@@ -4,17 +4,17 @@ import sys
 PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.append(PATH_TO_PROJECT)
-from sklearn.preprocessing import StandardScaler
+import sklearn.preprocessing as preprocessing
 
 """
 Standar scaler wrapper, first designed for projections
 """
 
 
-class StandarScaler(object):
+class StandardScaler(object):
 
   def __init__(self):
-    self.scaler = StandardScaler()
+    self.scaler = preprocessing.StandardScaler()
 
   def fit(self, train_data_array, train_labels):
     self.scaler.fit(train_data_array)

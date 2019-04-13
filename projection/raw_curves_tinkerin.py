@@ -6,12 +6,13 @@ PATH_TO_PROJECT = os.path.abspath(
 sys.path.append(PATH_TO_PROJECT)
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
-from sklearn.manifold import TSNE
-from sklearn.utils import shuffle
+from modules.wrappers.standard_scaler import StandardScaler
+from modules.wrappers.pca import PCA
+from modules.wrappers.tsne import TSNE
 from modules.data_loaders.data_loader import DataLoader
 import parameters.general_keys as general_keys
+import parameters.param_keys as param_keys
+from modules.pipeline import Pipeline
 
 REAL_DATA_NAME = 'starlight_new_bal_1.00.pkl'
 
@@ -23,10 +24,37 @@ if __name__ == '__main__':
       data_path=path_to_real_data)
   x_train_real, y_train_real, x_val_real, y_val_real, x_test_real, y_test_real = \
     data_loader.get_all_sets_data()
-  x_train_real = x_train_real[:, :, 0]
+  index_to_get_val = 5000
+  x_train_real = x_train_real[:index_to_get_val, :, 0]
+  y_train_real = y_train_real[:index_to_get_val]
+
+  pca_params = {param_keys.VARIANCE_PERCENTAGE_TO_KEEP: 0.9}
+  list_of_methods = [StandardScaler(), PCA(pca_params), TSNE()]
+  pipeline = Pipeline(list_of_methods)
+  pipeline.fit(train_data_array=x_train_real,
+               train_labels=y_train_real)
+  tsne_pca_results = pipeline.transform(x_train_real)
+  print(tsne_pca_results.shape)
+  data_list = []
+  unique_labels = np.unique(y_train_real)
+  for label_value in unique_labels:
+    labels_idx = np.where(y_train_real == label_value)[0]
+    data_list.append(tsne_pca_results[labels_idx])
+
+  # Create plot
+  fig = plt.figure()
+
+  for label in range(len(data_list)):
+    x = data_list[label][:, 0]
+    y = data_list[label][:, 1]
+    plt.scatter(x, y, alpha=0.8, edgecolors='none', label=label)
+  plt.title('Matplot scatter plot')
+  plt.legend(loc=2)
+  plt.show()
+  """
   scaler = StandardScaler()
   scaler.fit(x_train_real)
-  x_train_scaled = x_train_real  # scaler.transform(x_train_real)
+  x_train_scaled = scaler.transform(x_train_real)
 
   pca = PCA()
   pca.fit(x_train_scaled)
@@ -65,3 +93,4 @@ if __name__ == '__main__':
   plt.title('Matplot scatter plot')
   plt.legend(loc=2)
   plt.show()
+  """

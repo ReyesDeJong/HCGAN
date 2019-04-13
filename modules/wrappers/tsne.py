@@ -4,7 +4,7 @@ import sys
 PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.append(PATH_TO_PROJECT)
-from sklearn.manifold import TSNE
+import sklearn.manifold as manifold
 
 """
 Standar scaler wrapper, first designed for projections
@@ -17,7 +17,7 @@ class TSNE(object):
     self.params = self.set_default_params()
     if params_to_update is not None:
       self.params.update(params_to_update)
-    self.tsne = TSNE(**self.params)
+    self.tsne = manifold.TSNE(**self.params)
 
   def set_default_params(self):
     params = {
