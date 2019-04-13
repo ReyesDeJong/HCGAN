@@ -21,7 +21,7 @@ class Projector(object):
     self.pipeline = pipeline
 
   def fit(self, train_data_array, train_labels):
-    self.pipeline.fit(X=train_data_array, y=train_labels)
+    self.pipeline.fit(train_data_array, train_labels)
 
   def project_data(self, data_array):
     return self.pipeline.transform(data_array)
@@ -55,6 +55,5 @@ class Projector(object):
     data_by_label_dict = {}
     for single_label_value in label_values:
       single_label_idxs = np.where(labels == single_label_value)[0]
-      data_by_label_dict[single_label_value].append(
-          data_array[single_label_idxs])
-    data_by_label_dict
+      data_by_label_dict[single_label_value] = data_array[single_label_idxs]
+    return data_by_label_dict
