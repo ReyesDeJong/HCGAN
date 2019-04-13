@@ -13,6 +13,10 @@ def load_pickle(path):
   dataset_partitions = pkl.load(infile)
   return dataset_partitions
 
+def check_dir(directory):
+	if not os.path.exists(directory):
+		os.makedirs(directory)
+
 
 if __name__ == '__main__':
   a = load_pickle(
