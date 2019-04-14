@@ -16,12 +16,15 @@ from modules.pipeline import Pipeline
 from projection.projector import Projector
 
 DATA_NAME = 'starlight_new_bal_1.00'
-SYN_DATA_FOLDER = os.path.join(PATH_TO_PROJECT, 'TSTR_data', 'generated', DATA_NAME)
-REAL_DATA_FOLDER = os.path.join(PATH_TO_PROJECT, 'TSTR_data', 'datasets_original', 'REAL')
+SYN_DATA_FOLDER = os.path.join(PATH_TO_PROJECT, 'TSTR_data', 'generated',
+                               DATA_NAME)
+REAL_DATA_FOLDER = os.path.join(PATH_TO_PROJECT, 'TSTR_data',
+                                'datasets_original', 'REAL')
 
 if __name__ == '__main__':
   path_to_real_data = os.path.join(REAL_DATA_FOLDER, '%s.pkl' % DATA_NAME)
-  path_to_syn_data = os.path.join(SYN_DATA_FOLDER, '%s_generated.pkl' % DATA_NAME)
+  path_to_syn_data = os.path.join(SYN_DATA_FOLDER,
+                                  '%s_generated.pkl' % DATA_NAME)
   real_data_loader = DataLoader(
       magnitude_key=general_keys.ORIGINAL_MAGNITUDE, time_key=general_keys.TIME,
       data_path=path_to_real_data)
@@ -31,13 +34,13 @@ if __name__ == '__main__':
   x_train_real, y_train_real, x_val_real, y_val_real, x_test_real, y_test_real = \
     real_data_loader.get_all_sets_data()
   x_train_syn, y_train_syn, x_val_syn, y_val_syn, x_test_syn, y_test_syn = \
-      syn_data_loader.get_all_sets_data()
-  #get magnitudes only
+    syn_data_loader.get_all_sets_data()
+  # get magnitudes only
   x_train_real = x_train_real[..., 0]
   x_train_syn = x_train_syn[..., 0]
 
-
-  list_of_methods = [StandardScaler(), PCA(), TSNE()]
+  tsne_param = {param_keys.VERBOSE: 1}
+  list_of_methods = [StandardScaler(), PCA(), TSNE(tsne_param)]
   pipeline = Pipeline(list_of_methods)
   projector = Projector(pipeline)
   projector.fit(x_train_real, y_train_real)
