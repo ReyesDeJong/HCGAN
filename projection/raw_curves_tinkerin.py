@@ -15,16 +15,18 @@ import parameters.param_keys as param_keys
 from modules.pipeline import Pipeline
 from projection.projector import Projector
 
-REAL_DATA_NAME = 'starlight_new_bal_1.00.pkl'
+DATA_NAME = 'starlight_new_bal_1.00'
+SYN_DATA_FOLDER = os.path.join(PATH_TO_PROJECT, 'TSTR_data', 'generated', DATA_NAME)
+REAL_DATA_FOLDER = os.path.join(PATH_TO_PROJECT, 'TSTR_data', 'datasets_original', 'REAL')
 
 if __name__ == '__main__':
-  path_to_real_data = os.path.join(PATH_TO_PROJECT, 'TSTR_data',
-                                   'datasets_original', 'REAL', REAL_DATA_NAME)
-  data_loader = DataLoader(
+  path_to_real_data = os.path.join(REAL_DATA_FOLDER, '%s.pkl' % DATA_NAME)
+  path_to_syn_data = os.path.join(SYN_DATA_FOLDER, '%s_generated.pkl' % DATA_NAME)
+  real_data_loader = DataLoader(
       magnitude_key=general_keys.ORIGINAL_MAGNITUDE, time_key=general_keys.TIME,
       data_path=path_to_real_data)
   x_train_real, y_train_real, x_val_real, y_val_real, x_test_real, y_test_real = \
-    data_loader.get_all_sets_data()
+    real_data_loader.get_all_sets_data()
   index_to_get_val = 100
   x_train_real = x_train_real[:index_to_get_val, :, 0]
   y_train_real = y_train_real[:index_to_get_val]
