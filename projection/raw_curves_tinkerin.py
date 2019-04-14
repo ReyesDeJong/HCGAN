@@ -29,7 +29,8 @@ if __name__ == '__main__':
       magnitude_key=general_keys.ORIGINAL_MAGNITUDE, time_key=general_keys.TIME,
       data_path=path_to_real_data)
   syn_data_loader = DataLoader(
-      magnitude_key=general_keys.ORIGINAL_MAGNITUDE, time_key=general_keys.TIME,
+      magnitude_key=general_keys.GENERATED_MAGNITUDE,
+      time_key=general_keys.TIME,
       data_path=path_to_syn_data)
   x_train_real, y_train_real, x_val_real, y_val_real, x_test_real, y_test_real = \
     real_data_loader.get_all_sets_data(n_samples_to_get=10000)
