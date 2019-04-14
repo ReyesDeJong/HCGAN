@@ -38,7 +38,8 @@ if __name__ == '__main__':
   # get magnitudes only
   x_train_real = x_train_real[..., 0]
   x_train_syn = x_train_syn[..., 0]
-
+  print(x_train_real.shape)
+  print(x_train_syn.shape)
   tsne_param = {param_keys.VERBOSE: 1}
   list_of_methods = [StandardScaler(), PCA(), TSNE(tsne_param)]
   pipeline = Pipeline(list_of_methods)
