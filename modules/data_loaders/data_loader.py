@@ -16,11 +16,11 @@ Base class to oad different types of data, in this case for Starlight and
 
 class DataLoader(object):
 
-    def __init__(self, magnitude_key, time_key, data_path):
+    def __init__(self, magnitude_key, time_key, data_path, verbose=False):
         self.magnitude_key = magnitude_key
         self.time_key = time_key
         self.data_path = data_path
-        self.verbose = False
+        self.verbose = verbose
 
     def load_data(self, path):
         return utils.load_pickle(path)

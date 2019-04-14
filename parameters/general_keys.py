@@ -8,6 +8,7 @@ TEST_SET = 'test'
 #set keys
 ORIGINAL_MAGNITUDE = 'original_magnitude'
 TIME = 'time'
+GENERATED_MAGNITUDE = 'generated_magnitude'
 
 # real-syn names
 REAL = 'real'
