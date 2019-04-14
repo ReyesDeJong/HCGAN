@@ -42,7 +42,7 @@ if __name__ == '__main__':
   tsne_param = {param_keys.VERBOSE: 1}
   list_of_methods = [StandardScaler(), PCA(), TSNE(tsne_param)]
   pipeline = Pipeline(list_of_methods)
-  projector = Projector(pipeline)
+  projector = Projector(pipeline, show_plots=False)
   projector.fit(x_train_real, y_train_real)
   pipeline.print_dimensions_before_projection()
   projector.project_and_plot_real_syn(
