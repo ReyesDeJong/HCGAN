@@ -43,7 +43,7 @@ class Pipeline(object):
     if self.pipiline_dimensions is None:
       raise ValueError('Pipeline must be trained in order to get dimensions')
     else:
-      return [None]+self.pipiline_dimensions[-1].shape[1:]
+      return [None]+self.pipiline_dimensions[-1][1:]
 
   def print_dimensions_before_projection(self):
     print('Dimensions before projection %s' % str(self._get_dimensions_before_projection()))
