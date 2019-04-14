@@ -41,6 +41,7 @@ if __name__ == '__main__':
   pipeline = Pipeline(list_of_methods)
   projector = Projector(pipeline)
   projector.fit(x_train_real, y_train_real)
+  pipeline.print_dimensions_before_projection()
   projector.project_and_plot_real_syn(
       x_train_real, y_train_real, x_train_syn, y_train_syn,
       save_fig_name='nice')
