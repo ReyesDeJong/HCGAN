@@ -27,7 +27,7 @@ class Pipeline(object):
     for object in self.list_of_pipeline_objects:
       train_data_array, train_labels = object.fit(
           train_data_array, train_labels)
-      self.pipiline_dimensions.append(train_data_array.shape)
+      self.pipiline_dimensions.append(list(train_data_array.shape))
     return train_data_array, train_labels
 
   """
