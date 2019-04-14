@@ -30,11 +30,11 @@ if __name__ == '__main__':
       data_path=path_to_real_data)
   syn_data_loader = DataLoader(
       magnitude_key=general_keys.ORIGINAL_MAGNITUDE, time_key=general_keys.TIME,
-      data_path=path_to_real_data)
+      data_path=path_to_syn_data)
   x_train_real, y_train_real, x_val_real, y_val_real, x_test_real, y_test_real = \
-    real_data_loader.get_all_sets_data()
+    real_data_loader.get_all_sets_data(n_samples_to_get=10000)
   x_train_syn, y_train_syn, x_val_syn, y_val_syn, x_test_syn, y_test_syn = \
-    syn_data_loader.get_all_sets_data()
+    syn_data_loader.get_all_sets_data(n_samples_to_get=10000)
   # get magnitudes only
   x_train_real = x_train_real[..., 0]
   x_train_syn = x_train_syn[..., 0]
