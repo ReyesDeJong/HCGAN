@@ -33,9 +33,9 @@ if __name__ == '__main__':
       time_key=general_keys.TIME,
       data_path=path_to_syn_data)
   x_train_real, y_train_real, x_val_real, y_val_real, x_test_real, y_test_real = \
-    real_data_loader.get_all_sets_data(n_samples_to_get=10000)
+    real_data_loader.get_all_sets_data()#n_samples_to_get=10000)
   x_train_syn, y_train_syn, x_val_syn, y_val_syn, x_test_syn, y_test_syn = \
-    syn_data_loader.get_all_sets_data(n_samples_to_get=10000)
+    syn_data_loader.get_all_sets_data()#n_samples_to_get=10000)
   # get magnitudes only
   x_train_real = x_train_real[..., 0]
   x_train_syn = x_train_syn[..., 0]
@@ -44,7 +44,7 @@ if __name__ == '__main__':
   tsne_param = {param_keys.VERBOSE: 1}
   list_of_methods = [StandardScaler(), PCA(), TSNE(tsne_param)]
   pipeline = Pipeline(list_of_methods)
-  projector = Projector(pipeline, show_plots=False)
+  projector = Projector(pipeline, show_plots=True)
   projector.fit(x_train_real, y_train_real)
   pipeline.print_dimensions_before_projection()
   projector.project_and_plot_real_syn(
