@@ -27,7 +27,8 @@ if __name__ == '__main__':
   path_to_syn_data = os.path.join(SYN_DATA_FOLDER,
                                   '%s.pkl' % SYN_DATA_NAME)
   real_data_loader = DataLoader(
-      magnitude_key=general_keys.ORIGINAL_MAGNITUDE, time_key=general_keys.TIME,
+      magnitude_key=general_keys.ORIGINAL_MAGNITUDE_RANDOM,
+      time_key=general_keys.TIME_RANDOM,
       data_path=path_to_real_data)
   syn_data_loader = DataLoader(
       magnitude_key=general_keys.GENERATED_MAGNITUDE,
