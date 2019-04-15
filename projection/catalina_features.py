@@ -67,9 +67,11 @@ if __name__ == '__main__':
 
   real_merged_features = load_and_concatenate_features(
       [path_to_real_fats_features, path_to_real_tsfresh_features])[
+                           general_keys.TRAIN_SET][
                          :N_SAMPLES_TO_PROJECT]
   syn_merged_features = load_and_concatenate_features(
       [path_to_syn_fats_features, path_to_syn_tsfresh_features])[
+                          general_keys.TRAIN_SET][
                         :N_SAMPLES_TO_PROJECT]
 
   rf_params = {param_keys.N_IMPORTANT_FEATURE_TO_KEEP: 100}
