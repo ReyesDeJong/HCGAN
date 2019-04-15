@@ -6,10 +6,10 @@ PATH_TO_PROJECT = os.path.abspath(
 sys.path.append(PATH_TO_PROJECT)
 import numpy as np
 import matplotlib.pyplot as plt
-from modules.wrappers.standard_scaler import StandardScaler
-from modules.wrappers.pca import PCA
-from modules.wrappers.tsne import TSNE
-from modules.wrappers.random_forest import RandomForest
+from modules.pipeline_wrappers.standard_scaler import StandardScaler
+from modules.pipeline_wrappers.pca import PCA
+from modules.pipeline_wrappers.tsne import TSNE
+from modules.pipeline_wrappers.random_forest import RandomForest
 from modules.data_loaders.data_loader import DataLoader
 import parameters.general_keys as general_keys
 import parameters.param_keys as param_keys

@@ -4,7 +4,7 @@ import sys
 PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.append(PATH_TO_PROJECT)
-from modules.wrappers.random_forest import RandomForest
+from modules.pipeline_wrappers.random_forest import RandomForest
 from xgboost import XGBClassifier
 from parameters import param_keys
 
