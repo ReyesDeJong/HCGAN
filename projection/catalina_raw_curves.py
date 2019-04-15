@@ -16,7 +16,7 @@ from modules.pipeline import Pipeline
 from projection.projector import Projector
 
 REAL_DATA_NAME = 'catalina_north9classes'
-SYN_DATAN_NAME = 'catalina_amp_irregular_9classes_generated_10000'
+SYN_DATA_NAME = 'catalina_amp_irregular_9classes_generated_10000'
 SYN_DATA_FOLDER = os.path.join(PATH_TO_PROJECT, 'TSTR_data', 'generated',
                                'catalina_amp_irregular_9classes')
 REAL_DATA_FOLDER = os.path.join(PATH_TO_PROJECT, 'TSTR_data',
