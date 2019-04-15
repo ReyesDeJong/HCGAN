@@ -80,10 +80,12 @@ if __name__ == '__main__':
                         :N_SAMPLES_TO_TRAIN_PROJECTION]
 
   clf_params = {param_keys.N_IMPORTANT_FEATURE_TO_KEEP: 100}
+  pca_params = {param_keys.VARIANCE_PERCENTAGE_TO_KEEP: 0.80}
   selector_params = {param_keys.N_FIRST_FEATURE_TO_KEEP: 10}
   list_of_methods = [StandardScaler(), LightGBM(clf_params),
                      StandardScaler(),
-                     PCA(), FirstNFeatSelector(selector_params),
+                     PCA(),
+                     #FirstNFeatSelector(selector_params),
                      TSNE()]
   pipeline = Pipeline(list_of_methods)
   projector = Projector(pipeline, show_plots=True)
@@ -94,7 +96,7 @@ if __name__ == '__main__':
       y_train_real[:N_SAMPLES_TO_PROJECT],
       syn_merged_features[:N_SAMPLES_TO_PROJECT],
       y_train_syn[:N_SAMPLES_TO_PROJECT],
-      save_fig_name='features_catalina',
+      save_fig_name='features_catalina_mo_selector_85var',
       title='Catalina with 10 most important features from LGBM+PCA',
       label_names=['EW', 'RRc', 'EA', 'RRab', 'RS CVn', 'LPV', 'RRd',
                    'beta Lyrae', 'HADS'])
