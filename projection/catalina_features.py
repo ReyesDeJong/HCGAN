@@ -9,8 +9,10 @@ import matplotlib.pyplot as plt
 from modules.pipeline_wrappers.standard_scaler import StandardScaler
 from modules.pipeline_wrappers.pca import PCA
 from modules.pipeline_wrappers.tsne import TSNE
-from modules.pipeline_wrappers.random_forest import RandomForest
+from modules.pipeline_wrappers.lightGBM import LightGBM
 from modules.data_loaders.data_loader import DataLoader
+from modules.pipeline_wrappers.first_n_feature_selector import \
+  FirstNFeatSelector
 import parameters.general_keys as general_keys
 import parameters.param_keys as param_keys
 from modules.pipeline import Pipeline
@@ -35,7 +37,7 @@ NAME_REAL_FATS_FEATURES = 'catalina_north9classes_features_fats.pkl'
 NAME_REAL_TSFRESH_FEATURES = 'catalina_north9classes_features_tsfresh.pkl'
 NAME_SYN_TSFRESH_FEATURES = 'catalina_north9classes_features_tsfresh_concatenated.pkl'
 NAME_SYN_FATS_FEATURES = 'catalina_north9classes_features_fats.pkl'
-N_SAMPLES_TO_PROJECT = 10000
+N_SAMPLES_TO_PROJECT = 1e6
 
 if __name__ == '__main__':
   path_to_real_data = os.path.join(REAL_DATA_FOLDER, '%s.pkl' % REAL_DATA_NAME)
@@ -74,14 +76,15 @@ if __name__ == '__main__':
                           general_keys.TRAIN_SET][
                         :N_SAMPLES_TO_PROJECT]
 
-  rf_params = {param_keys.N_IMPORTANT_FEATURE_TO_KEEP: 100}
-  list_of_methods = [StandardScaler(), RandomForest(rf_params),
+  clf_params = {param_keys.N_IMPORTANT_FEATURE_TO_KEEP: 100}
+  selector_params = {param_keys.N_FIRST_FEATURE_TO_KEEP: 10}
+  list_of_methods = [StandardScaler(), LightGBM(clf_params),
                      StandardScaler(),
-                     PCA(), TSNE()]
+                     PCA(), FirstNFeatSelector(selector_params), TSNE()]
   pipeline = Pipeline(list_of_methods)
   projector = Projector(pipeline, show_plots=True)
   projector.fit(real_merged_features, y_train_real)
   pipeline.print_dimensions_before_projection()
   projector.project_and_plot_real_syn(
       real_merged_features, y_train_real, syn_merged_features, y_train_syn,
-      save_fig_name='features_catalina_RF')
+      save_fig_name='features_catalina_light')
