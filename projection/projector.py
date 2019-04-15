@@ -53,7 +53,7 @@ class Projector(object):
                   bbox_inches='tight')
 
   def _split_data_by_label(self, data_array, labels) -> dict:
-    label_values = np.unique(labels)
+    label_values = np.unique(labels).astype(int)
     data_by_label_dict = {}
     for single_label_value in label_values:
       single_label_idxs = np.where(labels == single_label_value)[0]
@@ -94,7 +94,7 @@ class Projector(object):
     for label in data_by_label_dict.keys():
       x = data_by_label_dict[label][:, 0]
       y = data_by_label_dict[label][:, 1]
-      ax.scatter(x, y, alpha=0.8, edgecolors='none', label=label)
+      ax.scatter(x, y, alpha=0.5, edgecolors='none', label=label)
     ax.set_title(title)
     ax.legend()
     return ax

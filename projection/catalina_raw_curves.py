@@ -15,16 +15,17 @@ import parameters.param_keys as param_keys
 from modules.pipeline import Pipeline
 from projection.projector import Projector
 
-DATA_NAME = 'starlight_new_bal_1.00'
+REAL_DATA_NAME = 'catalina_north9classes'
+SYN_DATAN_NAME = 'catalina_amp_irregular_9classes_generated_10000'
 SYN_DATA_FOLDER = os.path.join(PATH_TO_PROJECT, 'TSTR_data', 'generated',
-                               DATA_NAME)
+                               'catalina_amp_irregular_9classes')
 REAL_DATA_FOLDER = os.path.join(PATH_TO_PROJECT, 'TSTR_data',
-                                'datasets_original', 'REAL')
+                                'datasets_original', 'REAL', '9classes_100_100')
 
 if __name__ == '__main__':
-  path_to_real_data = os.path.join(REAL_DATA_FOLDER, '%s.pkl' % DATA_NAME)
+  path_to_real_data = os.path.join(REAL_DATA_FOLDER, '%s.pkl' % REAL_DATA_NAME)
   path_to_syn_data = os.path.join(SYN_DATA_FOLDER,
-                                  '%s_generated.pkl' % DATA_NAME)
+                                  '%s.pkl' % SYN_DATA_NAME)
   real_data_loader = DataLoader(
       magnitude_key=general_keys.ORIGINAL_MAGNITUDE, time_key=general_keys.TIME,
       data_path=path_to_real_data)
@@ -39,10 +40,7 @@ if __name__ == '__main__':
   # get magnitudes only
   x_train_real = x_train_real[..., 0]
   x_train_syn = x_train_syn[..., 0]
-  print(x_train_real.shape)
-  print(x_train_syn.shape)
-  tsne_param = {param_keys.VERBOSE: 1}
-  list_of_methods = [StandardScaler(), PCA(), TSNE(tsne_param)]
+  list_of_methods = [StandardScaler(), PCA(), TSNE()]
   pipeline = Pipeline(list_of_methods)
   projector = Projector(pipeline, show_plots=True)
   projector.fit(x_train_real, y_train_real)
