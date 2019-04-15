@@ -26,12 +26,12 @@ class FirstNFeatSelector(object):
     return params
 
   def fit(self, train_data_array, train_labels):
+    train_data_array = self.transform(train_data_array)
     return train_data_array, train_labels
 
   def transform(self, data_array):
     most_relevant_features = self.get_n_first_features_from_array(
       data_array)
-    print(most_relevant_features.shape)
     return most_relevant_features
 
   def get_n_first_features_from_array(self, data_array):
