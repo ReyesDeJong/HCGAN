@@ -37,7 +37,7 @@ NAME_REAL_FATS_FEATURES = 'catalina_north9classes_features_fats.pkl'
 NAME_REAL_TSFRESH_FEATURES = 'catalina_north9classes_features_tsfresh.pkl'
 NAME_SYN_TSFRESH_FEATURES = 'catalina_north9classes_features_tsfresh_concatenated.pkl'
 NAME_SYN_FATS_FEATURES = 'catalina_north9classes_features_fats.pkl'
-N_SAMPLES_TO_PROJECT = int(1e2)
+N_SAMPLES_TO_PROJECT = int(1e10)
 
 if __name__ == '__main__':
   path_to_real_data = os.path.join(REAL_DATA_FOLDER, '%s.pkl' % REAL_DATA_NAME)
