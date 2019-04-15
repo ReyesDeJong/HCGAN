@@ -38,7 +38,7 @@ NAME_REAL_TSFRESH_FEATURES = 'catalina_north9classes_features_tsfresh.pkl'
 NAME_SYN_TSFRESH_FEATURES = 'catalina_north9classes_features_tsfresh_concatenated.pkl'
 NAME_SYN_FATS_FEATURES = 'catalina_north9classes_features_fats.pkl'
 N_SAMPLES_TO_TRAIN_PROJECTION = int(1e100)
-N_SAMPLES_TO_PROJECT = int(4000)
+N_SAMPLES_TO_PROJECT = int(10000)
 
 if __name__ == '__main__':
   path_to_real_data = os.path.join(REAL_DATA_FOLDER, '%s.pkl' % REAL_DATA_NAME)
@@ -54,10 +54,10 @@ if __name__ == '__main__':
       data_path=path_to_syn_data)
   x_train_real, y_train_real, x_val_real, y_val_real, x_test_real, y_test_real = \
     real_data_loader.get_all_sets_data(
-      n_samples_to_get=N_SAMPLES_TO_TRAIN_PROJECTION)
+        n_samples_to_get=N_SAMPLES_TO_TRAIN_PROJECTION)
   x_train_syn, y_train_syn, x_val_syn, y_val_syn, x_test_syn, y_test_syn = \
     syn_data_loader.get_all_sets_data(
-      n_samples_to_get=N_SAMPLES_TO_TRAIN_PROJECTION)
+        n_samples_to_get=N_SAMPLES_TO_TRAIN_PROJECTION)
 
   # load features
   path_to_real_fats_features = os.path.join(PATH_TO_PROJECT, REAL_DATA_FOLDER,
@@ -83,7 +83,8 @@ if __name__ == '__main__':
   selector_params = {param_keys.N_FIRST_FEATURE_TO_KEEP: 10}
   list_of_methods = [StandardScaler(), LightGBM(clf_params),
                      StandardScaler(),
-                     PCA(), FirstNFeatSelector(selector_params), TSNE()]
+                     PCA(), FirstNFeatSelector(selector_params),
+                     TSNE()]
   pipeline = Pipeline(list_of_methods)
   projector = Projector(pipeline, show_plots=True)
   projector.fit(real_merged_features, y_train_real)
@@ -93,4 +94,7 @@ if __name__ == '__main__':
       y_train_real[:N_SAMPLES_TO_PROJECT],
       syn_merged_features[:N_SAMPLES_TO_PROJECT],
       y_train_syn[:N_SAMPLES_TO_PROJECT],
-      save_fig_name='features_catalina_light')
+      save_fig_name='features_catalina',
+      title='Catalina with 10 most important features from LGBM+PCA',
+      label_names=['EW', 'RRc', 'EA', 'RRab', 'RS CVn', 'LPV', 'RRd',
+                   'beta Lyrae', 'HADS'])
