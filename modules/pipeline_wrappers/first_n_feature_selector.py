@@ -4,27 +4,24 @@ import sys
 PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.append(PATH_TO_PROJECT)
-import sklearn.manifold as manifold
+from parameters import param_keys
+import numpy as np
 
 """
-Standar scaler wrapper, first designed for projections
+RF wrapper, first designed for projections
 """
 
 
-class TSNE(object):
+class FirstNFeatSelector(object):
 
   def __init__(self, params_to_update=None):
     self.params = self.set_default_params()
     if params_to_update is not None:
       self.params.update(params_to_update)
-    self.tsne = manifold.TSNE(**self.params)
 
   def set_default_params(self):
     params = {
-      'n_components': 2,
-      'verbose': 0,
-      'perplexity': 40,
-      'n_iter': 1000
+      param_keys.N_FIRST_FEATURE_TO_KEEP: 1e10
     }
     return params
 
@@ -32,4 +29,9 @@ class TSNE(object):
     return train_data_array, train_labels
 
   def transform(self, data_array):
-    return self.tsne.fit_transform(data_array)
+    most_relevant_features = self.get_n_first_features_from_array(
+      data_array)
+    return most_relevant_features
+
+  def get_n_first_features_from_array(self, data_array):
+    return data_array[:, :self.params[param_keys.N_FIRST_FEATURE_TO_KEEP]]
