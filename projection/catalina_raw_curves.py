@@ -47,4 +47,4 @@ if __name__ == '__main__':
   pipeline.print_dimensions_before_projection()
   projector.project_and_plot_real_syn(
       x_train_real, y_train_real, x_train_syn, y_train_syn,
-      save_fig_name='raw_curves')
+      save_fig_name='raw_curves_catalina')
