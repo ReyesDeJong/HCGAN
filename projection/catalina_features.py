@@ -42,9 +42,9 @@ if __name__ == '__main__':
       time_key=general_keys.TIME,
       data_path=path_to_syn_data)
   x_train_real, y_train_real, x_val_real, y_val_real, x_test_real, y_test_real = \
-    real_data_loader.get_all_sets_data(n_samples_to_get=10000)
+    real_data_loader.get_all_sets_data()#n_samples_to_get=10000)
   x_train_syn, y_train_syn, x_val_syn, y_val_syn, x_test_syn, y_test_syn = \
-    syn_data_loader.get_all_sets_data(n_samples_to_get=10000)
+    syn_data_loader.get_all_sets_data()#n_samples_to_get=10000)
 
   x_train_real2, y_train_real2, x_val_real2, y_val_real2, x_test_real2, y_test_real2 = \
     FATS_extractor.read_data_irregular_sampling(
